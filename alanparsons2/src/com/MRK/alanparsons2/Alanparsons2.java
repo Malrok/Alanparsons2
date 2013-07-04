@@ -22,8 +22,8 @@ public class Alanparsons2 implements ApplicationListener {
 		camera.setToOrtho(false, 800, 480);
 		batch = new SpriteBatch();
 		
-		sprite = new Sprite(new Texture(Gdx.files.internal("data/saucisse.png")));
-		sprite.setSize(64, 64);
+		sprite = new Sprite(new Texture(Gdx.files.internal("data/lapin.png")));
+//		sprite.setSize(64, 64);
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(800 / 2 - 64 / 2, 20);
 	}
