@@ -2,6 +2,7 @@ package com.MRK.alanparsons2;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,27 +44,33 @@ public class Alanparsons2 implements ApplicationListener {
 		sprite.draw(batch);
 		batch.end();
 		
+		float x = sprite.getX(), y = sprite.getY();
+		
 		// process user input
 		if(Gdx.input.isTouched()) {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
 			
-//			float x = sprite.getX() + (float) Math.sqrt(Math.abs(touchPos.x - sprite.getX())) / SPEED * Gdx.graphics.getDeltaTime();
-//			float y = sprite.getY() + (float) Math.sqrt(Math.abs(touchPos.y - sprite.getY())) / SPEED * Gdx.graphics.getDeltaTime();
 			float hypo = (float) Math.sqrt((touchPos.x - sprite.getX()) * (touchPos.x - sprite.getX()) + (touchPos.y - sprite.getY()) * (touchPos.y - sprite.getY()));
-			float x = sprite.getX() + ((touchPos.x - sprite.getX()) / hypo) * SPEED * Gdx.graphics.getDeltaTime();
-			float y = sprite.getY() + ((touchPos.y - sprite.getY()) / hypo) * SPEED * Gdx.graphics.getDeltaTime();
-					
-			sprite.setPosition(x, y);
+			x += ((touchPos.x - sprite.getX()) / hypo) * SPEED * Gdx.graphics.getDeltaTime();
+			y += ((touchPos.y - sprite.getY()) / hypo) * SPEED * Gdx.graphics.getDeltaTime();
 		}
-//		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-//			bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-//			bucket.x += 200 * Gdx.graphics.getDeltaTime();
-//		}
-		  
+		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+			x -= SPEED * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			x += SPEED * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Keys.UP)) {
+			y += SPEED * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+			y -= SPEED * Gdx.graphics.getDeltaTime();
+		}
+		
+		sprite.setPosition(x, y);
+		
 		// make sure the bucket stays within the screen bounds
 //		if(bucket.x < 0) bucket.x = 0;
 //		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
