@@ -16,24 +16,21 @@ public class Alanparsons2 extends Game {
 
 		// when the screen is done we change to the
 		// next screen
-		if (screen.isDone()) {
+		if (screen.result().length() != 0) {
 			// dispose the current screen
 			screen.dispose();
 
-//			// if this screen is a main menu screen we switch to
-//			// the game loop
-//			if (screen instanceof MainMenu)
-//				screen = new GameScreen();
-//			else
-//			// if this screen is a game loop screen we switch to the
-//			// game over screen
-//			if (screen instanceof GameLoop)
-//				screen = new GameOver();
-//			else
-//			// if this screen is a game over screen we switch to the
-//			// main menu screen
-//			if (screen instanceof GameOver)
-//				screen = new MainMenu();
+			if (screen instanceof MainScreen) {
+				if (screen.result().equalsIgnoreCase("play"))
+					screen = new GameScreen();
+			}
+			if (screen instanceof GameScreen) {
+				if (screen.result().equalsIgnoreCase("lose"))
+					screen = new MainScreen();
+			}
+//			if (screen instanceof GameOver) {
+//				
+//			}
 		}
 	}
 
@@ -45,7 +42,7 @@ public class Alanparsons2 extends Game {
 	@Override
 	public void create() {
 		if (!isInitialized) {
-			screen = new GameScreen();
+			screen = new MainScreen();
 //			Music music = Gdx.audio.newMusic(Gdx.files.getFileHandle(
 //					"data/8.12.mp3", FileType.Internal));
 //			music.setLooping(true);

@@ -1,29 +1,28 @@
 package com.MRK.alanparsons2;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class MainScreen implements Screen {
 	
 	private Stage stage;
+	private String result = "";
 	
 	public MainScreen() {
 		stage = new Stage(0, 0, true);
 		
-		TextButton button = new TextButton("Start", new Skin());
+		Skin skin = new Skin(Gdx.files.internal("skins/uiskin.json"));
+		
+		TextButton button = new TextButton("Start", skin.get(TextButtonStyle.class));
 		button.addListener(new InputListener() {
-
-//			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//		 		Gdx.app.log("Example", "touch started at (" + x + ", " + y + ")");
-//		 		return false;
-//		 	}
 		 
 		 	public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//		 		Gdx.app.log("Example", "touch done at (" + x + ", " + y + ")");
-		 		
+		 		result = "play";
 		 	}
 			
 		});
@@ -41,8 +40,8 @@ public class MainScreen implements Screen {
 	}
 
 	@Override
-	public boolean isDone() {
-		return false;
+	public String result() {
+		return result;
 	}
 
 	@Override

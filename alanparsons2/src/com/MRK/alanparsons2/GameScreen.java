@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
 	private Sprite sprite;
 	private ArrayList<Saucisse> saucisses = new ArrayList<Saucisse>();
 	
-	private boolean isDone = false;
+	private String result = "";
 	
 	public GameScreen() {
 		camera = new OrthographicCamera();
@@ -89,7 +89,7 @@ public class GameScreen implements Screen {
 		
 		for (Saucisse saucisse : saucisses) {
 			if (sprite.getBoundingRectangle().overlaps(saucisse.getBoundingRectangle()))
-				isDone = true;
+				result = "lose";
 		}
 	    
 		if (saucisses.size() < NB_MAX_SAUCISSES) {
@@ -115,7 +115,7 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public boolean isDone() {
-		return isDone;
+	public String result() {
+		return result;
 	}
 }

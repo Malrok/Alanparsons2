@@ -6,7 +6,7 @@ public interface Screen {
 	
 	public void render();
 	
-	public boolean isDone();
+	public String result();
 	
 	public void dispose();
 	
