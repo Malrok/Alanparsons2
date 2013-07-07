@@ -8,11 +8,15 @@ import com.badlogic.gdx.Game;
 public class Alanparsons2 extends Game {
 
 	private boolean isInitialized = false;
+	private int width, height;
 	
 	private Screen screen;
 	
 	@Override
 	public void render() {
+		if (screen == null)
+			screen = new MainScreen(width, height);
+		
 		screen.update();
 
 		screen.render();
@@ -20,30 +24,32 @@ public class Alanparsons2 extends Game {
 		// when the screen is done we change to the
 		// next screen
 		if (screen.result().length() != 0) {
-			System.out.println("result=" + screen.result());
 			// dispose the current screen
 			screen.dispose();
 
 			if (screen instanceof MainScreen) {
 				if (screen.result().equalsIgnoreCase("play"))
-					screen = new GameScreen();
+					screen = new GameScreen(width, height);
 			}
 			if (screen instanceof GameScreen) {
 				if (screen.result().equalsIgnoreCase("lose"))
-					screen = new MainScreen();
+					screen = new MainScreen(width, height);
 			}
 		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		screen.resize(width, height);
+		this.width = width;
+		this.height = height;
+		
+		if (screen != null)
+			screen.resize(width, height);
 	}
 
 	@Override
 	public void create() {
 		if (!isInitialized) {
-			screen = new MainScreen();
 //			Music music = Gdx.audio.newMusic(Gdx.files.getFileHandle(
 //					"data/8.12.mp3", FileType.Internal));
 //			music.setLooping(true);

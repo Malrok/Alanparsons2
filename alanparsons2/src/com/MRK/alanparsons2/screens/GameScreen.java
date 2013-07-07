@@ -26,14 +26,13 @@ public class GameScreen implements Screen {
 	
 	private String result = "";
 	
-	public GameScreen() {
+	public GameScreen(int width, int height) {
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
 		batch = new SpriteBatch();
-		
 		sprite = new Sprite(new Texture(Gdx.files.internal("data/lapin.png")));
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-		sprite.setPosition(20, 600 / 2 - 64 / 2);
+		
+		resize(width, height);
 	}
 	
 	@Override
@@ -51,7 +50,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
+		batch.dispose();
 	}
 
 	@Override
@@ -121,6 +120,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		
+		camera.setToOrtho(false, width, height);
+		sprite.setPosition(20, height / 2 - sprite.getHeight() / 2);
 	}
 }

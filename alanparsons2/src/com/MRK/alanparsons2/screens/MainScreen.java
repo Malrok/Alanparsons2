@@ -18,14 +18,13 @@ public class MainScreen implements Screen {
 
 	private String result = "";
 	
-	public MainScreen() {
+	public MainScreen(int width, int height) {
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
 		batch = new SpriteBatch();
-		
 		start = new Sprite(new Texture(Gdx.files.internal("buttons/start.png")));
 		start.setOrigin(start.getWidth()/2, start.getHeight()/2);
 		
+		resize(width, height);
 	}
 	
 	@Override
@@ -59,11 +58,12 @@ public class MainScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		
+		batch.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
+		camera.setToOrtho(false, width, height);
 		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
 	}
 }
