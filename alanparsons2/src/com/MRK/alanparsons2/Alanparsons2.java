@@ -1,5 +1,8 @@
 package com.MRK.alanparsons2;
 
+import com.MRK.alanparsons2.screens.GameScreen;
+import com.MRK.alanparsons2.screens.MainScreen;
+import com.MRK.alanparsons2.screens.Screen;
 import com.badlogic.gdx.Game;
 
 public class Alanparsons2 extends Game {
@@ -17,6 +20,7 @@ public class Alanparsons2 extends Game {
 		// when the screen is done we change to the
 		// next screen
 		if (screen.result().length() != 0) {
+			System.out.println("result=" + screen.result());
 			// dispose the current screen
 			screen.dispose();
 
@@ -28,15 +32,12 @@ public class Alanparsons2 extends Game {
 				if (screen.result().equalsIgnoreCase("lose"))
 					screen = new MainScreen();
 			}
-//			if (screen instanceof GameOver) {
-//				
-//			}
 		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-
+		screen.resize(width, height);
 	}
 
 	@Override
@@ -50,10 +51,5 @@ public class Alanparsons2 extends Game {
 			isInitialized = true;
 		}
 	}
-	
-//	@Override
-//	public void create() {
-//		setScreen(new GameScreen());
-//	}
 	
 }
