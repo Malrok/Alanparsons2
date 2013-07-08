@@ -1,5 +1,12 @@
 package com.MRK.alanparsons2.screens;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenManager;
+import aurelienribon.tweenengine.equations.Linear;
+
+import com.MRK.alanparsons2.helpers.SpriteAccessor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,10 +19,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public class MainScreen implements Screen {
 
+	private final float PULSE = 1.0f;
+	
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Sprite start;
 
+	private TweenManager tweenManager = new TweenManager();
+	
 	private String result = "";
 	
 	public MainScreen(int width, int height) {
@@ -25,6 +36,10 @@ public class MainScreen implements Screen {
 		start.setOrigin(start.getWidth()/2, start.getHeight()/2);
 		
 		resize(width, height);
+		
+		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
+
+		Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.1f, 1.1f).repeatYoyo(-1, 0).start(tweenManager);
 	}
 	
 	@Override
@@ -35,7 +50,8 @@ public class MainScreen implements Screen {
 			camera.unproject(touchPos);
 			
 			if (start.getBoundingRectangle().contains(new Vector2(touchPos.x, touchPos.y))) {
-				result = "play";
+				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f);				
+				Tween.call(tweenCallback).start(tweenManager);
 			}
 		}
 	}
@@ -49,6 +65,8 @@ public class MainScreen implements Screen {
 		batch.begin();
 		start.draw(batch);		
 		batch.end();
+		
+		tweenManager.update(Gdx.graphics.getDeltaTime());
 	}
 
 	@Override
@@ -66,4 +84,13 @@ public class MainScreen implements Screen {
 		camera.setToOrtho(false, width, height);
 		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
 	}
+	
+	private final TweenCallback tweenCallback = new TweenCallback() {
+
+		@Override
+		public void onEvent(int type, BaseTween<?> source) {
+//			result = "play";
+		}
+		
+	};
 }

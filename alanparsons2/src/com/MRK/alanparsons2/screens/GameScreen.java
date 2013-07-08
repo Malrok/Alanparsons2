@@ -2,6 +2,11 @@ package com.MRK.alanparsons2.screens;
 
 import java.util.ArrayList;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+import aurelienribon.tweenengine.equations.Linear;
+
+import com.MRK.alanparsons2.helpers.SpriteAccessor;
 import com.MRK.alanparsons2.models.Saucisse;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -18,11 +23,15 @@ public class GameScreen implements Screen {
 	private final int NB_MAX_SAUCISSES = 20;
 	private final double SAUCISSES_CHANCES = 0.9f;
 
+	private int width, height;
+	
 	private OrthographicCamera camera;
 	
 	private SpriteBatch batch;
 	private Sprite sprite;
 	private ArrayList<Saucisse> saucisses = new ArrayList<Saucisse>();
+	
+    private TweenManager tweenManager = new TweenManager();
 	
 	private String result = "";
 	
@@ -33,26 +42,10 @@ public class GameScreen implements Screen {
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		
 		resize(width, height);
+		
+		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 	}
 	
-	@Override
-	public void render() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		sprite.draw(batch);		
-		for (Saucisse saucisse : saucisses)
-			saucisse.draw(batch);
-		batch.end();
-	}
-
-	@Override
-	public void dispose() {
-		batch.dispose();
-	}
-
 	@Override
 	public void update() {
 		float x = sprite.getX(), y = sprite.getY();
@@ -95,22 +88,44 @@ public class GameScreen implements Screen {
 			if (Math.random() > SAUCISSES_CHANCES) {
 				Saucisse saucisse = new Saucisse(new Texture(Gdx.files.internal("data/saucisse_small.png")));
 				saucisse.setOrigin(saucisse.getWidth()/2, saucisse.getHeight()/2);
-				saucisse.setPosition(800, (float) (Math.random() * 600));
+				saucisse.setPosition(width, (float) (Math.random() * height));
 	
 				saucisses.add(saucisse);
+				
+				Tween.to(saucisse, SpriteAccessor.POSITION_X, width / saucisse.getSpeed()).ease(Linear.INOUT).target(-saucisse.getWidth()).start(tweenManager);
 			}
 		}
 		
 		ArrayList<Sprite> toBeRemoved = new ArrayList<Sprite>();
 		
 		for (Saucisse saucisse : saucisses) {
-			saucisse.setPosition(saucisse.getX() - saucisse.getSpeed() * Gdx.graphics.getDeltaTime(), saucisse.getY());
-			if (saucisse.getX() < -saucisse.getWidth())
+//			saucisse.setPosition(saucisse.getX() - saucisse.getSpeed() * Gdx.graphics.getDeltaTime(), saucisse.getY());
+			if (saucisse.getX() <= -saucisse.getWidth())
 				toBeRemoved.add(saucisse);
 		}
 		
 		saucisses.removeAll(toBeRemoved);
 
+	}
+	
+	@Override
+	public void render() {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		sprite.draw(batch);		
+		for (Saucisse saucisse : saucisses)
+			saucisse.draw(batch);
+		batch.end();
+		
+		tweenManager.update(Gdx.graphics.getDeltaTime());
+	}
+
+	@Override
+	public void dispose() {
+		batch.dispose();
 	}
 
 	@Override
@@ -120,6 +135,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		this.width = width;
+		this.height = height;
 		camera.setToOrtho(false, width, height);
 		sprite.setPosition(20, height / 2 - sprite.getHeight() / 2);
 	}
