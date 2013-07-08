@@ -1,8 +1,6 @@
 package com.MRK.alanparsons2.screens;
 
-import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Linear;
 
@@ -50,8 +48,9 @@ public class MainScreen implements Screen {
 			camera.unproject(touchPos);
 			
 			if (start.getBoundingRectangle().contains(new Vector2(touchPos.x, touchPos.y))) {
-				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f);				
-				Tween.call(tweenCallback).start(tweenManager);
+//				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f);				
+//				Tween.call(tweenCallback).start(tweenManager);
+				result = "play";
 			}
 		}
 	}
@@ -63,7 +62,7 @@ public class MainScreen implements Screen {
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		start.draw(batch);		
+		start.draw(batch);
 		batch.end();
 		
 		tweenManager.update(Gdx.graphics.getDeltaTime());
@@ -85,12 +84,12 @@ public class MainScreen implements Screen {
 		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
 	}
 	
-	private final TweenCallback tweenCallback = new TweenCallback() {
-
-		@Override
-		public void onEvent(int type, BaseTween<?> source) {
-//			result = "play";
-		}
-		
-	};
+//	private final TweenCallback tweenCallback = new TweenCallback() {
+//
+//		@Override
+//		public void onEvent(int type, BaseTween<?> source) {
+//
+//		}
+//		
+//	};
 }
