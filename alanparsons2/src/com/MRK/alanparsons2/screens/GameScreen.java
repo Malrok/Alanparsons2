@@ -106,7 +106,6 @@ public class GameScreen implements Screen {
 		ArrayList<Sprite> toBeRemoved = new ArrayList<Sprite>();
 		
 		for (Saucisse saucisse : saucisses) {
-//			saucisse.setPosition(saucisse.getX() - saucisse.getSpeed() * Gdx.graphics.getDeltaTime(), saucisse.getY());
 			if (saucisse.getX() <= -saucisse.getWidth())
 				toBeRemoved.add(saucisse);
 		}
@@ -152,15 +151,15 @@ public class GameScreen implements Screen {
 		this.width = width;
 		this.height = height;
 		
+		camera.setToOrtho(false, width, height);
+		
 		lapin = new Sprite(lapinTexture);
 		lapin.setOrigin(lapin.getWidth()/2, lapin.getHeight()/2);
+		lapin.setPosition(20, height / 2 - lapin.getHeight() / 2);
 		
 		float wOnh = skyTexture.getWidth() / skyTexture.getHeight();
 		
 		sky = new Sprite(skyTexture, (int) (height * wOnh), height);
-		
-		camera.setToOrtho(false, width, height);
-		lapin.setPosition(20, height / 2 - lapin.getHeight() / 2);
 	}
 	
 	private void load() {
