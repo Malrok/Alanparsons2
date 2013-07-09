@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 public class GameScreen implements Screen {
@@ -33,8 +32,6 @@ public class GameScreen implements Screen {
 	private Texture skyTexture;
 	private Texture saucisseTexture;
 	
-	private TextureRegion skyTextureRegion;
-	
 	private SpriteBatch batch;
 	private Sprite lapin;
 	private Sprite sky;
@@ -50,11 +47,6 @@ public class GameScreen implements Screen {
 		
 		camera = new OrthographicCamera();
 		batch = new SpriteBatch();
-		
-		lapin = new Sprite(lapinTexture);
-		lapin.setOrigin(lapin.getWidth()/2, lapin.getHeight()/2);
-		
-		sky = new Sprite(skyTexture);
 		
 		resize(width, height);
 		
@@ -120,7 +112,6 @@ public class GameScreen implements Screen {
 		}
 		
 		saucisses.removeAll(toBeRemoved);
-
 		
 		skyScrolling -= SCROLLING_SPEED;
 		if (skyScrolling < -sky.getWidth())
@@ -137,8 +128,6 @@ public class GameScreen implements Screen {
 		
 		batch.draw(sky, skyScrolling + sky.getWidth(), 0);
 		batch.draw(sky, skyScrolling, 0);
-//		batch.draw(skyTextureRegion, 0, 0, skyScrolling, 0, sky.getWidth() - skyScrolling, sky.getHeight(), 1, 1, 0);
-//		batch.draw(skyTextureRegion, skyScrolling, 0, sky.getWidth() - skyScrolling, 0, skyScrolling, sky.getHeight(), 1, 1, 0);
 		
 		lapin.draw(batch);		
 		for (Saucisse saucisse : saucisses)
@@ -163,15 +152,15 @@ public class GameScreen implements Screen {
 		this.width = width;
 		this.height = height;
 		
+		lapin = new Sprite(lapinTexture);
+		lapin.setOrigin(lapin.getWidth()/2, lapin.getHeight()/2);
+		
+		float wOnh = skyTexture.getWidth() / skyTexture.getHeight();
+		
+		sky = new Sprite(skyTexture, (int) (height * wOnh), height);
+		
 		camera.setToOrtho(false, width, height);
 		lapin.setPosition(20, height / 2 - lapin.getHeight() / 2);
-		
-		float wOnh = sky.getWidth() / sky.getHeight();
-		
-//		skyScrolling = 0;
-		skyTextureRegion = new TextureRegion(skyTexture, 0, 0, width, height);
-		
-		sky.setSize(height * wOnh, height);
 	}
 	
 	private void load() {
