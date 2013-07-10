@@ -1,7 +1,8 @@
 package com.MRK.alanparsons2;
 
-import com.MRK.alanparsons2.screens.RabbitvsSausages;
 import com.MRK.alanparsons2.screens.MainScreen;
+import com.MRK.alanparsons2.screens.RabbitvsSausages;
+import com.MRK.alanparsons2.screens.RotateAroundRabbit;
 import com.MRK.alanparsons2.screens.Screen;
 import com.badlogic.gdx.Game;
 
@@ -29,7 +30,8 @@ public class Alanparsons2 extends Game {
 
 			if (screen instanceof MainScreen) {
 				if (screen.result().equalsIgnoreCase("play"))
-					screen = new RabbitvsSausages(width, height);
+//					screen = new RabbitvsSausages(width, height);
+					screen = new RotateAroundRabbit(width, height);
 			}
 			if (screen instanceof RabbitvsSausages) {
 				if (screen.result().equalsIgnoreCase("lose"))
