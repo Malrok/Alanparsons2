@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-public class GameScreen implements Screen {
+public class RabbitvsSausages implements Screen {
 
 	private final int SPACESHIP_SPEED = 100;
 	private final int NB_MAX_SAUCISSES = 20;
@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
     private int skyScrolling = 0;
 	private String result = "";
 	
-	public GameScreen(int width, int height) {
+	public RabbitvsSausages(int width, int height) {
 		load();
 		
 		camera = new OrthographicCamera();

@@ -1,6 +1,8 @@
 package com.MRK.alanparsons2.screens;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Linear;
 
@@ -48,9 +50,10 @@ public class MainScreen implements Screen {
 			camera.unproject(touchPos);
 			
 			if (start.getBoundingRectangle().contains(new Vector2(touchPos.x, touchPos.y))) {
-//				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f);				
-//				Tween.call(tweenCallback).start(tweenManager);
-				result = "play";
+				tweenManager.killAll();
+//				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f, 1.4f).call(tweenCallback).start(tweenManager);
+				Tween.call(tweenCallback).start(tweenManager);
+//				result = "play";
 			}
 		}
 	}
@@ -84,12 +87,17 @@ public class MainScreen implements Screen {
 		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
 	}
 	
-//	private final TweenCallback tweenCallback = new TweenCallback() {
-//
-//		@Override
-//		public void onEvent(int type, BaseTween<?> source) {
-//
-//		}
-//		
-//	};
+	private final TweenCallback tweenCallback = new TweenCallback() {
+
+		@Override
+		public void onEvent(int type, BaseTween<?> source) {
+			if (type == TweenCallback.BEGIN) {
+				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f, 1.4f).start(tweenManager);
+			}
+			if (type == TweenCallback.END) {
+				result = "play";
+			}
+		}
+		
+	};
 }
