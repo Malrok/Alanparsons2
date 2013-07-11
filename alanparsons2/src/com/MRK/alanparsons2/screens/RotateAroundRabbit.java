@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 public class RotateAroundRabbit implements Screen {
 
 	private static float CAMERA_ANGLE_SPEED = 0.01f;
-	
+	private static float DISTANCEFROMFOE;
 	private static float LAPINX = .5f; 
 	private static float LAPINY = .8f;
 	
@@ -20,7 +20,7 @@ public class RotateAroundRabbit implements Screen {
 	
 	private RotatingCamera camera;
 	private float lastRotateValue = 0;
-	private float distanceFromLapin;
+	
 
 	private Texture lapinTexture, saucisseTexture;
 	private SpriteBatch batch;
@@ -55,12 +55,12 @@ public class RotateAroundRabbit implements Screen {
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
 			touched = true;
 			lastRotateValue = - CAMERA_ANGLE_SPEED;
-			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), distanceFromLapin, -CAMERA_ANGLE_SPEED);
+			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), DISTANCEFROMFOE, -CAMERA_ANGLE_SPEED);
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			touched = true;
 			lastRotateValue = CAMERA_ANGLE_SPEED;
-			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), distanceFromLapin, CAMERA_ANGLE_SPEED);
+			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), DISTANCEFROMFOE, CAMERA_ANGLE_SPEED);
 		}
 		if(Gdx.input.isKeyPressed(Keys.UP)) {
 //			y += SPACESHIP_SPEED * Gdx.graphics.getDeltaTime();
@@ -118,7 +118,7 @@ public class RotateAroundRabbit implements Screen {
 //		lapin.setPosition(width * LAPINX - lapin.getWidth() / 2, height * LAPINY - lapin.getHeight() / 2);
 		setLapinPosition();
 		
-		distanceFromLapin = Math.abs(saucisse1.getY() + saucisse1.getHeight() / 2 - camera.position.y);
+		DISTANCEFROMFOE = Math.abs(saucisse1.getY() + saucisse1.getHeight() / 2 - camera.position.y);
 		
 //		System.out.println("lapin origin x/y = " + lapin1.getOriginX() + "/" + lapin1.getOriginY() + 
 //				"\ncamera x/y = " + camera.position.x + "/" + camera.position.y +
