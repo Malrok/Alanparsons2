@@ -14,11 +14,12 @@ public class RotateAroundRabbit implements Screen {
 	private static float CAMERA_ANGLE_SPEED = 0.01f;
 	
 	private static float LAPINX = .5f; 
-	private static float LAPINY = .2f;
+	private static float LAPINY = .8f;
 	
 	private float width, height;
 	
 	private RotatingCamera camera;
+	private float lastRotateValue = 0;
 	private float distanceFromLapin;
 
 	private Texture lapinTexture, saucisseTexture;
@@ -53,11 +54,13 @@ public class RotateAroundRabbit implements Screen {
 		}
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
 			touched = true;
+			lastRotateValue = - CAMERA_ANGLE_SPEED;
 			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), distanceFromLapin, -CAMERA_ANGLE_SPEED);
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			touched = true;
-			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), distanceFromLapin, +CAMERA_ANGLE_SPEED);
+			lastRotateValue = CAMERA_ANGLE_SPEED;
+			camera.rotateCameraAround(new Vector3(saucisse1.getOriginX(), saucisse1.getOriginY(), 0), distanceFromLapin, CAMERA_ANGLE_SPEED);
 		}
 		if(Gdx.input.isKeyPressed(Keys.UP)) {
 //			y += SPACESHIP_SPEED * Gdx.graphics.getDeltaTime();
@@ -66,11 +69,7 @@ public class RotateAroundRabbit implements Screen {
 //			y -= SPACESHIP_SPEED * Gdx.graphics.getDeltaTime();
 		}
 		
-		if (touched) {
-			Vector3 newLapinPos = new Vector3(width * LAPINX, height * LAPINY, 0);
-			camera.unproject(newLapinPos);
-			lapin.setPosition(newLapinPos.x, newLapinPos.y);
-		}
+		if (touched) setLapinPosition();
 	}
 
 	@Override
@@ -116,7 +115,8 @@ public class RotateAroundRabbit implements Screen {
 		saucisse2.setPosition(width / 3 - saucisse2.getWidth() / 2, 2 * height / 3 - saucisse2.getHeight() / 2);
 		
 		lapin = new Sprite(lapinTexture);
-		lapin.setPosition(width * LAPINX, height * LAPINY);
+//		lapin.setPosition(width * LAPINX - lapin.getWidth() / 2, height * LAPINY - lapin.getHeight() / 2);
+		setLapinPosition();
 		
 		distanceFromLapin = Math.abs(saucisse1.getY() + saucisse1.getHeight() / 2 - camera.position.y);
 		
@@ -128,5 +128,12 @@ public class RotateAroundRabbit implements Screen {
 	private void load() {
 		saucisseTexture = new Texture(Gdx.files.internal("data/saucisse.png"));
 		lapinTexture = new Texture(Gdx.files.internal("data/lapin.png"));
+	}
+	
+	private void setLapinPosition() {
+		Vector3 newLapinPos = new Vector3(width * LAPINX - lapin.getWidth() / 2, height * LAPINY - lapin.getHeight() / 2, 0);
+		camera.unproject(newLapinPos);
+		lapin.setPosition(newLapinPos.x, newLapinPos.y);
+		lapin.rotate((float) Math.toDegrees(lastRotateValue));
 	}
 }
