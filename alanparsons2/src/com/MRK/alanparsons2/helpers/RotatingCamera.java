@@ -1,14 +1,13 @@
 package com.MRK.alanparsons2.helpers;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class RotatingCamera extends OrthographicCamera {
 
 	private float currentAngle;
 	
-	private Vector2 oldPos;
+//	private Vector2 oldPos;
 	
 	public RotatingCamera() {
 		super();
@@ -20,7 +19,7 @@ public class RotatingCamera extends OrthographicCamera {
 		
 		currentAngle = (float) Math.toRadians(270);
 		
-		oldPos = new Vector2(position.x, position.y);
+//		oldPos = new Vector2(position.x, position.y);
 	}
 	
 	public void rotateCameraAround(Vector3 origin, float radius, float angle) {
@@ -35,12 +34,12 @@ public class RotatingCamera extends OrthographicCamera {
 //				" radius = " + radius + " angle = " + angle +
 //				"\nnew x/y = " + x + "/" + y);
 		
-//		position.x = (float) x;
-//		position.y = (float) y;
+		position.x = (float) x;
+		position.y = (float) y;
 		
-		translate((float) (x - oldPos.x),(float) (y - oldPos.y));
+//		translate((float) (x - oldPos.x),(float) (y - oldPos.y));
 		
-		oldPos = new Vector2((float)x, (float)y);
+//		oldPos = new Vector2((float)x, (float)y);
 		
 		rotate(-(float) Math.toDegrees(angle));
 	}
