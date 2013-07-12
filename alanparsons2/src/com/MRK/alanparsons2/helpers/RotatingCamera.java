@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class RotatingCamera extends OrthographicCamera {
 
-	private float currentAngle;
+//	private float currentAngle;
 	
 //	private Vector2 oldPos;
 	
@@ -17,30 +17,32 @@ public class RotatingCamera extends OrthographicCamera {
 	public void setToOrtho(boolean yDown, float viewportWidth, float viewportHeight) {
 		super.setToOrtho(yDown, viewportWidth, viewportHeight);
 		
-		currentAngle = (float) Math.toRadians(270);
+		CircleHelper.currentAngle = (float) Math.toRadians(270);
 		
 //		oldPos = new Vector2(position.x, position.y);
 	}
 	
 	public void rotateCameraAround(Vector3 origin, float radius, float angle) {
-		double x, y;
+//		double x, y;
 		
-		currentAngle += angle;
+		CircleHelper.currentAngle += angle;
 
-		x = origin.x + (radius * Math.cos(currentAngle));
-		y = origin.y + (radius * Math.sin(currentAngle));
+//		x = origin.x + (radius * Math.cos(currentAngle));
+//		y = origin.y + (radius * Math.sin(currentAngle));
+		
+		Vector3 newPos = CircleHelper.getPointOnCircle(origin, radius, CircleHelper.currentAngle);
 		
 //		System.out.println("rotateCameraAround origin x/y = " + origin.x + "/" + origin.y +
 //				" radius = " + radius + " angle = " + angle +
 //				"\nnew x/y = " + x + "/" + y);
 		
-		position.x = (float) x;
-		position.y = (float) y;
+		position.x = newPos.x;
+		position.y = newPos.y;
 		
 //		translate((float) (x - oldPos.x),(float) (y - oldPos.y));
 		
 //		oldPos = new Vector2((float)x, (float)y);
 		
 		rotate(-(float) Math.toDegrees(angle));
-	}
+	}	
 }
