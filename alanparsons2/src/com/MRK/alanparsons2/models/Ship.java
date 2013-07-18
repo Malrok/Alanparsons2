@@ -17,8 +17,10 @@ public class Ship extends Sprite {
 	private static Ship instance = new Ship();
 	private Weapon weapon;
 	
+	private static final float PROJECTILE_SPEED = 1.0f;
+	
 	private Ship() {
-		super(new Texture(Gdx.files.internal("data/lapin.png")));
+		super(new Texture(Gdx.files.internal("data/ship.png")));
 	}
 	
 	/** 
@@ -52,7 +54,7 @@ public class Ship extends Sprite {
 	 * @param lastRotateValue - float : dernier angle de rotation appliqué au vaisseau
 	 */
 	public void update(float lastRotateValue) {
-		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(super.getX(), super.getY(), ShipController.getInstance().getRotationCenter().x, ShipController.getInstance().getRotationCenter().y, ShipController.currentAngle));
+		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(super.getX(), super.getY(), ShipController.getInstance().getRotationCenter().x, ShipController.getInstance().getRotationCenter().y, PROJECTILE_SPEED));
 		weapon.update();
 	}
 	

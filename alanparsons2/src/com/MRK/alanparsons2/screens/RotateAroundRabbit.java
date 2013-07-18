@@ -13,12 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class RotateAroundRabbit implements Screen {
 
-//	private RotatingCamera camera;
-
-//	private ShapeRenderer shapeRenderer;
-
-//	private ShipController shipController;
-	
 	private Texture saucisseTexture, projectileTexture;
 	private SpriteBatch batch;
 	private Sprite saucisse1, saucisse2;
@@ -31,20 +25,16 @@ public class RotateAroundRabbit implements Screen {
 		
 		load();
 		
-//		camera = new RotatingCamera();
 		batch = new SpriteBatch();
 		
 		resize(width, height);
 		
-//		shipController = new ShipController(width, height, new Vector2(saucisse1.getOriginX(), saucisse1.getOriginY()));
-//		shipController.setPosition();
 		ShipController.getInstance().init(width, height, new Vector2(saucisse1.getOriginX(), saucisse1.getOriginY()));
 		ShipController.getInstance().setPosition();
 	}
 	
 	@Override
 	public void update() {
-//		shipController.setLastRotateValue(shipController.getDirection());
 		ShipController.getInstance().getDirection();
 		RotatingCamera.getInstance().rotateCameraAround(saucisse1.getOriginX(), saucisse1.getOriginY(), ShipController.getInstance().getLastRotateValue());
 		ShipController.getInstance().setPosition();
@@ -111,13 +101,4 @@ public class RotateAroundRabbit implements Screen {
 		saucisseTexture = new Texture(Gdx.files.internal("data/saucisse.png"));
 		projectileTexture = new Texture(Gdx.files.internal("data/shot.png"));
 	}
-	
-//	private void drawCircle() {
-//		shapeRenderer.setProjectionMatrix(camera.combined);
-//		 
-//		shapeRenderer.begin(ShapeType.Line);
-//		shapeRenderer.setColor(Color.CYAN);
-//		shapeRenderer.circle(saucisse1.getX() + saucisse1.getWidth() / 2, saucisse1.getY() + saucisse1.getHeight() / 2, CAMERA_DISTANCE_FROM_FOE);
-//		shapeRenderer.end();
-//	}
 }

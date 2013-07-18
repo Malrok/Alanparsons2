@@ -1,5 +1,6 @@
 package com.MRK.alanparsons2.models;
 
+import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +23,7 @@ public class Projectile extends Sprite {
 		super(texture);
 		this.speed = speed;
 		this.power = power;
+		super.rotate(CircleHelper.getDAngle(speed.x, speed.y));
 	}
 	
 	public Vector2 getSpeed() {
@@ -40,9 +42,8 @@ public class Projectile extends Sprite {
 	 * Calcul de la nouvelle position
 	 */
 	public void update() {
-		float x, y;
-		x = this.getX() + speed.x;
-		y = this.getY() + speed.y;
-		this.setPosition(x, y);
+		float x = getX() + speed.x,
+			  y = getY() + speed.y;
+		setPosition(x, y);
 	}
 }

@@ -38,7 +38,9 @@ public class CircleHelper {
 	 * @return {@link Vector2}
 	 */
 	public static Vector2 getVectorAimingAtCenter(float originx, float originy, float aimx, float aimy, float speed) {
-		double angle = Math.atan((originy - aimy) / (originx - aimx));
+		double angle = getRAngle(originx - aimx, originy - aimy);
+		
+//		System.out.println("getVectorAimingAtCenter angle=" + Math.toDegrees(angle));
 		
 		double x = speed * Math.cos(angle);
 		double y = speed * Math.sin(angle);
@@ -46,4 +48,23 @@ public class CircleHelper {
 		return new Vector2((float)x, (float)y);
 	}
 	
+	/**
+	 * Renvoie l'angle en radian formé par le vecteur
+	 * @param x - float
+	 * @param y - float
+	 * @return  - float
+	 */
+	public static float getRAngle(float x, float y) {
+		return (float) Math.atan(y / x);
+	}
+	
+	/**
+	 * Renvoie l'angle en degrés formé par le vecteur
+	 * @param x - float
+	 * @param y - float
+	 * @return  - float
+	 */
+	public static float getDAngle(float x, float y) {
+		return (float) Math.toDegrees(Math.atan(y / x));
+	}
 }

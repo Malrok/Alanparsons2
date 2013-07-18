@@ -16,27 +16,26 @@ public class ShipController {
 
 	private static ShipController instance = new ShipController();
 	
-	public static float MIN_ANGLE = .01f;
-	public static float MAX_ANGLE = .1f;
-	public static long SPEED_DOWN_DELAY = 100;
+	private static float MIN_ANGLE = .01f;
+	private static float MAX_ANGLE = .1f;
+	private static long SPEED_DOWN_DELAY = 100;
 	private static float SHIP_DISTANCE_FROM_FOE;
-	private static float LAPINY = .1f;
+	private static float LAPINY = .05f;
 	
-	// touch direction zones
 	private static float screenMiddle;
 	private static Vector2 rotationCenter;
-	public static float currentAngle;
-	
 	private float currentDirection = 0;
 	private long lastTime = TimeUtils.millis();
 	
+	public static float currentAngle;
+	
 	/** 
-	 * constructeur 
+	 * constructeur
 	 */
 	private ShipController() { }
 	
 	/** 
-	 * retourne l'instance unique de la classe
+	 * Retourne l'instance unique de la classe
 	 * @return {@type ShipController}
 	 */
 	public static ShipController getInstance() {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.MRK.alanparsons2.models.Projectile;
 import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Controlleur des projectiles à l'écran<BR>
@@ -20,6 +21,8 @@ public class ProjectileController {
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 	
 	private ProjectileController() { }
+	
+//	private boolean emit = true;
 	
 	/** 
 	 * retourne l'instance unique de la classe
@@ -49,10 +52,11 @@ public class ProjectileController {
 	public void fireWeapons() {
 		for (Weapon weapon : weapons) {
 			if (weapon.shouldEmitProjectile()) {
-				Projectile projectile = new Projectile(weapon.getTexture(), weapon.getAimAt(), weapon.getShootPower());
+				Projectile projectile = new Projectile(weapon.getTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
 				projectile.setPosition(weapon.getPosition().x, weapon.getPosition().y);
 				projectiles.add(projectile);
 				weapon.projectileEmitted();
+//				emit = false;
 			}
 		}
 	}
@@ -71,6 +75,7 @@ public class ProjectileController {
 	
 	public void drawProjectiles(SpriteBatch batch) {
 		for (Projectile projectile : projectiles) {
+//			System.out.println("Projectile x/y = " + projectile.getX() + "/" + projectile.getY());
 			projectile.draw(batch);
 		}
 	}
