@@ -19,18 +19,13 @@ public class Alanparsons2 extends Game {
 			screen = new MainScreen(width, height);
 		
 		screen.update();
-
 		screen.render();
 
-		// when the screen is done we change to the
-		// next screen
 		if (screen.result().length() != 0) {
-			// dispose the current screen
 			screen.dispose();
 
 			if (screen instanceof MainScreen) {
 				if (screen.result().equalsIgnoreCase("play"))
-//					screen = new RabbitvsSausages(width, height);
 					screen = new RotateAroundRabbit(width, height);
 			}
 			if (screen instanceof RabbitvsSausages) {

@@ -4,16 +4,15 @@ import aurelienribon.tweenengine.TweenAccessor;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ * Accesseur {@link TweenAccessor} vers un {@link Sprite}<BR>
+ */
 public class SpriteAccessor implements TweenAccessor<Sprite> {
-	// The following lines define the different possible tween types.
-    // It's up to you to define what you need :-)
 
-    public static final int POSITION_X = 1;
+	public static final int POSITION_X = 1;
     public static final int POSITION_Y = 2;
     public static final int POSITION_XY = 3;
     public static final int ZOOM = 4;
-
-    // TweenAccessor implementation
 
     @Override
     public int getValues(Sprite target, int tweenType, float[] returnValues) {
