@@ -38,12 +38,12 @@ public class CircleHelper {
 	 * @return {@link Vector2}
 	 */
 	public static Vector2 getVectorAimingAtCenter(float originx, float originy, float aimx, float aimy, float speed) {
-		double angle = getRAngle(originx - aimx, originy - aimy);
+		double angle = getRAngle(Math.abs(originx - aimx), Math.abs(originy - aimy));
 		
-//		System.out.println("getVectorAimingAtCenter angle=" + Math.toDegrees(angle));
+		double x = getWay(originx, aimx) * speed * Math.cos(angle);
+		double y = getWay(originy, aimy) * speed * Math.sin(angle);
 		
-		double x = speed * Math.cos(angle);
-		double y = speed * Math.sin(angle);
+		System.out.println("getVectorAimingAtCenter angle=" + Math.toDegrees(angle) + " x/y=" + x + "/" + y);
 		
 		return new Vector2((float)x, (float)y);
 	}
@@ -66,5 +66,13 @@ public class CircleHelper {
 	 */
 	public static float getDAngle(float x, float y) {
 		return (float) Math.toDegrees(Math.atan(y / x));
+	}
+	
+	/**
+	 * Détermine le sens du parcours entre deux points
+	 * @return 1 pour gauche à droite, -1 sinon 
+	 */
+	public static int getWay(float origin, float destination) {
+		return (int) (Math.abs(destination - origin) / (destination - origin));
 	}
 }

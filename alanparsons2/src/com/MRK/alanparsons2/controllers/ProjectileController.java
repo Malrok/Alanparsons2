@@ -22,7 +22,7 @@ public class ProjectileController {
 	
 	private ProjectileController() { }
 	
-//	private boolean emit = true;
+//	private int emit = 0;
 	
 	/** 
 	 * retourne l'instance unique de la classe
@@ -56,7 +56,7 @@ public class ProjectileController {
 				projectile.setPosition(weapon.getPosition().x, weapon.getPosition().y);
 				projectiles.add(projectile);
 				weapon.projectileEmitted();
-//				emit = false;
+//				emit++;
 			}
 		}
 	}
