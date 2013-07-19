@@ -13,14 +13,29 @@ import com.badlogic.gdx.math.Vector2;
  * Appeler {@link #getInstance() getInstance} pour récupérer l'instance de la classe
  */
 public class Ship extends Sprite {
-
-	private static Ship instance = new Ship();
-	private Weapon weapon;
 	
 	private static final float PROJECTILE_SPEED = 1.0f;
+	public static final int STILL = 0;
+	public static final int TURNING_LEFT = 1;
+	public static final int TURNING_RIGHT = 2;
+	
+	private static Ship instance = new Ship();
+	private Texture[] textures = new Texture[3];
+	private Weapon weapon;
+	
+	private int currentDirection = STILL;
 	
 	private Ship() {
-		super(new Texture(Gdx.files.internal("data/ship.png")));
+//		super(new Texture(Gdx.files.internal("data/ship.png")));
+	}
+	
+	/**
+	 * Initialise les textures du vaisseau
+	 */
+	public void init() {
+		textures[STILL] = new Texture(Gdx.files.internal("data/ship.png"));
+		textures[TURNING_LEFT] = new Texture(Gdx.files.internal("data/ship_turning_left.png"));
+		textures[TURNING_RIGHT] = new Texture(Gdx.files.internal("data/ship_turning_right.png"));
 	}
 	
 	/** 
@@ -65,5 +80,19 @@ public class Ship extends Sprite {
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
 		weapon.setPosition(x, y);
+	}
+	
+	/**
+	 * Met à jour la direction donnée au vaisseau
+	 */
+	public void setDirection(int newDirection) {
+		currentDirection = newDirection;
+	}
+	
+	/**
+	 * Récupération de la texture du vaisseau
+	 */
+	public Texture getTexture() {
+		return textures[currentDirection];
 	}
 }

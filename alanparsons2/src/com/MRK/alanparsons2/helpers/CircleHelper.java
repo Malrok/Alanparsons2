@@ -43,7 +43,7 @@ public class CircleHelper {
 		double x = getWay(originx, aimx) * speed * Math.cos(angle);
 		double y = getWay(originy, aimy) * speed * Math.sin(angle);
 		
-		System.out.println("getVectorAimingAtCenter angle=" + Math.toDegrees(angle) + " x/y=" + x + "/" + y);
+//		System.out.println("getVectorAimingAtCenter angle=" + Math.toDegrees(angle) + " x/y=" + x + "/" + y);
 		
 		return new Vector2((float)x, (float)y);
 	}

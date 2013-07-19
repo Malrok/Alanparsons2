@@ -54,7 +54,8 @@ public class RotateAroundRabbit implements Screen {
 		saucisse1.draw(batch);
 		saucisse2.draw(batch);
 
-		lapin.draw(batch);
+//		lapin.draw(batch);
+		ShipController.getInstance().drawShip(batch);
 		ProjectileController.getInstance().drawProjectiles(batch);
 		
 		batch.end();
@@ -100,5 +101,6 @@ public class RotateAroundRabbit implements Screen {
 	private void load() {
 		saucisseTexture = new Texture(Gdx.files.internal("data/saucisse.png"));
 		projectileTexture = new Texture(Gdx.files.internal("data/shot.png"));
+		Ship.getInstance().init();
 	}
 }

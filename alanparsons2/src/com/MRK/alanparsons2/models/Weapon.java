@@ -88,7 +88,6 @@ public class Weapon {
 	 * Définit si un tir doit être effectué.
 	 */
 	public void update() {
-//		System.out.println("Weapon update " + TimeUtils.millis() + " > " + lastShoot + " + " + (1000 / shootFrequency) + " = " + (TimeUtils.millis() > lastShoot + (1000 / shootFrequency)));
 		if (TimeUtils.millis() > (long)(lastShoot + (1000 / shootFrequency)))
 			shouldEmitProjectile = true;
 	}

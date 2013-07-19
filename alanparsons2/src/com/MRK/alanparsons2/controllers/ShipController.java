@@ -4,6 +4,8 @@ import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.MRK.alanparsons2.models.Ship;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -24,6 +26,8 @@ public class ShipController {
 	
 	private static float screenMiddle;
 	private static Vector2 rotationCenter;
+	
+	private Ship ship = Ship.getInstance();
 	private float currentDirection = 0;
 	private long lastTime = TimeUtils.millis();
 	
@@ -52,7 +56,7 @@ public class ShipController {
 		screenMiddle = screenWidth / 2;
 		rotationCenter = center;
 		
-		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (screenHeight * LAPINY + Ship.getInstance().getHeight() / 2));
+		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (screenHeight * LAPINY + ship.getHeight() / 2));
 	}
 	
 	/**
@@ -76,6 +80,7 @@ public class ShipController {
 			} else {
 				currentDirection -= MIN_ANGLE;
 			}
+			ship.setDirection(Ship.TURNING_LEFT);
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT) || touchRight) {
 			touched = true;
@@ -84,6 +89,7 @@ public class ShipController {
 			} else {
 				currentDirection += MIN_ANGLE;
 			}
+			ship.setDirection(Ship.TURNING_RIGHT);
 		}
 		
 		if (Math.abs(currentDirection) > MAX_ANGLE) currentDirection = (Math.abs(currentDirection) / currentDirection) * MAX_ANGLE;
@@ -93,7 +99,10 @@ public class ShipController {
 			if (currentDirection != 0) currentDirection -= (Math.abs(currentDirection) / currentDirection) * MIN_ANGLE;
 		}
 			
-		if (!touched && Math.abs(currentDirection) <= MIN_ANGLE) currentDirection = 0;
+		if (!touched && Math.abs(currentDirection) <= MIN_ANGLE) {
+			currentDirection = 0;
+			ship.setDirection(Ship.STILL);
+		}
 	}
 
 	/**
@@ -105,13 +114,11 @@ public class ShipController {
 				SHIP_DISTANCE_FROM_FOE,
 				currentAngle);
 
-		Ship.getInstance().setPosition(newLapinPos.x - Ship.getInstance().getWidth() / 2, newLapinPos.y - Ship.getInstance().getHeight() / 2);
-		Ship.getInstance().rotate((float) Math.toDegrees(getLastRotateValue()));
+		ship.setPosition(newLapinPos.x - ship.getWidth() / 2, newLapinPos.y - ship.getHeight() / 2);
 	}
 	
 	/**
 	 * Dernière angle de rotation calculé
-	 * @return
 	 */
 	public float getLastRotateValue() {
 		return currentDirection;
@@ -119,9 +126,19 @@ public class ShipController {
 
 	/**
 	 * centre de rotation du monde
-	 * @return
 	 */
 	public Vector2 getRotationCenter() {
 		return rotationCenter;
+	}
+	
+	/**
+	 * rendering du vaisseau
+	 */
+	public void drawShip(SpriteBatch batch) {
+		Texture texture = ship.getTexture();
+		
+		batch.draw(texture, ship.getX() - ship.getWidth() / 2, ship.getY(), ship.getOriginX(), ship.getOriginY(), 
+				texture.getWidth(), texture.getHeight(), 1, 1, (float)Math.toDegrees(currentAngle) + 90, 
+				0, 0, texture.getWidth(), texture.getHeight(), false, false);
 	}
 }
