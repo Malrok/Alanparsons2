@@ -2,7 +2,7 @@ package com.MRK.alanparsons2;
 
 import com.MRK.alanparsons2.screens.MainScreen;
 import com.MRK.alanparsons2.screens.RabbitvsSausages;
-import com.MRK.alanparsons2.screens.RotateAroundRabbit;
+import com.MRK.alanparsons2.screens.LevelScreen;
 import com.MRK.alanparsons2.screens.Screen;
 import com.badlogic.gdx.Game;
 
@@ -26,7 +26,7 @@ public class Alanparsons2 extends Game {
 
 			if (screen instanceof MainScreen) {
 				if (screen.result().equalsIgnoreCase("play"))
-					screen = new RotateAroundRabbit(width, height);
+					screen = new LevelScreen(width, height);
 			}
 			if (screen instanceof RabbitvsSausages) {
 				if (screen.result().equalsIgnoreCase("lose"))

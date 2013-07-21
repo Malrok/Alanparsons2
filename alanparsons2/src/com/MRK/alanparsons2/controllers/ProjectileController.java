@@ -10,26 +10,14 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Controlleur des projectiles à l'écran<BR>
  * Gère les instance de {@link Weapon} et émet les projectiles<BR>
- * Modèle de type singleton, non instanciable<BR>
- * Appeler {@link #getInstance() getInstance} pour récupérer l'instance de la classe
  */
 public class ProjectileController {
 
-	private static ProjectileController instance = new ProjectileController();
-	
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 	
-	private ProjectileController() { }
-	
-//	private int emit = 0;
-	
-	/** 
-	 * retourne l'instance unique de la classe
-	 * @return {@type ProjectileController}
-	 */
-	public static ProjectileController getInstance() {
-		return instance;
+	public ProjectileController() { 
+		
 	}
 	
 	/**
@@ -53,10 +41,10 @@ public class ProjectileController {
 		for (Weapon weapon : weapons) {
 			if (weapon.shouldEmitProjectile()) {
 				Projectile projectile = new Projectile(weapon.getTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
+//				System.out.println("Emitting projectile at x/y = " + weapon.getPosition().x + "/" + weapon.getPosition().y);
 				projectile.setPosition(weapon.getPosition().x, weapon.getPosition().y);
 				projectiles.add(projectile);
 				weapon.projectileEmitted();
-//				emit++;
 			}
 		}
 	}

@@ -7,16 +7,20 @@ import com.badlogic.gdx.math.Vector2;
 
 public class RotatingCamera extends OrthographicCamera {
 	
-	private static RotatingCamera instance = new RotatingCamera();
+	public static float VIEWPORT_WIDTH;
+	public static float VIEWPORT_HEIGHT;
 	
 	private static float radius;
 	
-	private RotatingCamera() {
+	public RotatingCamera() {
 		super();
 	}
 	
-	public static RotatingCamera getInstance() {
-		return instance;
+	public void init(float width, float height) {
+		VIEWPORT_WIDTH = Level.LEVEL_WIDTH / 2;
+		VIEWPORT_HEIGHT = height * VIEWPORT_WIDTH / width;
+		setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+//		setToOrtho(false, width, height);
 	}
 	
 	public void setRadius(float value) {
@@ -26,6 +30,9 @@ public class RotatingCamera extends OrthographicCamera {
 	@Override
 	public void setToOrtho(boolean yDown, float viewportWidth, float viewportHeight) {
 		super.setToOrtho(yDown, viewportWidth, viewportHeight);
+		
+		position.x = Level.LEVEL_WIDTH / 2;
+		position.y = Level.LEVEL_HEIGHT / 2 - VIEWPORT_HEIGHT / 2;
 		
 		ShipController.currentAngle = (float) Math.toRadians(270);
 	}

@@ -1,33 +1,28 @@
 package com.MRK.alanparsons2.controllers;
 
 import com.MRK.alanparsons2.helpers.CircleHelper;
+import com.MRK.alanparsons2.models.RotatingCamera;
 import com.MRK.alanparsons2.models.Ship;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * Controlleur du vaisseau<BR>
- * Modèle de type singleton, non instanciable<BR>
- * Appeler {@link #getInstance() getInstance} pour récupérer l'instance de la classe
  */
 public class ShipController {
 
-	private static ShipController instance = new ShipController();
-	
 	private static float MIN_ANGLE = .01f;
 	private static float MAX_ANGLE = .1f;
 	private static long SPEED_DOWN_DELAY = 100;
 	private static float SHIP_DISTANCE_FROM_FOE;
-	private static float LAPINY = .05f;
+	private static float LAPINY = .75f;
 	
 	private static float screenMiddle;
 	private static Vector2 rotationCenter;
 	
-	private Ship ship = Ship.getInstance();
+	private Ship ship;
 	private float currentDirection = 0;
 	private long lastTime = TimeUtils.millis();
 	
@@ -36,14 +31,8 @@ public class ShipController {
 	/** 
 	 * constructeur
 	 */
-	private ShipController() { }
-	
-	/** 
-	 * Retourne l'instance unique de la classe
-	 * @return {@type ShipController}
-	 */
-	public static ShipController getInstance() {
-		return instance;
+	public ShipController(Ship ship) { 
+		this.ship = ship;
 	}
 	
 	/**
@@ -52,11 +41,13 @@ public class ShipController {
 	 * @param screenHeight - float : hauteur de l'écran
 	 * @param center       - {@link Vector2} : centre de rotation du monde
 	 */
-	public void init(float screenWidth, float screenHeight, Vector2 center) {
-		screenMiddle = screenWidth / 2;
+	public void init(Vector2 center) {
+		screenMiddle = RotatingCamera.VIEWPORT_WIDTH / 2;
 		rotationCenter = center;
 		
-		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (screenHeight * LAPINY + ship.getHeight() / 2));
+		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY + ship.getHeight() / 2));
+		
+//		System.out.println("SHIP_DISTANCE_FROM_FOE : " + SHIP_DISTANCE_FROM_FOE + "=" + center.y + "-(" + RotatingCamera.VIEWPORT_HEIGHT + "*" + LAPINY + "+" + ship.getHeight() + "/ 2)");
 	}
 	
 	/**
@@ -108,13 +99,13 @@ public class ShipController {
 	/**
 	 * Calcule la nouvelle position du vaissaue en fonction des inputs récupérés depuis {@link #getDirection() getDirection}
 	 */
-	public void setPosition() {
-		Vector2 newLapinPos = CircleHelper.getPointOnCircle(
-				rotationCenter.x, rotationCenter.y, 
-				SHIP_DISTANCE_FROM_FOE,
-				currentAngle);
+	public void update() {
+		getDirection();
+		
+		Vector2 newShipPos = CircleHelper.getPointOnCircle(rotationCenter.x, rotationCenter.y, SHIP_DISTANCE_FROM_FOE, currentAngle);
 
-		ship.setPosition(newLapinPos.x - ship.getWidth() / 2, newLapinPos.y - ship.getHeight() / 2);
+		ship.update(currentDirection, rotationCenter.y, rotationCenter.y);
+		ship.setPosition(newShipPos.x - ship.getWidth() / 2, newShipPos.y - ship.getHeight() / 2);
 	}
 	
 	/**
@@ -129,16 +120,5 @@ public class ShipController {
 	 */
 	public Vector2 getRotationCenter() {
 		return rotationCenter;
-	}
-	
-	/**
-	 * rendering du vaisseau
-	 */
-	public void drawShip(SpriteBatch batch) {
-		Texture texture = ship.getTexture();
-		
-		batch.draw(texture, ship.getX() - ship.getWidth() / 2, ship.getY(), ship.getOriginX(), ship.getOriginY(), 
-				texture.getWidth(), texture.getHeight(), 1, 1, (float)Math.toDegrees(currentAngle) + 90, 
-				0, 0, texture.getWidth(), texture.getHeight(), false, false);
 	}
 }

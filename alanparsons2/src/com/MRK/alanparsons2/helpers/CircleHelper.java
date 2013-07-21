@@ -4,8 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Classe définissant des méthodes statiques de calculs sur les cercles
- * @author malrok
- *
  */
 public class CircleHelper {
 

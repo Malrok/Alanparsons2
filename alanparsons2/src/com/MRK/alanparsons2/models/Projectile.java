@@ -10,6 +10,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Projectile extends Sprite {
 
+	public static float PROJECTILE_WIDTH = 1;
+	public static float PROJECTILE_HEIGHT = 0.4f;
+	
 	private Vector2 speed;
 	private int power;
 
@@ -21,6 +24,7 @@ public class Projectile extends Sprite {
 	 */
 	public Projectile(Texture texture, Vector2 speed, int power) {
 		super(texture);
+		super.setSize(PROJECTILE_WIDTH, PROJECTILE_HEIGHT);
 		this.speed = speed;
 		this.power = power;
 		super.rotate(CircleHelper.getDAngle(speed.x, speed.y));
