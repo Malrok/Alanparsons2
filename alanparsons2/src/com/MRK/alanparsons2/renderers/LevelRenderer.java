@@ -67,7 +67,7 @@ public class LevelRenderer {
 			}
 		}
 		
-		batch.draw(level.getPlanetTexture(), 0, 0, Level.LEVEL_WIDTH / 2, Level.LEVEL_HEIGHT / 2);
+		batch.draw(level.getPlanetTexture(), ShipController.deltaX / 3, ShipController.deltaY / 3, Level.LEVEL_WIDTH / 2, Level.LEVEL_HEIGHT / 2);
 		
 		level.getShip().draw(batch);
 		level.getFoe().draw(batch);

@@ -27,6 +27,7 @@ public class ShipController {
 	private long lastTime = TimeUtils.millis();
 	
 	public static float currentAngle;
+	public static float deltaX, deltaY;
 	
 	/** 
 	 * constructeur
@@ -42,7 +43,7 @@ public class ShipController {
 	 * @param center       - {@link Vector2} : centre de rotation du monde
 	 */
 	public void init(Vector2 center) {
-		screenMiddle = RotatingCamera.VIEWPORT_WIDTH / 2;
+		screenMiddle = Gdx.graphics.getWidth() / 2;
 		rotationCenter = center;
 		
 		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY + ship.getHeight() / 2));
@@ -104,6 +105,9 @@ public class ShipController {
 		
 		Vector2 newShipPos = CircleHelper.getPointOnCircle(rotationCenter.x, rotationCenter.y, SHIP_DISTANCE_FROM_FOE, currentAngle);
 
+		deltaX = newShipPos.x - ship.getWidth() / 2;
+		deltaY = newShipPos.y - ship.getHeight() / 2;
+		
 		ship.update(currentDirection, rotationCenter.y, rotationCenter.y);
 		ship.setPosition(newShipPos.x - ship.getWidth() / 2, newShipPos.y - ship.getHeight() / 2);
 	}
