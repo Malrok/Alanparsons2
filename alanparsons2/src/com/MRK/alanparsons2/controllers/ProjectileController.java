@@ -91,9 +91,10 @@ public class ProjectileController implements Disposable {
 			projectile.update();
 			
 			for (Sprite target : targets) {
-				if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX(), projectile.getY())) {
+				if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2)) {
 					if (target instanceof PixmapSprite) {
-						((PixmapSprite) target).project(position, (int) projectile.getX(), (int) projectile.getY());						
+						((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth(), (int) projectile.getY() + projectile.getHeight() / 2);
+//						((PixmapSprite) target).project(position, (int) projectile.getX(), (int) projectile.getY());
 						collide = ((PixmapSprite) target).collides(position);
 						if (collide)
 							((PixmapSprite) target).eraseCircle(position, projectile.getPower());
