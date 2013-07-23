@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Classe héritant de {@link Sprite}, définissant le vaisseau du joueur
  */
-public class Ship extends Sprite {
+public class Ship extends Sprite implements Disposable {
 	
-	private static final float PROJECTILE_SPEED = 1.0f;
+	private static final float PROJECTILE_SPEED = .1f;
 	public static final int STILL = 0;
 	public static final int TURNING_LEFT = 1;
 	public static final int TURNING_RIGHT = 2;
@@ -35,6 +36,10 @@ public class Ship extends Sprite {
 		setOrigin(SHIP_WIDTH / 2, SHIP_HEIGHT / 2);
 	}
 	
+	public void dispose() {
+		weapon.dispose();
+	}
+	
 	/** 
 	 * retourne l'arme de la classe
 	 * @return {@type Weapon}
@@ -48,7 +53,7 @@ public class Ship extends Sprite {
 	 * @param texture - {@type Texture}
 	 */
 	public void setWeapon(Texture texture) {
-		weapon = new Weapon(texture, new Vector2(0, 1), 3, 1);
+		weapon = new Weapon(this, texture, new Vector2(0, 1), 3, 1);
 		weapon.setEnabled(true);
 	}
 	
@@ -58,7 +63,7 @@ public class Ship extends Sprite {
 	 * @param lastRotateValue - float : dernier angle de rotation appliqué au vaisseau
 	 */
 	public void update(float lastRotateValue, float x, float y) {
-		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + getOriginX(), getY() + getOriginY(), x, y, PROJECTILE_SPEED));
+		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + SHIP_WIDTH / 2, getY() + SHIP_HEIGHT / 2, x, y, PROJECTILE_SPEED));
 		weapon.update();
 	}
 	
@@ -68,7 +73,7 @@ public class Ship extends Sprite {
 	@Override
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
-		weapon.setPosition(x - getOriginX(), y - getOriginY());
+		weapon.setPosition(x + SHIP_WIDTH / 2, y + SHIP_HEIGHT / 2);
 	}
 	
 	/**

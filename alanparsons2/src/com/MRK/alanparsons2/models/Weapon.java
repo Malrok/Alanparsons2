@@ -1,25 +1,29 @@
 package com.MRK.alanparsons2.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
 
 /**
  * Une arme<BR>
  * Modèle destiné à émettre des {@link Projectile}
  */
-public class Weapon {
+public class Weapon implements Disposable {
 
 	private boolean enabled = false;
-	private Texture texture;
+	private Texture projectileTexture;
 	private Vector2 position;
-	private ArrayList<Vector2> aimAt = new ArrayList<Vector2>();
+	private List<Vector2> aimAt = new ArrayList<Vector2>();
 	private int shootFrequency = 3; // shots per second
 	private int shootPower = 1;
 	private long lastShoot;
 	private boolean shouldEmitProjectile = false;
+	private Sprite emitter;
 	
 	/**
 	 * Constructeur
@@ -28,12 +32,17 @@ public class Weapon {
 	 * @param shootFrequency - int : le nombre de tirs par seconde
 	 * @param shootPower     - int : la puissance d'un {@link Projectile}
 	 */
-	public Weapon(Texture texture, Vector2 aimAt, int shootFrequency, int shootPower) {
-		this.texture = texture;
+	public Weapon(Sprite emitter, Texture texture, Vector2 aimAt, int shootFrequency, int shootPower) {
+		this.emitter = emitter;
+		this.projectileTexture = texture;
 		this.position = new Vector2();
 		this.aimAt.add(aimAt);
 		this.shootFrequency = shootFrequency;
 		this.shootPower = shootPower;
+	}
+	
+	public void dispose() {
+		emitter = null;
 	}
 	
 	public boolean isEnabled() {
@@ -46,8 +55,8 @@ public class Weapon {
 			lastShoot = TimeUtils.millis();
 	}
 	
-	public Texture getTexture() {
-		return texture;
+	public Texture getProjectileTexture() {
+		return projectileTexture;
 	}
 	
 	public void setPosition(float x, float y) {
@@ -99,5 +108,9 @@ public class Weapon {
 	public void projectileEmitted() {
 		shouldEmitProjectile = false;
 		lastShoot = TimeUtils.millis();
+	}
+
+	public Sprite getEmitter() {
+		return emitter;
 	}
 }

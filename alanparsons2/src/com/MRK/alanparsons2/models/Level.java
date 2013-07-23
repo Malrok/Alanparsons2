@@ -2,42 +2,39 @@ package com.MRK.alanparsons2.models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Disposable;
 
-public class Level {
+public class Level implements Disposable {
 
 	public static final float LEVEL_WIDTH = 100f;
 	public static final float LEVEL_HEIGHT = 100f;
 	
-	private Texture foeTexture, projectileTexture, starsTexture, planetTexture;
+	private Texture projectileTexture, starsTexture, planetTexture, sunTexture;
 	
 	private Ship ship;
-	private Sprite foe;
+	private PixmapSprite foe;
 
 	public Level() {
-		foeTexture = new Texture(Gdx.files.internal("data/saucisse.png"));
 		projectileTexture = new Texture(Gdx.files.internal("data/shot.png"));
 		starsTexture = new Texture(Gdx.files.internal("data/stars.png"));
 		planetTexture = new Texture(Gdx.files.internal("data/planet.png"));
+		sunTexture = new Texture(Gdx.files.internal("data/sun.png"));
 		
 		ship = new Ship();
 		ship.setWeapon(projectileTexture);
 		
-		foe = new Sprite(foeTexture);
+		foe = new PixmapSprite("data/enemy.png");
 	}
 
-	public void resize(int width, int height) {
-		foe.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_HEIGHT / 3);
-		foe.setPosition(LEVEL_WIDTH / 2 - foe.getWidth() / 2, LEVEL_HEIGHT / 2 - foe.getHeight() / 2);
-		foe.setOrigin(foe.getX() + foe.getWidth() / 2, foe.getY() + foe.getHeight() / 2);
+	public void dispose() {
+		ship.dispose();
+		foe.dispose();
 	}
 	
-	public Texture getFoeTexture() {
-		return foeTexture;
-	}
-
-	public void setFoeTexture(Texture foeTexture) {
-		this.foeTexture = foeTexture;
+	public void resize(int width, int height) {
+		foe.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
+		foe.setPosition(LEVEL_WIDTH / 2 - foe.getWidth() / 2, LEVEL_HEIGHT / 2 - foe.getHeight() / 2);
+		foe.setOrigin(foe.getX() + foe.getWidth() / 2, foe.getY() + foe.getHeight() / 2);
 	}
 
 	public Texture getProjectileTexture() {
@@ -56,12 +53,8 @@ public class Level {
 		this.ship = ship;
 	}
 
-	public Sprite getFoe() {
+	public PixmapSprite getFoe() {
 		return foe;
-	}
-
-	public void setFoe(Sprite foe) {
-		this.foe = foe;
 	}
 
 	public Texture getStarsTexture() {
@@ -70,5 +63,9 @@ public class Level {
 	
 	public Texture getPlanetTexture() {
 		return planetTexture;
+	}
+	
+	public Texture getSunTexture() {
+		return sunTexture;
 	}
 }

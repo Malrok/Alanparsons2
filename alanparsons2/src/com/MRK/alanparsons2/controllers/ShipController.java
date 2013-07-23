@@ -17,7 +17,7 @@ public class ShipController {
 	private static float MAX_ANGLE = .1f;
 	private static long SPEED_DOWN_DELAY = 100;
 	private static float SHIP_DISTANCE_FROM_FOE;
-	private static float LAPINY = .75f;
+	private static float LAPINY = 1.0f;
 	
 	private static float screenMiddle;
 	private static Vector2 rotationCenter;
@@ -46,7 +46,7 @@ public class ShipController {
 		screenMiddle = Gdx.graphics.getWidth() / 2;
 		rotationCenter = center;
 		
-		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY + ship.getHeight() / 2));
+		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY) + Ship.SHIP_HEIGHT / 2);
 		
 //		System.out.println("SHIP_DISTANCE_FROM_FOE : " + SHIP_DISTANCE_FROM_FOE + "=" + center.y + "-(" + RotatingCamera.VIEWPORT_HEIGHT + "*" + LAPINY + "+" + ship.getHeight() + "/ 2)");
 	}

@@ -12,11 +12,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Renderer du niveau
  */
-public class LevelRenderer {
+public class LevelRenderer implements Disposable {
 
 	private Level level;
 	
@@ -44,6 +45,9 @@ public class LevelRenderer {
 		
 		projectileController.addWeapon(level.getShip().getWeapon());
 		
+		projectileController.addTarget(level.getShip());
+		projectileController.addTarget(level.getFoe());
+		
 		shapeRenderer = new ShapeRenderer();
 	}
 	
@@ -51,6 +55,8 @@ public class LevelRenderer {
 		camera.rotateCameraAround(level.getFoe().getOriginX(), level.getFoe().getOriginY(), shipController.getLastRotateValue());
 		shipController.update();
 		projectileController.update();
+		
+		level.getFoe().update();
 	}
 	
 	public void render() {
@@ -67,20 +73,26 @@ public class LevelRenderer {
 			}
 		}
 		
-		batch.draw(level.getPlanetTexture(), ShipController.deltaX / 3, ShipController.deltaY / 3, Level.LEVEL_WIDTH / 2, Level.LEVEL_HEIGHT / 2);
+		batch.draw(level.getSunTexture(), 3 * Level.LEVEL_WIDTH / 7 - (ShipController.deltaX / 5), 3 * Level.LEVEL_HEIGHT / 7 - (ShipController.deltaY / 5) + 8, 8, 8);
+		batch.draw(level.getPlanetTexture(), ShipController.deltaX / 3 - level.getPlanetTexture().getWidth() / 24, ShipController.deltaY / 3 - level.getPlanetTexture().getHeight() / 24, Level.LEVEL_WIDTH / 2, Level.LEVEL_HEIGHT / 2);
+		
+		projectileController.drawProjectiles(batch);
 		
 		level.getShip().draw(batch);
 		level.getFoe().draw(batch);
 		
-		projectileController.drawProjectiles(batch);
-		
 		batch.end();
 		
+		drawDebug();
+	}	
+	
+	private void drawDebug() {
 		shapeRenderer.setProjectionMatrix(camera.combined);
-		  
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.setColor(Color.RED);
 		shapeRenderer.rect(level.getShip().getX(), level.getShip().getY(), Ship.SHIP_WIDTH, Ship.SHIP_HEIGHT);
+		shapeRenderer.circle(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, 0.4f);
+		shapeRenderer.line(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
 		shapeRenderer.end();
 	}
 	

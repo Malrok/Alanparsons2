@@ -36,12 +36,12 @@ public class LevelScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		level.dispose();
 		renderer.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		renderer.resize(width, height);
-//		System.out.println("resize");
 	}
 }
