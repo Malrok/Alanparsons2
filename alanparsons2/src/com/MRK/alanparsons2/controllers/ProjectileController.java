@@ -24,6 +24,8 @@ public class ProjectileController implements Disposable {
 	
 	private final Vector2 position = new Vector2();
 	
+	private List<Vector2> impacts = new ArrayList<Vector2>();
+	
 //	public ProjectileController() { }
 	
 	public void dispose() {
@@ -61,6 +63,7 @@ public class ProjectileController implements Disposable {
 		updateWeapons();
 		updateProjectiles();
 		fireWeapons();
+//		impacts.clear();
 	}
 	
 	public void fireWeapons() {
@@ -96,8 +99,10 @@ public class ProjectileController implements Disposable {
 						((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth(), (int) projectile.getY() + projectile.getHeight() / 2);
 //						((PixmapSprite) target).project(position, (int) projectile.getX(), (int) projectile.getY());
 						collide = ((PixmapSprite) target).collides(position);
-						if (collide)
+						if (collide) {
+							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 							((PixmapSprite) target).eraseCircle(position, projectile.getPower());
+						}
 					} else {
 						collide = true;
 					}
@@ -116,5 +121,13 @@ public class ProjectileController implements Disposable {
 		for (Projectile projectile : projectiles) {
 			projectile.draw(batch);
 		}
+	}
+	
+	public List<Vector2> getImpacts() {
+		return impacts;
+	}
+	
+	public void clearImpacts() {
+		impacts.clear();
 	}
 }

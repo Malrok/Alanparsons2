@@ -1,5 +1,6 @@
 package com.MRK.alanparsons2.renderers;
 
+import com.MRK.alanparsons2.controllers.ParticleController;
 import com.MRK.alanparsons2.controllers.ProjectileController;
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.models.Level;
@@ -26,6 +27,7 @@ public class LevelRenderer implements Disposable {
 	
 	private ShipController shipController;
 	private ProjectileController projectileController;
+	private ParticleController particleController;
 
 	/* debug */
 	private ShapeRenderer shapeRenderer;
@@ -42,6 +44,7 @@ public class LevelRenderer implements Disposable {
 		
 		shipController = new ShipController(level.getShip());
 		projectileController = new ProjectileController();
+		particleController = new ParticleController();
 		
 		projectileController.addWeapon(level.getShip().getWeapon());
 		
@@ -55,6 +58,8 @@ public class LevelRenderer implements Disposable {
 		camera.rotateCameraAround(level.getFoe().getOriginX(), level.getFoe().getOriginY(), shipController.getLastRotateValue());
 		shipController.update();
 		projectileController.update();
+		particleController.update(projectileController.getImpacts());
+		projectileController.clearImpacts();
 		
 		level.getFoe().update();
 	}
@@ -81,9 +86,11 @@ public class LevelRenderer implements Disposable {
 		level.getShip().draw(batch);
 		level.getFoe().draw(batch);
 		
+		particleController.draw(batch);
+		
 		batch.end();
 		
-		drawDebug();
+//		drawDebug();
 	}	
 	
 	private void drawDebug() {
