@@ -5,13 +5,9 @@ import com.MRK.alanparsons2.controllers.ProjectileController;
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.RotatingCamera;
-import com.MRK.alanparsons2.models.Ship;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -30,7 +26,7 @@ public class LevelRenderer implements Disposable {
 	private ParticleController particleController;
 
 	/* debug */
-	private ShapeRenderer shapeRenderer;
+//	private ShapeRenderer shapeRenderer;
 	
 	/**
 	 * Constructeur
@@ -46,12 +42,7 @@ public class LevelRenderer implements Disposable {
 		projectileController = new ProjectileController();
 		particleController = new ParticleController();
 		
-		projectileController.addWeapon(level.getShip().getWeapon());
-		
-		projectileController.addTarget(level.getShip());
-		projectileController.addTarget(level.getFoe());
-		
-		shapeRenderer = new ShapeRenderer();
+//		shapeRenderer = new ShapeRenderer();
 	}
 	
 	public void update() {
@@ -61,7 +52,7 @@ public class LevelRenderer implements Disposable {
 		particleController.update(projectileController.getImpacts());
 		projectileController.clearImpacts();
 		
-		level.getFoe().update();
+		level.getFoe().update(level.getShip().getX() + level.getShip().getWidth() / 2, level.getShip().getY() + level.getShip().getHeight() / 2);
 	}
 	
 	public void render() {
@@ -93,15 +84,15 @@ public class LevelRenderer implements Disposable {
 //		drawDebug();
 	}	
 	
-	private void drawDebug() {
-		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.begin(ShapeType.Line);
-		shapeRenderer.setColor(Color.RED);
-		shapeRenderer.rect(level.getShip().getX(), level.getShip().getY(), Ship.SHIP_WIDTH, Ship.SHIP_HEIGHT);
-		shapeRenderer.circle(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, 0.4f);
-		shapeRenderer.line(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
-		shapeRenderer.end();
-	}
+//	private void drawDebug() {
+//		shapeRenderer.setProjectionMatrix(camera.combined);
+//		shapeRenderer.begin(ShapeType.Line);
+//		shapeRenderer.setColor(Color.RED);
+//		shapeRenderer.rect(level.getShip().getX(), level.getShip().getY(), Ship.SHIP_WIDTH, Ship.SHIP_HEIGHT);
+//		shapeRenderer.circle(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, 0.4f);
+//		shapeRenderer.line(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
+//		shapeRenderer.end();
+//	}
 	
 	public void resize(int width, int height) {
 		camera.init(width, height);
@@ -112,6 +103,12 @@ public class LevelRenderer implements Disposable {
 		shipController.update();
 		
 		camera.setRadius(Math.abs(level.getFoe().getY() + level.getFoe().getHeight() / 2 - camera.position.y));
+		
+		projectileController.addWeapon(level.getShip().getWeapon());
+		projectileController.addWeapons(level.getFoe().getWeapons());
+		
+		projectileController.addTarget(level.getShip());
+		projectileController.addTarget(level.getFoe());
 	}
 	
 	public void dispose() {

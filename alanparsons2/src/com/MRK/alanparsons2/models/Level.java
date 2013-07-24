@@ -12,7 +12,7 @@ public class Level implements Disposable {
 	private Texture projectileTexture, starsTexture, planetTexture, sunTexture;
 	
 	private Ship ship;
-	private PixmapSprite foe;
+	private EnemyShip foe;
 
 	public Level() {
 		projectileTexture = new Texture(Gdx.files.internal("data/shot.png"));
@@ -23,7 +23,7 @@ public class Level implements Disposable {
 		ship = new Ship();
 		ship.setWeapon(projectileTexture);
 		
-		foe = new PixmapSprite("data/enemy.png");
+		foe = new EnemyShip("data/enemy.png");
 	}
 
 	public void dispose() {
@@ -35,6 +35,7 @@ public class Level implements Disposable {
 		foe.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
 		foe.setPosition(LEVEL_WIDTH / 2 - foe.getWidth() / 2, LEVEL_HEIGHT / 2 - foe.getHeight() / 2);
 		foe.setOrigin(foe.getX() + foe.getWidth() / 2, foe.getY() + foe.getHeight() / 2);
+		foe.setWeapons(projectileTexture);
 	}
 
 	public Texture getProjectileTexture() {
@@ -53,7 +54,7 @@ public class Level implements Disposable {
 		this.ship = ship;
 	}
 
-	public PixmapSprite getFoe() {
+	public EnemyShip getFoe() {
 		return foe;
 	}
 

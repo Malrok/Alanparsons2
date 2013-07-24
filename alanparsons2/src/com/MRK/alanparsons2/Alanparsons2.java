@@ -1,17 +1,26 @@
 package com.MRK.alanparsons2;
 
+import com.MRK.alanparsons2.interfaces.AndroidCallback;
+import com.MRK.alanparsons2.screens.LevelScreen;
 import com.MRK.alanparsons2.screens.MainScreen;
 import com.MRK.alanparsons2.screens.RabbitvsSausages;
-import com.MRK.alanparsons2.screens.LevelScreen;
 import com.MRK.alanparsons2.screens.Screen;
 import com.badlogic.gdx.Game;
 
 public class Alanparsons2 extends Game {
 
+	public static final boolean DEBUG = true; 
+	
 	private boolean isInitialized = false;
 	private int width, height;
 	
 	private Screen screen;
+	
+	private AndroidCallback callback;
+	
+	public void setCallback(AndroidCallback callback) {
+		this.callback = callback;
+	}
 	
 	@Override
 	public void render() {
@@ -19,8 +28,21 @@ public class Alanparsons2 extends Game {
 			screen = new MainScreen(width, height);
 		
 		screen.update();
+		
+		if (screen instanceof LevelScreen && callback != null)
+//			System.out.println("begin callback");
+			callback.beginRenderLevelCallback();
+//		} else
+//			System.out.println("no begin callback");
+		
 		screen.render();
 
+		if (screen instanceof LevelScreen && callback != null)
+//			System.out.println("end callback");
+			callback.endRenderLevelCallback();
+//		} else
+//			System.out.println("no end callback");
+		
 		if (screen.result().length() != 0) {
 			screen.dispose();
 

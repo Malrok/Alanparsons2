@@ -21,12 +21,8 @@ public class ProjectileController implements Disposable {
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Sprite> targets = new ArrayList<Sprite>();
 	private List<Projectile> toBeRemoved = new ArrayList<Projectile>();
-	
-	private final Vector2 position = new Vector2();
-	
+	private final Vector2 position = new Vector2();	
 	private List<Vector2> impacts = new ArrayList<Vector2>();
-	
-//	public ProjectileController() { }
 	
 	public void dispose() {
 		for (Weapon weapon : weapons)
@@ -49,6 +45,15 @@ public class ProjectileController implements Disposable {
 	}
 	
 	/**
+	 * Ajoute une liste d'objet de type {@link Weapon} à la liste des objets gérés 
+	 * @param weapon
+	 */
+	public void addWeapons(List<Weapon> weapons) {
+		System.out.println("adding weapons " + weapons.size());
+		this.weapons.addAll(weapons);
+	}
+	
+	/**
 	 * Ajoute une cible de type {@link Sprite} à la liste des objets gérés 
 	 * @param weapon
 	 */
@@ -63,11 +68,11 @@ public class ProjectileController implements Disposable {
 		updateWeapons();
 		updateProjectiles();
 		fireWeapons();
-//		impacts.clear();
 	}
 	
 	public void fireWeapons() {
 		for (Weapon weapon : weapons) {
+//			System.out.println("Weapon x/y = " + weapon.getPosition().x + "/" + weapon.getPosition().y + " shouldEmit = " + weapon.shouldEmitProjectile());
 			if (weapon.shouldEmitProjectile()) {
 				Projectile projectile = new Projectile(weapon.getEmitter(), weapon.getProjectileTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
 				projectile.setPosition(weapon.getPosition().x - Projectile.PROJECTILE_WIDTH / 2, weapon.getPosition().y);
@@ -97,7 +102,6 @@ public class ProjectileController implements Disposable {
 				if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2)) {
 					if (target instanceof PixmapSprite) {
 						((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth(), (int) projectile.getY() + projectile.getHeight() / 2);
-//						((PixmapSprite) target).project(position, (int) projectile.getX(), (int) projectile.getY());
 						collide = ((PixmapSprite) target).collides(position);
 						if (collide) {
 							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));

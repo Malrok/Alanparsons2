@@ -17,12 +17,6 @@ public class ParticleController implements Disposable {
 	private List<PooledEffect> effects = new ArrayList<PooledEffect>();
 	private List<PooledEffect> toBeRemoved = new ArrayList<PooledEffect>();
 	
-//	public void addEffect(float x, float y) {
-//		PooledEffect effect = effectPool.obtain();
-//		effect.setPosition(x, y);
-//		effects.add(effect);
-//	}
-	
 	public ParticleController() {
 		ParticleEffect effect = new ParticleEffect();
 		effect.load(Gdx.files.internal("particles/collision_effect.p"), Gdx.files.internal("particles"));
@@ -47,17 +41,15 @@ public class ParticleController implements Disposable {
 	public void draw(SpriteBatch batch) {
 		toBeRemoved.clear();
 		
-//		synchronized(effects) {
 		for (PooledEffect effect : effects) {
 	        effect.draw(batch, Gdx.graphics.getDeltaTime());
 	        
 	        if (effect.isComplete()) {
                 effect.free();
-//	                effects.remove(effect);
                 toBeRemoved.add(effect);
 	        }
 		}
-//		}
+
 		synchronized(effects) {
 			effects.removeAll(toBeRemoved);
 		}

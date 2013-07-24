@@ -1,8 +1,5 @@
 package com.MRK.alanparsons2.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -18,32 +15,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- * Définit un {@link Sprite} gérant un {@link Pixmap} afin de pouvoir le détruire au fur et à mesure
+ * Définit un {@link Sprite} gérant un {@link Pixmap}
  * @author malrok
  *
  */
 public class PixmapSprite extends Sprite implements Disposable {
 
-	private Pixmap pixmap;
-	private Texture texture;
-	private List<Weapon> weapons = new ArrayList<Weapon>();
-	
-	/**
-	 * Classe interne définissant les changements non encore "comités" à la texture du PixmapSprite
-	 * @author malrok
-	 *
-	 */
-	private class PixmapChange {
-
-		int x, y;
-		int width;
-
-		void set(int x, int y, int width) {
-			this.x = x;
-			this.y = y;
-			this.width = width;
-		}
-	}
+	protected Pixmap pixmap;
+	protected Texture texture;
 
 	private final Color color = new Color();
 	private int lastModification = 0;
@@ -66,22 +45,11 @@ public class PixmapSprite extends Sprite implements Disposable {
 	}
 	
 	public void dispose() {
-		for (Weapon weapon : weapons)
-			weapon.dispose();
 		
-		weapons.clear();
 	}
 	
 	public Pixmap getPixmap() {
 		return pixmap;
-	}
-	
-	public void addWeapon(Weapon weapon) {
-		weapons.add(weapon);
-	}
-	
-	public List<Weapon> getWeapons() {
-		return weapons;
 	}
 	
 	@Override
@@ -121,19 +89,23 @@ public class PixmapSprite extends Sprite implements Disposable {
 		modifications[lastModification++].set(newX, newY, newRadius * 2);
 	}
 
+	public void getPixelColor(Color color, Vector2 position) {
+		Color.rgba8888ToColor(color, pixmap.getPixel((int) position.x, (int) position.y));
+	}
+	
 	/**
 	 * Vérifie si le pixel dont la position est passée en paramètre est "rempli"
 	 * @param position
 	 * @return
 	 */
 	public boolean collides(Vector2 position) {
-		Color.rgba8888ToColor(color, pixmap.getPixel((int) position.x, (int) position.y));
+		getPixelColor(color, position);
 		
 		return (color.a != 0);
 	}
 
 	/**
-	 * Projette le point onScreenX / onScreenY dans le système du pixmap, et srocke le résultat dans le Vector2 position
+	 * Projette le point onScreenX / onScreenY dans le système du pixmap, et stocke le résultat dans le Vector2 position
 	 * @param position
 	 * @param onScreenX
 	 * @param onScreenY
@@ -152,6 +124,25 @@ public class PixmapSprite extends Sprite implements Disposable {
 
 //		System.out.println("x = (" + onScreenX + "-" + getX() + ") * (" + pixmap.getWidth() + "/" + getWidth() + ")");
 //		System.out.println("y = (" + getHeight() + "-(" + onScreenY + "-" + getY() + ") * (" + pixmap.getHeight() + "/" + getHeight() + ")");
+	}
+
+	/**
+	 * Projette le point du système du pixmap vers l'écran, et stocke le résultat dans le Vector2 position
+	 * @param position
+	 * @param onPixmapX
+	 * @param onPixmapY
+	 */
+	public void unproject(Vector2 position, float onPixmapX, float onPixmapY) {
+		position.set(onPixmapX, pixmap.getHeight() - onPixmapY);
+
+		float scaleX = getWidth() / pixmap.getWidth();
+		float scaleY = getHeight() / pixmap.getHeight();
+
+		position.x *= scaleX;
+		position.y *= scaleY;
+		
+		position.x += getX();
+		position.y += getY();
 	}
 	
 	/**

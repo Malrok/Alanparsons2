@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class Ship extends Sprite implements Disposable {
 	
-	private static final float PROJECTILE_SPEED = .1f;
+	public static final float PROJECTILE_SPEED = .1f;
 	public static final int STILL = 0;
 	public static final int TURNING_LEFT = 1;
 	public static final int TURNING_RIGHT = 2;
