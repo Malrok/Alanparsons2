@@ -10,14 +10,19 @@ public class RotatingCamera extends OrthographicCamera {
 	public static float VIEWPORT_WIDTH;
 	public static float VIEWPORT_HEIGHT;
 	
+	private float levelWidth, levelHeight;
+	
 	private static float radius;
 	
 	public RotatingCamera() {
 		super();
 	}
 	
-	public void init(float width, float height) {
-		VIEWPORT_WIDTH = Level.LEVEL_WIDTH / 2;
+	public void init(Level level, float width, float height) {
+		levelWidth = level.getWidth();
+		levelHeight = level.getHeight();
+		
+		VIEWPORT_WIDTH = levelWidth / 2;
 		VIEWPORT_HEIGHT = height * VIEWPORT_WIDTH / width;
 		setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 //		setToOrtho(false, width, height);
@@ -31,8 +36,8 @@ public class RotatingCamera extends OrthographicCamera {
 	public void setToOrtho(boolean yDown, float viewportWidth, float viewportHeight) {
 		super.setToOrtho(yDown, viewportWidth, viewportHeight);
 		
-		position.x = Level.LEVEL_WIDTH / 2;
-		position.y = Level.LEVEL_HEIGHT / 2 - VIEWPORT_HEIGHT / 2;
+		position.x = levelWidth / 2;
+		position.y = levelHeight / 2 - VIEWPORT_HEIGHT / 2;
 		
 		ShipController.currentAngle = (float) Math.toRadians(270);
 	}

@@ -1,9 +1,10 @@
 package com.MRK.alanparsons2;
 
+import com.MRK.alanparsons2.factories.LevelBuilder;
 import com.MRK.alanparsons2.interfaces.AndroidCallback;
 import com.MRK.alanparsons2.screens.LevelScreen;
+import com.MRK.alanparsons2.screens.LoadingScreen;
 import com.MRK.alanparsons2.screens.MainScreen;
-import com.MRK.alanparsons2.screens.RabbitvsSausages;
 import com.MRK.alanparsons2.screens.Screen;
 import com.badlogic.gdx.Game;
 
@@ -14,8 +15,9 @@ public class Alanparsons2 extends Game {
 	private boolean isInitialized = false;
 	private int width, height;
 	
+	private LevelBuilder levelBuilder = new LevelBuilder();
+//	private Level level = new Level();
 	private Screen screen;
-	
 	private AndroidCallback callback;
 	
 	public void setCallback(AndroidCallback callback) {
@@ -29,28 +31,23 @@ public class Alanparsons2 extends Game {
 		
 		screen.update();
 		
-		if (screen instanceof LevelScreen && callback != null)
-//			System.out.println("begin callback");
-			callback.beginRenderLevelCallback();
-//		} else
-//			System.out.println("no begin callback");
+		if (screen instanceof LevelScreen && callback != null) callback.beginRenderLevelCallback();
 		
 		screen.render();
 
-		if (screen instanceof LevelScreen && callback != null)
-//			System.out.println("end callback");
-			callback.endRenderLevelCallback();
-//		} else
-//			System.out.println("no end callback");
+		if (screen instanceof LevelScreen && callback != null) callback.endRenderLevelCallback();
 		
 		if (screen.result().length() != 0) {
 			screen.dispose();
 
 			if (screen instanceof MainScreen) {
-				if (screen.result().equalsIgnoreCase("play"))
-					screen = new LevelScreen(width, height);
+				if (screen.result().startsWith("play"))
+					screen = new LoadingScreen(screen.result().split(" ")[1], levelBuilder, width, height);
 			}
-			if (screen instanceof RabbitvsSausages) {
+			if (screen instanceof LoadingScreen)
+				if (screen.result().startsWith("loaded"))
+					screen = new LevelScreen(levelBuilder.getLevel(), width, height);
+			if (screen instanceof LevelScreen) {
 				if (screen.result().equalsIgnoreCase("lose"))
 					screen = new MainScreen(width, height);
 			}
@@ -77,4 +74,9 @@ public class Alanparsons2 extends Game {
 		}
 	}
 	
+	@Override
+	public void dispose() {
+		levelBuilder.dispose();
+//		level.dispose();
+	}
 }

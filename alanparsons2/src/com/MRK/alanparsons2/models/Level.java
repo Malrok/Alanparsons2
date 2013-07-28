@@ -1,49 +1,41 @@
 package com.MRK.alanparsons2.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.MRK.alanparsons2.controllers.ShipController;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Level implements Disposable {
 
-	public static final float LEVEL_WIDTH = 100f;
-	public static final float LEVEL_HEIGHT = 100f;
-	
-	private Texture projectileTexture, starsTexture, planetTexture, sunTexture;
+	private String name;	
+	private float width = 100f;
+	private float height = 100f;
 	
 	private Ship ship;
-	private EnemyShip foe;
+	private List<EnemyShip> enemies = new ArrayList<EnemyShip>();
+	private List<Weapon> weapons = new ArrayList<Weapon>();
+	private Background background;
 
-	public Level() {
-		projectileTexture = new Texture(Gdx.files.internal("data/shot.png"));
-		starsTexture = new Texture(Gdx.files.internal("data/stars.png"));
-		planetTexture = new Texture(Gdx.files.internal("data/planet.png"));
-		sunTexture = new Texture(Gdx.files.internal("data/sun.png"));
-		
-		ship = new Ship();
-		ship.setWeapon(projectileTexture);
-		
-		foe = new EnemyShip("data/enemy.png");
-	}
-
-	public void dispose() {
-		ship.dispose();
-		foe.dispose();
+	public String getName() {
+		return name;
 	}
 	
-	public void resize(int width, int height) {
-		foe.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
-		foe.setPosition(LEVEL_WIDTH / 2 - foe.getWidth() / 2, LEVEL_HEIGHT / 2 - foe.getHeight() / 2);
-		foe.setOrigin(foe.getX() + foe.getWidth() / 2, foe.getY() + foe.getHeight() / 2);
-		foe.setWeapons(projectileTexture);
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public float getWidth() {
+		return width;
+	}
+	
+	public float getHeight() {
+		return height;
 	}
 
-	public Texture getProjectileTexture() {
-		return projectileTexture;
-	}
-
-	public void setProjectileTexture(Texture projectileTexture) {
-		this.projectileTexture = projectileTexture;
+	public void setHeight(float height) {
+		this.height = height;
 	}
 	
 	public Ship getShip() {
@@ -54,19 +46,83 @@ public class Level implements Disposable {
 		this.ship = ship;
 	}
 
-	public EnemyShip getFoe() {
-		return foe;
+	public List<EnemyShip> getEnemies() {
+		return enemies;
+	}
+	
+	public void addEnemy(EnemyShip enemy) {
+		this.enemies.add(enemy);
+	}
+	
+	public void addEnemies(List<EnemyShip> enemies) {
+		this.enemies.addAll(enemies);
 	}
 
-	public Texture getStarsTexture() {
-		return starsTexture;
+	public List<Weapon> getWeapons() {
+		return weapons;
 	}
 	
-	public Texture getPlanetTexture() {
-		return planetTexture;
+	public void addWeapons(List<Weapon> weapons) {
+		this.weapons.addAll(weapons);
 	}
 	
-	public Texture getSunTexture() {
-		return sunTexture;
+	public Background getBackground() {
+		return background;
+	}
+
+	public void setBackground(Background background) {
+		this.background = background;
+	}
+
+	public float getLevelCenterX() {
+		float minx = 999999999, maxx = 0;
+		
+		for (EnemyShip enemy : enemies) {
+			minx = Math.min(minx, enemy.getX() - enemy.getWidth() / 2);
+			maxx = Math.max(maxx, enemy.getX() - enemy.getWidth() / 2);
+		}
+		
+		return minx + ((maxx - minx) / 2);
+	}
+	
+	public float getLevelCenterY() {
+		float miny = 999999999, maxy = 0;
+		
+		for (EnemyShip enemy : enemies) {
+			miny = Math.min(miny, enemy.getY() - enemy.getHeight() / 2);
+			maxy = Math.max(maxy, enemy.getY() - enemy.getHeight() / 2);
+		}
+		
+		return miny + ((maxy - miny) / 2);
+	}
+	
+	public void update() {
+		for (EnemyShip enemy : enemies)
+			enemy.update();
+	}
+	
+	public void draw(SpriteBatch batch) {
+		background.draw(batch, ShipController.deltaX, ShipController.deltaY);
+		
+		ship.draw(batch);
+		
+		for (EnemyShip enemy : enemies)
+			enemy.draw(batch);
+	}
+	
+	public void dispose() {
+		if (ship != null) ship.dispose();
+		if (enemies != null)
+			for (EnemyShip enemy : enemies)
+				enemy.dispose();
+	}
+	
+	public void resize(int width, int height) {
+		for (EnemyShip enemy : enemies) {
+			enemy.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
+			enemy.setPosition(width / 2 - enemy.getWidth() / 2, height / 2 - enemy.getHeight() / 2);
+			enemy.setOrigin(enemy.getX() + enemy.getWidth() / 2, enemy.getY() + enemy.getHeight() / 2);
+//			enemy.setWeapons(projectileTexture);
+		}
 	}
 }

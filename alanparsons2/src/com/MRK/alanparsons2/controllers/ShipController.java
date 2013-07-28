@@ -46,7 +46,7 @@ public class ShipController {
 		screenMiddle = Gdx.graphics.getWidth() / 2;
 		rotationCenter = center;
 		
-		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY) + Ship.SHIP_HEIGHT / 2);
+		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY) + ship.getHeight() / 2);
 		
 //		System.out.println("SHIP_DISTANCE_FROM_FOE : " + SHIP_DISTANCE_FROM_FOE + "=" + center.y + "-(" + RotatingCamera.VIEWPORT_HEIGHT + "*" + LAPINY + "+" + ship.getHeight() + "/ 2)");
 	}

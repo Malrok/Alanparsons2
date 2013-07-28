@@ -1,40 +1,70 @@
 package com.MRK.alanparsons2.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
 public class EnemyShip extends PixmapSprite implements Disposable {
 	
-	private List<Weapon> weapons = new ArrayList<Weapon>();
-	private List<PixmapPosition> weaponsPositions = new ArrayList<PixmapPosition>();
-	
 	private final Color color = new Color();
-	private final Vector2 position = new Vector2();
 	
-	public EnemyShip(String texture) {
-		super(texture);
+	private String name;
+	private Vector2 position = new Vector2();
+	
+//	private List<Weapon> weapons = new ArrayList<Weapon>();
+//	private List<PixmapPosition> weaponsPositions = new ArrayList<PixmapPosition>();
+	
+	private Map<PixmapPosition, Weapon> shipWeapons = new HashMap<PixmapPosition, Weapon>();
+	
+	
+//	public EnemyShip() {
+//		super();
+//	}
+
+	public String getName() {
+		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Vector2 getPosition() {
+		return position;
+	}
+	
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+	
+//	/**
+//	 * Définit la texture à appliquer
+//	 */
+//	public void setTexture(String texture) {
+//		super.setTexture(texture);
+//	}
+	
 	public void dispose() {
-		for (Weapon weapon : weapons)
-			weapon.dispose();
+//		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+//			entry.getValue().dispose();
+//		}
 		
-		weapons.clear();
+		shipWeapons.clear();
 	}
 	
 	/**
 	 * Initialisation des armes
 	 * @param texture à appliquer aux tirs
 	 */
-	public void setWeapons(Texture texture) {
+	public void setWeapons(Map<String, Weapon> weapons) {
 		initWeapons();
-		setWeaponsPositionOnSprite(texture);
+		setWeaponsPositionOnSprite(weapons);
 	}
 	
 	/**
@@ -42,15 +72,16 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	 */
 	public void update(float aimX, float aimY) {
 		super.update();
-		for (Weapon weapon: weapons) {
-			weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(weapon.getPosition().x, weapon.getPosition().y, aimX, aimY, Ship.PROJECTILE_SPEED));
-			weapon.update();
+//		for (Weapon weapon: shipWeapons) {
+		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+			entry.getValue().setAimAt(CircleHelper.getVectorAimingAtCenter(entry.getValue().getPosition().x, entry.getValue().getPosition().y, aimX, aimY, Ship.PROJECTILE_SPEED));
+			entry.getValue().update();
 		}
 	}
 	
-	public List<Weapon> getWeapons() {
-		return weapons;
-	}
+//	public List<Weapon> getWeapons() {
+//		return weapons;
+//	}
 
 	/**
 	 * Recherche sur la texture du vaisseau les points magenta définissant la position d'une arme, et la stocke<BR>
@@ -62,7 +93,8 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 				super.getPixelColor(color, new Vector2(x, y));
 				
 				if (color.r == 1.0f && color.b == 1.0f) { // magenta
-					weaponsPositions.add(new PixmapPosition(x, y));
+//					weaponsPositions.add(new PixmapPosition(x, y));
+					shipWeapons.put(new PixmapPosition(x, y), null);
 				}
 			}
 		}
@@ -71,13 +103,21 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	/**
 	 * Place les armes du vaisseau sur ce dernier, en positions réelles, à partir des {@link PixmapPosition}
 	 */
-	private void setWeaponsPositionOnSprite(Texture texture) {
-		for (PixmapPosition pixPos : weaponsPositions) {
-			Weapon weapon = new Weapon(this, texture, new Vector2(0, 1), 3, 1);
-			weapon.setEnabled(true);
-			unproject(position, pixPos.getX(), pixPos.getY());
-			weapon.setPosition(position.x, position.y);
-			weapons.add(weapon);
+	private void setWeaponsPositionOnSprite(Map<String, Weapon> weapons) {
+//		for (PixmapPosition pixPos : weaponsPositions) {
+//			Weapon weapon = new Weapon(this, texture, new Vector2(0, 1), 3, 1);
+//			weapon.setEnabled(true);
+//			unproject(position, pixPos.getX(), pixPos.getY());
+//			weapon.setPosition(position.x, position.y);
+//			weapons.add(weapon);
+//		}
+		for (Entry<String, Weapon> weaponEntry : weapons.entrySet()) {
+			if (weaponEntry.getValue().getEmitter().equals(this)) {
+				for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {		
+					if (weaponEntry.getValue() == null)
+						weaponEntry.setValue(entry.getValue());
+				}
+			}
 		}
 	}
 }

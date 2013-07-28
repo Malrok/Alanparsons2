@@ -1,11 +1,14 @@
 package com.MRK.alanparsons2.models;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.helpers.CircleHelper;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -18,8 +21,8 @@ public class Ship extends Sprite implements Disposable {
 	public static final int STILL = 0;
 	public static final int TURNING_LEFT = 1;
 	public static final int TURNING_RIGHT = 2;
-	public static final int SHIP_WIDTH = 4;
-	public static final int SHIP_HEIGHT= 4;
+//	public static final int SHIP_WIDTH = 4;
+//	public static final int SHIP_HEIGHT= 4;
 	
 	private Texture[] textures = new Texture[3];
 	private Weapon weapon;
@@ -28,13 +31,20 @@ public class Ship extends Sprite implements Disposable {
 	
 	public Ship() {
 		super();
-		textures[STILL] = new Texture(Gdx.files.internal("data/ship.png"));
-		textures[TURNING_LEFT] = new Texture(Gdx.files.internal("data/ship_turning_left.png"));
-		textures[TURNING_RIGHT] = new Texture(Gdx.files.internal("data/ship_turning_right.png"));
+//		textures[STILL] = new Texture(Gdx.files.internal("data/ship.png"));
+//		textures[TURNING_LEFT] = new Texture(Gdx.files.internal("data/ship_turning_left.png"));
+//		textures[TURNING_RIGHT] = new Texture(Gdx.files.internal("data/ship_turning_right.png"));
 		
-		setSize(SHIP_WIDTH, SHIP_HEIGHT);
-		setOrigin(SHIP_WIDTH / 2, SHIP_HEIGHT / 2);
+//		setSize(SHIP_WIDTH, SHIP_HEIGHT);
+//		setOrigin(SHIP_WIDTH / 2, SHIP_HEIGHT / 2);
 	}
+	
+//	public Ship clone() {
+//		Ship newShip = new Ship();
+//		newShip.set(this);
+//		for (int phase = 0; phase < 5; phase++)
+//			newShip.setTexture(phase, textures[phase]);
+//	}
 	
 	public void dispose() {
 		weapon.dispose();
@@ -50,11 +60,16 @@ public class Ship extends Sprite implements Disposable {
 	
 	/** 
 	 * Définit l'arme de la classe
-	 * @param texture - {@type Texture}
 	 */
-	public void setWeapon(Texture texture) {
-		weapon = new Weapon(this, texture, new Vector2(0, 1), 3, 1);
-		weapon.setEnabled(true);
+	public void setWeapon(Map<String, Weapon> weapons) {
+//		weapon = new Weapon(this, texture, new Vector2(0, 1), 3, 1);
+		for (Entry<String, Weapon> entry : weapons.entrySet()) {
+			if (entry.getValue().getEmitter().equals(this)) {
+				weapon = entry.getValue();
+				weapon.setEnabled(true);
+				weapon.setAimAt(new Vector2(0, 1));
+			}
+		}
 	}
 	
 	/** 
@@ -63,7 +78,7 @@ public class Ship extends Sprite implements Disposable {
 	 * @param lastRotateValue - float : dernier angle de rotation appliqué au vaisseau
 	 */
 	public void update(float lastRotateValue, float x, float y) {
-		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + SHIP_WIDTH / 2, getY() + SHIP_HEIGHT / 2, x, y, PROJECTILE_SPEED));
+		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + getWidth() / 2, getY() + getHeight() / 2, x, y, PROJECTILE_SPEED));
 		weapon.update();
 	}
 	
@@ -73,7 +88,7 @@ public class Ship extends Sprite implements Disposable {
 	@Override
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
-		weapon.setPosition(x + SHIP_WIDTH / 2, y + SHIP_HEIGHT / 2);
+		weapon.setPosition(x + getWidth() / 2, y + getHeight() / 2);
 	}
 	
 	/**
@@ -90,6 +105,15 @@ public class Ship extends Sprite implements Disposable {
 		return textures[currentDirection];
 	}
 	
+	public void setTexture(int phase, TextureRegion texture) {
+		if (texture != null)
+			textures[phase] = texture.getTexture();
+	}
+	
+	public void setTexture(int phase, Texture texture) {
+		textures[phase] = texture;
+	}
+	
 	/**
 	 * rendering du vaisseau
 	 */
@@ -97,7 +121,7 @@ public class Ship extends Sprite implements Disposable {
 		Texture texture = getTexture();
 		
 		batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(), 
-				Ship.SHIP_WIDTH, Ship.SHIP_HEIGHT, 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90, 
+				getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90, 
 				0, 0, texture.getWidth(), texture.getHeight(), false, false);
 	}
 }

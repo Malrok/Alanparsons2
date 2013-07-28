@@ -51,7 +51,7 @@ public class MainScreen implements Screen {
 //				tweenManager.killAll();
 ////				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f, 1.4f).call(tweenCallback).start(tweenManager);
 //				Tween.call(tweenCallback).start(tweenManager);
-				result = "play";
+				result = "play level1";
 			}
 		}
 	}

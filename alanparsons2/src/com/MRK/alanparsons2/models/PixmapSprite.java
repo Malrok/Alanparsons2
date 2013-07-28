@@ -29,12 +29,11 @@ public class PixmapSprite extends Sprite implements Disposable {
 	private PixmapChange[] modifications = new PixmapChange[10];	
 	
 	/**
-	 * Constructeur<BR>
-	 * Prend le chemin d'une texture en paramètre
+	 * Définit le texture depuis le chemin d'une texture en paramètre
 	 * @param texture
 	 */
-	public PixmapSprite(String texture) {
-		pixmap = new Pixmap(Gdx.files.internal(texture));
+	public void setTexture(Pixmap pixmap) {
+		this.pixmap = pixmap;
 
 		this.texture = new Texture(new PixmapTextureData(pixmap, pixmap.getFormat(), false, false));
 		this.texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);

@@ -3,6 +3,7 @@ package com.MRK.alanparsons2.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.PixmapSprite;
 import com.MRK.alanparsons2.models.Projectile;
 import com.MRK.alanparsons2.models.Weapon;
@@ -59,6 +60,14 @@ public class ProjectileController implements Disposable {
 	 */
 	public void addTarget(Sprite target) {
 		targets.add(target);
+	}
+	
+	/**
+	 * Ajoute une liste de cibles de type {@link Sprite} à la liste des objets gérés 
+	 * @param weapon
+	 */
+	public void addTargets(List<EnemyShip> list) {
+		this.targets.addAll(list);
 	}
 	
 	/**

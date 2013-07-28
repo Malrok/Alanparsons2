@@ -6,15 +6,15 @@ import com.badlogic.gdx.Gdx;
 
 public class LevelScreen implements Screen {
 
-	private Level level;
+//	private Level level;
 	private LevelRenderer renderer; 
 	
 	private String result = "";
 	
-	public LevelScreen(int width, int height) {
+	public LevelScreen(Level level, int width, int height) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		
-		level = new Level();
+//		level = new Level();
 		renderer = new LevelRenderer(level);		
 		renderer.resize(width, height);
 	}
@@ -36,7 +36,7 @@ public class LevelScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		level.dispose();
+//		level.dispose();
 		renderer.dispose();
 	}
 

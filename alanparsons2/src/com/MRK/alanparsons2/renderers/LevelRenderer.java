@@ -46,13 +46,15 @@ public class LevelRenderer implements Disposable {
 	}
 	
 	public void update() {
-		camera.rotateCameraAround(level.getFoe().getOriginX(), level.getFoe().getOriginY(), shipController.getLastRotateValue());
+//		camera.rotateCameraAround(level.getFoe().getOriginX(), level.getFoe().getOriginY(), shipController.getLastRotateValue());
+		camera.rotateCameraAround(level.getLevelCenterX(), level.getLevelCenterY(), shipController.getLastRotateValue());
 		shipController.update();
 		projectileController.update();
 		particleController.update(projectileController.getImpacts());
 		projectileController.clearImpacts();
 		
-		level.getFoe().update(level.getShip().getX() + level.getShip().getWidth() / 2, level.getShip().getY() + level.getShip().getHeight() / 2);
+//		level.getFoe().update(level.getShip().getX() + level.getShip().getWidth() / 2, level.getShip().getY() + level.getShip().getHeight() / 2);
+		level.update();
 	}
 	
 	public void render() {
@@ -63,19 +65,21 @@ public class LevelRenderer implements Disposable {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
-		for (int w=0; w<4; w++) {
-			for (int h=0; h<4; h++) {
-				batch.draw(level.getStarsTexture(), w * Level.LEVEL_WIDTH / 4, h * Level.LEVEL_HEIGHT / 4, Level.LEVEL_WIDTH / 4, Level.LEVEL_HEIGHT / 4);
-			}
-		}
+//		for (int w=0; w<4; w++) {
+//			for (int h=0; h<4; h++) {
+//				batch.draw(level.getStarsTexture(), w * Level.LEVEL_WIDTH / 4, h * Level.LEVEL_HEIGHT / 4, Level.LEVEL_WIDTH / 4, Level.LEVEL_HEIGHT / 4);
+//			}
+//		}
+//		
+//		batch.draw(level.getSunTexture(), 3 * Level.LEVEL_WIDTH / 7 - (ShipController.deltaX / 5), 3 * Level.LEVEL_HEIGHT / 7 - (ShipController.deltaY / 5) + 8, 8, 8);
+//		batch.draw(level.getPlanetTexture(), ShipController.deltaX / 3 - level.getPlanetTexture().getWidth() / 24, ShipController.deltaY / 3 - level.getPlanetTexture().getHeight() / 24, Level.LEVEL_WIDTH / 2, Level.LEVEL_HEIGHT / 2);
 		
-		batch.draw(level.getSunTexture(), 3 * Level.LEVEL_WIDTH / 7 - (ShipController.deltaX / 5), 3 * Level.LEVEL_HEIGHT / 7 - (ShipController.deltaY / 5) + 8, 8, 8);
-		batch.draw(level.getPlanetTexture(), ShipController.deltaX / 3 - level.getPlanetTexture().getWidth() / 24, ShipController.deltaY / 3 - level.getPlanetTexture().getHeight() / 24, Level.LEVEL_WIDTH / 2, Level.LEVEL_HEIGHT / 2);
+		level.draw(batch);
 		
 		projectileController.drawProjectiles(batch);
 		
-		level.getShip().draw(batch);
-		level.getFoe().draw(batch);
+//		level.getShip().draw(batch);
+//		level.getFoe().draw(batch);
 		
 		particleController.draw(batch);
 		
@@ -95,20 +99,21 @@ public class LevelRenderer implements Disposable {
 //	}
 	
 	public void resize(int width, int height) {
-		camera.init(width, height);
+		camera.init(level, width, height);
 		
 		level.resize(width, height);
 		
-		shipController.init(new Vector2(level.getFoe().getOriginX(), level.getFoe().getOriginY()));
+		shipController.init(new Vector2(level.getLevelCenterX(), level.getLevelCenterY()));
 		shipController.update();
 		
-		camera.setRadius(Math.abs(level.getFoe().getY() + level.getFoe().getHeight() / 2 - camera.position.y));
+//		camera.setRadius(Math.abs(level.getFoe().getY() + level.getFoe().getHeight() / 2 - camera.position.y));
+		camera.setRadius(Math.abs(level.getLevelCenterY() - camera.position.y));
 		
-		projectileController.addWeapon(level.getShip().getWeapon());
-		projectileController.addWeapons(level.getFoe().getWeapons());
+//		projectileController.addWeapon(level.getShip().getWeapon());
+		projectileController.addWeapons(level.getWeapons());
 		
 		projectileController.addTarget(level.getShip());
-		projectileController.addTarget(level.getFoe());
+		projectileController.addTargets(level.getEnemies());
 	}
 	
 	public void dispose() {
