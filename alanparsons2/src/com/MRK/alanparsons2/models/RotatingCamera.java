@@ -18,12 +18,12 @@ public class RotatingCamera extends OrthographicCamera {
 		super();
 	}
 	
-	public void init(Level level, float width, float height) {
-		levelWidth = level.getWidth();
-		levelHeight = level.getHeight();
+	public void init(float levelWidth, float levelHeight, float screenWidth, float screenHeight) {
+		this.levelWidth = levelWidth;
+		this.levelHeight = levelHeight;
 		
 		VIEWPORT_WIDTH = levelWidth / 2;
-		VIEWPORT_HEIGHT = height * VIEWPORT_WIDTH / width;
+		VIEWPORT_HEIGHT = screenHeight * VIEWPORT_WIDTH / screenWidth;
 		setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 //		setToOrtho(false, width, height);
 	}

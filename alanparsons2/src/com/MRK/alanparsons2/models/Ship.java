@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.helpers.CircleHelper;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,7 +23,7 @@ public class Ship extends Sprite implements Disposable {
 //	public static final int SHIP_WIDTH = 4;
 //	public static final int SHIP_HEIGHT= 4;
 	
-	private Texture[] textures = new Texture[3];
+	private TextureRegion[] textures = new TextureRegion[3];
 	private Weapon weapon;
 	
 	private int currentDirection = STILL;
@@ -48,6 +47,12 @@ public class Ship extends Sprite implements Disposable {
 	
 	public void dispose() {
 		weapon.dispose();
+	}
+
+	@Override
+	public void setSize(float width, float height) {
+		super.setSize(width, height);
+		setOrigin(width / 2, height / 2);
 	}
 	
 	/** 
@@ -98,30 +103,30 @@ public class Ship extends Sprite implements Disposable {
 		currentDirection = newDirection;
 	}
 	
-	/**
-	 * Récupération de la texture du vaisseau
-	 */
-	public Texture getTexture() {
-		return textures[currentDirection];
-	}
+//	/**
+//	 * Récupération de la texture du vaisseau
+//	 */
+//	public TextureRegion getTexture() {
+//		return textures[currentDirection];
+//	}
 	
-	public void setTexture(int phase, TextureRegion texture) {
+	public void addTexture(int phase, TextureRegion texture) {
 		if (texture != null)
-			textures[phase] = texture.getTexture();
+			textures[phase] = texture;
 	}
 	
-	public void setTexture(int phase, Texture texture) {
-		textures[phase] = texture;
-	}
+//	public void setTexture(int phase, Texture texture) {
+//		textures[phase] = texture;
+//	}
 	
 	/**
 	 * rendering du vaisseau
 	 */
 	public void draw(SpriteBatch batch) {
-		Texture texture = getTexture();
+//		Texture texture = getTexture();
 		
-		batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(), 
-				getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90, 
-				0, 0, texture.getWidth(), texture.getHeight(), false, false);
+		batch.draw(textures[currentDirection], getX(), getY(), getOriginX(), getOriginY(), 
+				getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90); 
+//				0, 0, texture.getWidth(), texture.getHeight(), false, false);
 	}
 }

@@ -1,6 +1,5 @@
 package com.MRK.alanparsons2.models;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -12,7 +11,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	private float repeatWidth, repeatHeight;
 	private float x, y;
 	private float shiftx, shifty;
-	private Texture texture;
+	private TextureRegion texture;
 	
 	public boolean isMoveable() {
 		return moveable;
@@ -94,12 +93,12 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.shifty = shifty;
 	}
 	
-	public Texture getTexture() {
+	public TextureRegion getTexture() {
 		return texture;
 	}
 	
 	public void setTexture(TextureRegion texture) {
-		this.texture = texture.getTexture();
+		this.texture = texture;
 	}
 
 	@Override

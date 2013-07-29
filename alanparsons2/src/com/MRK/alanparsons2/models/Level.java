@@ -30,6 +30,10 @@ public class Level implements Disposable {
 		return width;
 	}
 	
+	public void setWidth(float width) {
+		this.width = width;
+	}
+	
 	public float getHeight() {
 		return height;
 	}
@@ -72,7 +76,6 @@ public class Level implements Disposable {
 
 	public void setBackground(Background background) {
 		this.background = background;
-		this.background.setLevelSize(width, height);
 	}
 
 	public float getLevelCenterX() {
@@ -118,12 +121,14 @@ public class Level implements Disposable {
 				enemy.dispose();
 	}
 	
-	public void resize(int width, int height) {
-		for (EnemyShip enemy : enemies) {
-			enemy.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
-			enemy.setPosition(width / 2 - enemy.getWidth() / 2, height / 2 - enemy.getHeight() / 2);
-			enemy.setOrigin(enemy.getX() + enemy.getWidth() / 2, enemy.getY() + enemy.getHeight() / 2);
+	public void resize() {
+		if (background != null)
+			background.init(this.width, this.height);
+//		for (EnemyShip enemy : enemies) {
+//			enemy.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
+//			enemy.setPosition(width / 2 - enemy.getWidth() / 2, height / 2 - enemy.getHeight() / 2);
+//			enemy.setOrigin(enemy.getX() + enemy.getWidth() / 2, enemy.getY() + enemy.getHeight() / 2);
 //			enemy.setWeapons(projectileTexture);
-		}
+//		}
 	}
 }

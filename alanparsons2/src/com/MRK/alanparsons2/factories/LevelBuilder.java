@@ -159,9 +159,9 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(NAME))
 				level.setName(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(WIDTH))
-				level.setName(value.getValue().getString());
+				level.setWidth(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
-				level.setName(value.getValue().getString());
+				level.setHeight(value.getValue().getNumber());
 		}
 	}
 	
@@ -201,7 +201,7 @@ public class LevelBuilder implements Disposable {
 				} else
 					for (int phase = 0; phase < 5; phase++) {
 						System.out.println("ship texture " + phase + " " + value.getValue().getString());
-						((Ship)ship).setTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
+						((Ship)ship).addTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
 					}
 		}
 		
