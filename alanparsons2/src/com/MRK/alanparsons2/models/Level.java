@@ -72,6 +72,7 @@ public class Level implements Disposable {
 
 	public void setBackground(Background background) {
 		this.background = background;
+		this.background.setLevelSize(width, height);
 	}
 
 	public float getLevelCenterX() {

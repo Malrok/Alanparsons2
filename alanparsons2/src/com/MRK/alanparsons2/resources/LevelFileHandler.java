@@ -45,7 +45,7 @@ public class LevelFileHandler {
 				entry = line.substring(0, line.indexOf(SEMI_COLON));
 				value = line.substring(line.indexOf(SEMI_COLON) + 1, line.length());
 				
-				System.out.println("LevelFileHandler.load " + entry + " -- " + value);
+//				System.out.println("LevelFileHandler.load " + entry + " -- " + value);
 				
 				try {
 					resource.addValue(entry, Float.valueOf(value));

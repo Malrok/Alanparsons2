@@ -94,7 +94,7 @@ public class LevelBuilder implements Disposable {
 	
 	public void parse() {
 		for (Map.Entry<String, Resource> resource : levelHandler.resources.entries()) {
-			System.out.println("parsing " + resource.getKey());
+//			System.out.println("parsing " + resource.getKey());
 			constructObject(resource.getKey(), resource.getValue().getValues());
 		}
 	}
@@ -103,7 +103,7 @@ public class LevelBuilder implements Disposable {
 		level.setBackground(background);
 		
 		for (Entry<String, Weapon> weapon : weapons.entrySet()) {
-			System.out.println("weapon emitter = " + weapon.getValue().getEmitterName());
+//			System.out.println("weapon emitter = " + weapon.getValue().getEmitterName());
 			weapon.getValue().setEmitter(getSpriteByName(weapon.getValue().getEmitterName()));
 		}
 		
@@ -196,11 +196,13 @@ public class LevelBuilder implements Disposable {
 				y = value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				if (ship instanceof EnemyShip) {
-					System.out.println("texture " + value.getValue().getString());
+					System.out.println("enemy texture " + value.getValue().getString());
 					((EnemyShip)ship).setTexture(pixmapAtlas.createPixmap(value.getValue().getString()));
 				} else
-					for (int phase = 0; phase < 5; phase++)
+					for (int phase = 0; phase < 5; phase++) {
+						System.out.println("ship texture " + phase + " " + value.getValue().getString());
 						((Ship)ship).setTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
+					}
 		}
 		
 		if (width != 0 && height != 0)
@@ -215,7 +217,7 @@ public class LevelBuilder implements Disposable {
 		Weapon weapon = new Weapon();
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
-			System.out.println(value.getKey() + " " + value.getValue().getString());
+//			System.out.println(value.getKey() + " " + value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(NAME))
 				weapon.setName(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(WEAPON_HOST))
@@ -232,11 +234,15 @@ public class LevelBuilder implements Disposable {
 	private void constructBackground(boolean moveable, Map<String, ResourceValue> values) {
 		BackgroundElement element = new BackgroundElement();
 		
+		element.setMoveable(moveable);
+		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(Z_RANK))
 				element.setZrank((int) value.getValue().getNumber());
-			if (value.getKey().equalsIgnoreCase(TEXTURE))
+			if (value.getKey().equalsIgnoreCase(TEXTURE)) {
+				System.out.println("background texture " + value.getValue().getString());
 				element.setTexture(atlas.findRegion(value.getValue().getString()));
+			}
 			if (value.getKey().equalsIgnoreCase(WIDTH))
 				element.setWidth(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEIGHT))

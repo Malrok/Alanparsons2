@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Background {
 	
+	private float levelWidth, levelHeight;
 	private List<BackgroundElement> elements = new ArrayList<BackgroundElement>();
 	
 	public void addElement(BackgroundElement element) {
@@ -17,9 +18,26 @@ public class Background {
 	}
 	
 	public void draw(SpriteBatch batch, float deltax, float deltay) {
+		
 		for (BackgroundElement element : elements) {
-			element.draw(batch, deltax, deltay);
+			if (element.isMoveable()) {
+//				System.out.println("drawing background moveable deltax/deltay = " + deltax + "/" + deltay + " x/shiftx/y/shifty = " + 
+//						element.getX() + "/" + element.getShiftx() + "/" + element.getY() + "/" + element.getShifty());
+				batch.draw(element.getTexture(), element.getX() + element.getShiftx() * deltax, element.getY() + element.getShifty() * deltay);
+			} else {
+				for (int w = 0; w < element.getRepeatWidth(); w++) {
+					for (int h = 0; h < element.getRepeatHeight(); h++) {
+						batch.draw(element.getTexture(), 
+								w * levelWidth / element.getRepeatWidth(), h * levelHeight / element.getRepeatHeight(), 
+								levelWidth / element.getRepeatWidth(), levelHeight / element.getRepeatHeight());
+					}
+				}
+			}
 		}
 	}
 	
+	public void setLevelSize(float width, float height) {
+		this.levelWidth = width;
+		this.levelHeight = height;
+	}
 }
