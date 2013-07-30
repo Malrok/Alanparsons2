@@ -82,8 +82,8 @@ public class Level implements Disposable {
 		float minx = 999999999, maxx = 0;
 		
 		for (EnemyShip enemy : enemies) {
-			minx = Math.min(minx, enemy.getX() - enemy.getWidth() / 2);
-			maxx = Math.max(maxx, enemy.getX() - enemy.getWidth() / 2);
+			minx = Math.min(minx, enemy.getX());
+			maxx = Math.max(maxx, enemy.getX());
 		}
 		
 		return minx + ((maxx - minx) / 2);
@@ -93,8 +93,8 @@ public class Level implements Disposable {
 		float miny = 999999999, maxy = 0;
 		
 		for (EnemyShip enemy : enemies) {
-			miny = Math.min(miny, enemy.getY() - enemy.getHeight() / 2);
-			maxy = Math.max(maxy, enemy.getY() - enemy.getHeight() / 2);
+			miny = Math.min(miny, enemy.getY());
+			maxy = Math.max(maxy, enemy.getY());
 		}
 		
 		return miny + ((maxy - miny) / 2);
@@ -124,11 +124,5 @@ public class Level implements Disposable {
 	public void resize() {
 		if (background != null)
 			background.init(this.width, this.height);
-//		for (EnemyShip enemy : enemies) {
-//			enemy.setSize(RotatingCamera.VIEWPORT_WIDTH / 3, RotatingCamera.VIEWPORT_WIDTH / 3);
-//			enemy.setPosition(width / 2 - enemy.getWidth() / 2, height / 2 - enemy.getHeight() / 2);
-//			enemy.setOrigin(enemy.getX() + enemy.getWidth() / 2, enemy.getY() + enemy.getHeight() / 2);
-//			enemy.setWeapons(projectileTexture);
-//		}
 	}
 }

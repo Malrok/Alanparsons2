@@ -25,7 +25,6 @@ public class RotatingCamera extends OrthographicCamera {
 		VIEWPORT_WIDTH = levelWidth / 2;
 		VIEWPORT_HEIGHT = screenHeight * VIEWPORT_WIDTH / screenWidth;
 		setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-//		setToOrtho(false, width, height);
 	}
 	
 	public void setRadius(float value) {

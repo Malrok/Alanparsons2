@@ -16,7 +16,6 @@ public class Alanparsons2 extends Game {
 	private int width, height;
 	
 	private LevelBuilder levelBuilder = new LevelBuilder();
-//	private Level level = new Level();
 	private Screen screen;
 	private AndroidCallback callback;
 	
@@ -77,6 +76,5 @@ public class Alanparsons2 extends Game {
 	@Override
 	public void dispose() {
 		levelBuilder.dispose();
-//		level.dispose();
 	}
 }

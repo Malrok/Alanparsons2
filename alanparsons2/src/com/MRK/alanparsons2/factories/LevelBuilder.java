@@ -94,7 +94,6 @@ public class LevelBuilder implements Disposable {
 	
 	public void parse() {
 		for (Map.Entry<String, Resource> resource : levelHandler.resources.entries()) {
-//			System.out.println("parsing " + resource.getKey());
 			constructObject(resource.getKey(), resource.getValue().getValues());
 		}
 	}
@@ -103,18 +102,14 @@ public class LevelBuilder implements Disposable {
 		level.setBackground(background);
 		
 		for (Entry<String, Weapon> weapon : weapons.entrySet()) {
-//			System.out.println("weapon emitter = " + weapon.getValue().getEmitterName());
 			weapon.getValue().setEmitter(getSpriteByName(weapon.getValue().getEmitterName()));
 		}
 		
 		for (Entry<String, Sprite> sprite : sprites.entrySet()) {
-//			System.out.println("ship read");
 			if (sprite.getValue() instanceof Ship) {
-//				System.out.println("adding ship");
 				level.setShip((Ship) sprite.getValue());
 				level.getShip().setWeapon(weapons);
 			} else if (sprite.getValue() instanceof EnemyShip) {
-//				System.out.println("adding enemy");
 				level.addEnemy((EnemyShip) sprite.getValue());
 			}
 		}
@@ -122,11 +117,6 @@ public class LevelBuilder implements Disposable {
 		for (EnemyShip enemy : level.getEnemies()) {
 			enemy.setWeapons(weapons);
 		}
-		
-//		level.setShip(ship);
-//		for (Entry<String, EnemyShip> enemy : enemies.entrySet()) {
-//			level.addEnemy(enemy.getValue());
-//		}
 	}
 	
 	private void constructObject(String entity, Map<String, ResourceValue> values) {
@@ -196,11 +186,9 @@ public class LevelBuilder implements Disposable {
 				y = value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				if (ship instanceof EnemyShip) {
-					System.out.println("enemy texture " + value.getValue().getString());
 					((EnemyShip)ship).setTexture(pixmapAtlas.createPixmap(value.getValue().getString()));
 				} else
 					for (int phase = 0; phase < 5; phase++) {
-						System.out.println("ship texture " + phase + " " + value.getValue().getString());
 						((Ship)ship).addTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
 					}
 		}
@@ -217,7 +205,6 @@ public class LevelBuilder implements Disposable {
 		Weapon weapon = new Weapon();
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
-//			System.out.println(value.getKey() + " " + value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(NAME))
 				weapon.setName(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(WEAPON_HOST))
@@ -239,10 +226,8 @@ public class LevelBuilder implements Disposable {
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(Z_RANK))
 				element.setZrank((int) value.getValue().getNumber());
-			if (value.getKey().equalsIgnoreCase(TEXTURE)) {
-				System.out.println("background texture " + value.getValue().getString());
+			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				element.setTexture(atlas.findRegion(value.getValue().getString()));
-			}
 			if (value.getKey().equalsIgnoreCase(WIDTH))
 				element.setWidth(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
@@ -261,8 +246,7 @@ public class LevelBuilder implements Disposable {
 				element.setRepeatHeight(value.getValue().getNumber());
 		}
 
-		background.addElement(element);
-		
+		background.addElement(element);		
 	}
 	
 	private Sprite getSpriteByName(String name) {
@@ -270,7 +254,6 @@ public class LevelBuilder implements Disposable {
 			if (sprite.getValue() instanceof Ship && name.equals(SHIP))
 				return sprite.getValue();
 			else if (sprite.getValue() instanceof EnemyShip && ((EnemyShip)sprite.getValue()).getName().equalsIgnoreCase(name))
-//			else if (((EnemyShip)sprite.getValue()).getName().equalsIgnoreCase(name))
 				return sprite.getValue();
 		}
 		

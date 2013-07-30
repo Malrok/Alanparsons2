@@ -124,7 +124,9 @@ public class Ship extends Sprite implements Disposable {
 	 */
 	public void draw(SpriteBatch batch) {
 //		Texture texture = getTexture();
-		
+//		System.out.println("drawing ship -- texture is null = " + (textures[currentDirection] == null) + " x/y/origx/origy/w/h " +
+//				getX() + "/" + getY() + "/" + getOriginX() + "/" + getOriginY() + "/" +  
+//				getWidth() + "/" + getHeight());
 		batch.draw(textures[currentDirection], getX(), getY(), getOriginX(), getOriginY(), 
 				getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90); 
 //				0, 0, texture.getWidth(), texture.getHeight(), false, false);

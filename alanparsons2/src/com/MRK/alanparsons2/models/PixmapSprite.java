@@ -53,7 +53,7 @@ public class PixmapSprite extends Sprite implements Disposable {
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
+		batch.draw(texture, getX() - getWidth() / 2, getY() - getHeight() / 2, getWidth(), getHeight());
 	}
 	
 	/**
@@ -120,9 +120,6 @@ public class PixmapSprite extends Sprite implements Disposable {
 
 		position.x *= scaleX;
 		position.y *= scaleY;
-
-//		System.out.println("x = (" + onScreenX + "-" + getX() + ") * (" + pixmap.getWidth() + "/" + getWidth() + ")");
-//		System.out.println("y = (" + getHeight() + "-(" + onScreenY + "-" + getY() + ") * (" + pixmap.getHeight() + "/" + getHeight() + ")");
 	}
 
 	/**
