@@ -16,6 +16,7 @@ public class Level implements Disposable {
 	private Ship ship;
 	private List<EnemyShip> enemies = new ArrayList<EnemyShip>();
 	private List<Weapon> weapons = new ArrayList<Weapon>();
+	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private Background background;
 
 	public String getName() {
@@ -70,6 +71,14 @@ public class Level implements Disposable {
 		this.weapons.addAll(weapons);
 	}
 	
+	public List<Projectile> getProjectiles() {
+		return projectiles;
+	}
+
+	public void setProjectiles(List<Projectile> projectiles) {
+		this.projectiles = projectiles;
+	}
+
 	public Background getBackground() {
 		return background;
 	}
@@ -112,6 +121,9 @@ public class Level implements Disposable {
 		
 		for (EnemyShip enemy : enemies)
 			enemy.draw(batch);
+		
+		for (Projectile projectile : projectiles)
+			projectile.draw(batch);
 	}
 	
 	public void dispose() {

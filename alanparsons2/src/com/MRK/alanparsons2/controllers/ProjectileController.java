@@ -19,11 +19,15 @@ import com.badlogic.gdx.utils.Disposable;
 public class ProjectileController implements Disposable {
 
 	private List<Weapon> weapons = new ArrayList<Weapon>();
-	private List<Projectile> projectiles = new ArrayList<Projectile>();
+	private List<Projectile> projectiles;// = new ArrayList<Projectile>();
 	private List<Sprite> targets = new ArrayList<Sprite>();
 	private List<Projectile> toBeRemoved = new ArrayList<Projectile>();
 	private final Vector2 position = new Vector2();	
 	private List<Vector2> impacts = new ArrayList<Vector2>();
+	
+	public ProjectileController(List<Projectile> projectiles) {
+		this.projectiles = projectiles;
+	}
 	
 	public void dispose() {
 		for (Weapon weapon : weapons)

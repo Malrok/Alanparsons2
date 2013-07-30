@@ -43,7 +43,7 @@ public class LevelRenderer implements Disposable {
 		camera = new RotatingCamera();
 		
 		shipController = new ShipController(level.getShip());
-		projectileController = new ProjectileController();
+		projectileController = new ProjectileController(level.getProjectiles());
 		particleController = new ParticleController();
 		
 		shapeRenderer = new ShapeRenderer();

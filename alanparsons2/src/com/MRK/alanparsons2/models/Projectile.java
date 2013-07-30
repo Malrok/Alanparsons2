@@ -3,6 +3,7 @@ package com.MRK.alanparsons2.models;
 import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -25,8 +26,8 @@ public class Projectile extends Sprite implements Disposable {
 	 * @param speed   - {@link Vector2}
 	 * @param power   - int
 	 */
-	public Projectile(Sprite emitter, Texture texture, Vector2 speed, int power) {
-		super(texture);
+	public Projectile(Sprite emitter, TextureRegion texture, Vector2 speed, int power) {
+		super(texture.getTexture());
 		super.setSize(PROJECTILE_WIDTH, PROJECTILE_HEIGHT);
 		super.setOrigin(PROJECTILE_WIDTH / 2, PROJECTILE_HEIGHT / 2);
 		this.emitter = emitter;

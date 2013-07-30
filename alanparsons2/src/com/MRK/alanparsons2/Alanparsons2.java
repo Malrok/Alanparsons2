@@ -10,7 +10,7 @@ import com.badlogic.gdx.Game;
 
 public class Alanparsons2 extends Game {
 
-	public static final boolean DEBUG = true; 
+	public static final boolean DEBUG = false; 
 	
 	private boolean isInitialized = false;
 	private int width, height;

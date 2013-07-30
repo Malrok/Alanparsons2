@@ -9,6 +9,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar" sourcepath="libs/gdx-backend-android-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/alanparsons2/libs/gdx.jar" sourcepath="/alanparsons2/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/alanparsons2/libs/tween-engine-api.jar" sourcepath="/alanparsons2/libs/tween-engine-api-sources.jar"/>
-	<classpathentry kind="lib" path="/alanparsons2/libs/guava-14.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/alanparsons2/libs/guava-14.0.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

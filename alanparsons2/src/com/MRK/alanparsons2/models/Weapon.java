@@ -1,6 +1,5 @@
 package com.MRK.alanparsons2.models;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +14,7 @@ public class Weapon implements Disposable {
 
 	private String name;
 	private boolean enabled = false;
-	private Texture projectileTexture;
+	private TextureRegion projectileTexture;
 	private Vector2 position = new Vector2();
 //	private List<Vector2> aimAt = new ArrayList<Vector2>();
 	private Vector2 aimAt;
@@ -64,12 +63,12 @@ public class Weapon implements Disposable {
 			lastShoot = TimeUtils.millis();
 	}
 	
-	public Texture getProjectileTexture() {
+	public TextureRegion getProjectileTexture() {
 		return projectileTexture;
 	}
 	
 	public void setProjectileTexture(TextureRegion texture) {
-		projectileTexture = texture.getTexture();
+		projectileTexture = texture;
 	}
 	
 	public void setPosition(float x, float y) {
