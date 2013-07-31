@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.math.Vector2;
@@ -74,7 +73,8 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 		super.update();
 //		for (Weapon weapon: shipWeapons) {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
-			entry.getValue().setAimAt(CircleHelper.getVectorAimingAtCenter(entry.getValue().getPosition().x, entry.getValue().getPosition().y, aimX, aimY, Ship.PROJECTILE_SPEED));
+//			entry.getValue().setAimAt(CircleHelper.getVectorAimingAtCenter(entry.getValue().getPosition().x, entry.getValue().getPosition().y, aimX, aimY, Ship.PROJECTILE_SPEED));
+			entry.getValue().setAimAt(new Vector2(entry.getValue().getPosition().x - aimX, entry.getValue().getPosition().y - aimY));
 			entry.getValue().update();
 		}
 	}

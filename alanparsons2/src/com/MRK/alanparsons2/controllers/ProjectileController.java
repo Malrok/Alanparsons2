@@ -3,6 +3,7 @@ package com.MRK.alanparsons2.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.MRK.alanparsons2.factories.ProjectileFactory;
 import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.PixmapSprite;
 import com.MRK.alanparsons2.models.Projectile;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class ProjectileController implements Disposable {
 
+	private ProjectileFactory projectileFactory;
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<Projectile> projectiles;// = new ArrayList<Projectile>();
 	private List<Sprite> targets = new ArrayList<Sprite>();
@@ -25,7 +27,8 @@ public class ProjectileController implements Disposable {
 	private final Vector2 position = new Vector2();	
 	private List<Vector2> impacts = new ArrayList<Vector2>();
 	
-	public ProjectileController(List<Projectile> projectiles) {
+	public ProjectileController(ProjectileFactory projectileFactory, List<Projectile> projectiles) {
+		this.projectileFactory = projectileFactory;
 		this.projectiles = projectiles;
 	}
 	
@@ -78,6 +81,7 @@ public class ProjectileController implements Disposable {
 	 * Mise à jour cyclique du controlleur
 	 */
 	public void update() {
+//		System.out.println("updating weapons " + weapons.size());
 		updateWeapons();
 		updateProjectiles();
 		fireWeapons();
@@ -87,9 +91,9 @@ public class ProjectileController implements Disposable {
 		for (Weapon weapon : weapons) {
 //			System.out.println("Weapon x/y = " + weapon.getPosition().x + "/" + weapon.getPosition().y + " shouldEmit = " + weapon.shouldEmitProjectile());
 			if (weapon.shouldEmitProjectile()) {
-				Projectile projectile = new Projectile(weapon.getEmitter(), weapon.getProjectileTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
-				projectile.setPosition(weapon.getPosition().x - Projectile.PROJECTILE_WIDTH / 2, weapon.getPosition().y);
-				projectiles.add(projectile);
+//				Projectile projectile = new Projectile(weapon.getEmitter(), weapon.getProjectileTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
+//				projectile.setPosition(weapon.getPosition().x - Projectile.PROJECTILE_WIDTH / 2, weapon.getPosition().y);
+				projectiles.add(projectileFactory.createProjectile(weapon));
 				weapon.projectileEmitted();
 			}
 		}

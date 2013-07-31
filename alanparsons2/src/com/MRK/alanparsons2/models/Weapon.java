@@ -1,7 +1,6 @@
 package com.MRK.alanparsons2.models;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -14,12 +13,12 @@ public class Weapon implements Disposable {
 
 	private String name;
 	private boolean enabled = false;
-	private TextureRegion projectileTexture;
+	private int projectileType;
+//	private TextureRegion projectileTexture;
 	private Vector2 position = new Vector2();
 //	private List<Vector2> aimAt = new ArrayList<Vector2>();
 	private Vector2 aimAt;
 	private int shootFrequency = 3; // shots per second
-	private int shootPower = 1;
 	private long lastShoot;
 	private boolean shouldEmitProjectile = false;
 	private String emitterName;
@@ -63,14 +62,22 @@ public class Weapon implements Disposable {
 			lastShoot = TimeUtils.millis();
 	}
 	
-	public TextureRegion getProjectileTexture() {
-		return projectileTexture;
-	}
+//	public TextureRegion getProjectileTexture() {
+//		return projectileTexture;
+//	}
+//	
+//	public void setProjectileTexture(TextureRegion texture) {
+//		projectileTexture = texture;
+//	}
 	
-	public void setProjectileTexture(TextureRegion texture) {
-		projectileTexture = texture;
+	public int getProjectileType() {
+		return projectileType;
 	}
-	
+
+	public void setProjectileType(int projectileType) {
+		this.projectileType = projectileType;
+	}
+
 	public void setPosition(float x, float y) {
 		this.position.x = x;
 		this.position.y = y;
@@ -104,14 +111,6 @@ public class Weapon implements Disposable {
 	
 	public void setShootFrequency(int shootFrequency) {
 		this.shootFrequency = shootFrequency;
-	}
-	
-	public int getShootPower() {
-		return shootPower;
-	}
-	
-	public void setShootPower(int shootPower) {
-		this.shootPower = shootPower;
 	}
 	
 	/**

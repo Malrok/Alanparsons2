@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.MRK.alanparsons2.controllers.ShipController;
+import com.MRK.alanparsons2.templates.ProjectileTemplate;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -16,6 +17,7 @@ public class Level implements Disposable {
 	private Ship ship;
 	private List<EnemyShip> enemies = new ArrayList<EnemyShip>();
 	private List<Weapon> weapons = new ArrayList<Weapon>();
+	private List<ProjectileTemplate> projectilesTemplates = new ArrayList<ProjectileTemplate>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private Background background;
 
@@ -67,10 +69,22 @@ public class Level implements Disposable {
 		return weapons;
 	}
 	
-	public void addWeapons(List<Weapon> weapons) {
-		this.weapons.addAll(weapons);
+	public void addWeapon(Weapon weapon) {
+		this.weapons.add(weapon);
 	}
 	
+//	public void addWeapons(List<Weapon> weapons) {
+//		this.weapons.addAll(weapons);
+//	}
+	
+	public List<ProjectileTemplate> getProjectilesTemplates() {
+		return projectilesTemplates;
+	}
+
+	public void setProjectilesTemplates(List<ProjectileTemplate> projectilesTemplates) {
+		this.projectilesTemplates = projectilesTemplates;
+	}
+
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}

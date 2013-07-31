@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.MRK.alanparsons2.controllers.ShipController;
-import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class Ship extends Sprite implements Disposable {
 	
-	public static final float PROJECTILE_SPEED = .1f;
+//	public static final float PROJECTILE_SPEED = .1f;
 	public static final int STILL = 0;
 	public static final int TURNING_LEFT = 1;
 	public static final int TURNING_RIGHT = 2;
@@ -83,7 +82,8 @@ public class Ship extends Sprite implements Disposable {
 	 * @param lastRotateValue - float : dernier angle de rotation appliqué au vaisseau
 	 */
 	public void update(float lastRotateValue, float x, float y) {
-		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + getWidth() / 2, getY() + getHeight() / 2, x, y, PROJECTILE_SPEED));
+//		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + getWidth() / 2, getY() + getHeight() / 2, x, y, PROJECTILE_SPEED));
+		weapon.setAimAt(new Vector2(getX() + getWidth() / 2 - x, getY() + getHeight() / 2 - y));
 		weapon.update();
 	}
 	

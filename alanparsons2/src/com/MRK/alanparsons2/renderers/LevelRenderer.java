@@ -4,6 +4,7 @@ import com.MRK.alanparsons2.Alanparsons2;
 import com.MRK.alanparsons2.controllers.ParticleController;
 import com.MRK.alanparsons2.controllers.ProjectileController;
 import com.MRK.alanparsons2.controllers.ShipController;
+import com.MRK.alanparsons2.factories.ProjectileFactory;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.RotatingCamera;
 import com.badlogic.gdx.Gdx;
@@ -43,7 +44,7 @@ public class LevelRenderer implements Disposable {
 		camera = new RotatingCamera();
 		
 		shipController = new ShipController(level.getShip());
-		projectileController = new ProjectileController(level.getProjectiles());
+		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
 		particleController = new ParticleController();
 		
 		shapeRenderer = new ShapeRenderer();

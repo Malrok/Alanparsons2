@@ -1,7 +1,9 @@
 package com.MRK.alanparsons2.factories;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,6 +16,7 @@ import com.MRK.alanparsons2.models.Weapon;
 import com.MRK.alanparsons2.resources.LevelFileHandler;
 import com.MRK.alanparsons2.resources.Resource;
 import com.MRK.alanparsons2.resources.ResourceValue;
+import com.MRK.alanparsons2.templates.ProjectileTemplate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -50,8 +53,7 @@ public class LevelBuilder implements Disposable {
 	private static final String TEXTURE = "texture";
 	private static final String POWER = "power";
 	private static final String SHOTS_PER_SECOND = "sps";
-	private static final String SPEEDX = "speedx";
-	private static final String SPEEDY = "speedy";
+	private static final String SPEED = "speed";
 	private static final String ZOOM_MIN = "zoom_min";
 	private static final String ZOOM_MAX = "zoom_max";
 	private static final String REPEAT_WIDTH = "repeatwidth";
@@ -60,7 +62,7 @@ public class LevelBuilder implements Disposable {
 	private static final String SHIFTY = "shifty";
 	private static final String NAME = "name";
 	private static final String WEAPON_HOST = "host";
-	private static final String PROJECTILE_EMITTER = "emitter";
+	private static final String PROJECTILE_TYPE = "projectiletype";
 	private static final String Z_RANK = "zrank";
 	
 	private FileHandle handle;
@@ -75,6 +77,7 @@ public class LevelBuilder implements Disposable {
 	private Map<String, Weapon> weapons = new HashMap<String, Weapon>();
 	private float cameraWidth, cameraHeight, cameraZoomMin, cameraZoomMax;
 	private Background background = new Background();
+	private List<ProjectileTemplate> projectiles = new ArrayList<ProjectileTemplate>();
 	
 	@Override
 	public void dispose() {
@@ -103,6 +106,7 @@ public class LevelBuilder implements Disposable {
 		
 		for (Entry<String, Weapon> weapon : weapons.entrySet()) {
 			weapon.getValue().setEmitter(getSpriteByName(weapon.getValue().getEmitterName()));
+			level.addWeapon(weapon.getValue());
 		}
 		
 		for (Entry<String, Sprite> sprite : sprites.entrySet()) {
@@ -117,6 +121,8 @@ public class LevelBuilder implements Disposable {
 		for (EnemyShip enemy : level.getEnemies()) {
 			enemy.setWeapons(weapons);
 		}
+		
+		level.setProjectilesTemplates(projectiles);
 	}
 	
 	private void constructObject(String entity, Map<String, ResourceValue> values) {
@@ -133,7 +139,7 @@ public class LevelBuilder implements Disposable {
 			constructWeapon(values);
 		}
 		if (entity.equalsIgnoreCase(PROJECTILE)) {
-			
+			constructProjectile(values);
 		}
 		if (entity.equalsIgnoreCase(STATIC_BACKGROUND)) {
 			constructBackground(false, values);
@@ -142,7 +148,7 @@ public class LevelBuilder implements Disposable {
 			constructBackground(true, values);
 		}
 	}
-	
+
 	private void constructLevel(Map<String, ResourceValue> values) {
 		level = new Level();
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
@@ -209,13 +215,34 @@ public class LevelBuilder implements Disposable {
 				weapon.setName(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(WEAPON_HOST))
 				weapon.setEmitterName(value.getValue().getString());
-			if (value.getKey().equalsIgnoreCase(POWER))
-				weapon.setShootPower((int) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(SHOTS_PER_SECOND))
 				weapon.setShootFrequency((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(PROJECTILE_TYPE))
+				weapon.setProjectileType((int) value.getValue().getNumber());
 		}
 
 		weapons.put(weapon.getName(), weapon);
+	}
+	
+	private void constructProjectile(Map<String, ResourceValue> values) {
+		ProjectileTemplate projectile = new ProjectileTemplate();
+		
+		for (Entry<String, ResourceValue> value : values.entrySet()) {
+			if (value.getKey().equalsIgnoreCase(PROJECTILE_TYPE))
+				projectile.setType((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(SPEED))
+				projectile.setSpeed((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(WIDTH))
+				projectile.setWidth((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(HEIGHT))
+				projectile.setHeight((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(TEXTURE))
+				projectile.setTexture(atlas.findRegion(value.getValue().getString()));
+			if (value.getKey().equalsIgnoreCase(POWER))
+				projectile.setPower((int) value.getValue().getNumber());
+		}
+		
+		projectiles.add(projectile);
 	}
 	
 	private void constructBackground(boolean moveable, Map<String, ResourceValue> values) {
