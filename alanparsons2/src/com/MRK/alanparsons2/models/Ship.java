@@ -70,8 +70,8 @@ public class Ship extends Sprite implements Disposable {
 		for (Entry<String, Weapon> entry : weapons.entrySet()) {
 			if (entry.getValue().getEmitter().equals(this)) {
 				weapon = entry.getValue();
-				weapon.setEnabled(true);
 				weapon.setAimAt(new Vector2(0, 1));
+				weapon.setEnabled(true);
 			}
 		}
 	}
@@ -83,7 +83,8 @@ public class Ship extends Sprite implements Disposable {
 	 */
 	public void update(float lastRotateValue, float x, float y) {
 //		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + getWidth() / 2, getY() + getHeight() / 2, x, y, PROJECTILE_SPEED));
-		weapon.setAimAt(new Vector2(getX() + getWidth() / 2 - x, getY() + getHeight() / 2 - y));
+//		weapon.setAimAt(new Vector2(getX() + getWidth() / 2 - x, getY() + getHeight() / 2 - y));
+		weapon.setAimAt(new Vector2(x, y));
 		weapon.update();
 	}
 	
@@ -94,6 +95,8 @@ public class Ship extends Sprite implements Disposable {
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
 		weapon.setPosition(x + getWidth() / 2, y + getHeight() / 2);
+		
+//		System.out.println("Ship x/y=" + x + "/" + y + " weapon x/y=" + weapon.getPosition().x + "/" + weapon.getPosition().y);
 	}
 	
 	/**

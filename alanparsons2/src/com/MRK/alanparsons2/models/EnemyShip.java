@@ -74,8 +74,9 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 //		for (Weapon weapon: shipWeapons) {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
 //			entry.getValue().setAimAt(CircleHelper.getVectorAimingAtCenter(entry.getValue().getPosition().x, entry.getValue().getPosition().y, aimX, aimY, Ship.PROJECTILE_SPEED));
-			entry.getValue().setAimAt(new Vector2(entry.getValue().getPosition().x - aimX, entry.getValue().getPosition().y - aimY));
-			entry.getValue().update();
+			entry.getValue().setAimAt(new Vector2(aimX, aimY));
+//			entry.getValue().setEnabled(true);
+//			entry.getValue().update();
 		}
 	}
 	

@@ -118,9 +118,9 @@ public class LevelBuilder implements Disposable {
 			}
 		}
 		
-		for (EnemyShip enemy : level.getEnemies()) {
-			enemy.setWeapons(weapons);
-		}
+//		for (EnemyShip enemy : level.getEnemies()) {
+//			enemy.setWeapons(weapons);
+//		}
 		
 		level.setProjectilesTemplates(projectiles);
 	}
@@ -231,15 +231,15 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(PROJECTILE_TYPE))
 				projectile.setType((int) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(SPEED))
-				projectile.setSpeed((int) value.getValue().getNumber());
+				projectile.setSpeed((float) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(WIDTH))
-				projectile.setWidth((int) value.getValue().getNumber());
+				projectile.setWidth((float) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
-				projectile.setHeight((int) value.getValue().getNumber());
+				projectile.setHeight((float) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				projectile.setTexture(atlas.findRegion(value.getValue().getString()));
 			if (value.getKey().equalsIgnoreCase(POWER))
-				projectile.setPower((int) value.getValue().getNumber());
+				projectile.setPower((float) value.getValue().getNumber());
 		}
 		
 		projectiles.add(projectile);

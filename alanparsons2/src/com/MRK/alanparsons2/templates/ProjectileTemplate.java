@@ -6,7 +6,7 @@ public class ProjectileTemplate {
 
 	private int type;
 	private float speed;
-	private int power = 1;
+	private float power = 1;
 	private float width, height;
 	private TextureRegion texture;
 	
@@ -26,11 +26,11 @@ public class ProjectileTemplate {
 		return speed;
 	}
 	
-	public int getPower() {
+	public float getPower() {
 		return power;
 	}
 	
-	public void setPower(int shootPower) {
+	public void setPower(float shootPower) {
 		this.power = shootPower;
 	}
 	

@@ -24,15 +24,22 @@ public class ProjectileFactory {
 			return null;
 		}
 		
-		System.out.println("ProjectileFactory.createProjectile " + (template.getTexture() == null));
+//		System.out.println("ProjectileFactory.createProjectile " + (template.getTexture() == null));
 		
 		Projectile projectile = new Projectile(
 				weapon.getEmitter(), template.getTexture(), 
 				CircleHelper.getVectorAimingAtCenter(
-						weapon.getPosition().x + template.getWidth() / 2, weapon.getPosition().y + template.getHeight() / 2, 
-						weapon.getAimAt().x, weapon.getAimAt().y, template.getSpeed()), 
+						weapon.getPosition().x - template.getWidth() / 2, weapon.getPosition().y - template.getHeight() / 2, 
+						weapon.getAimAt().x, weapon.getAimAt().y, template.getSpeed()),
+//				new Vector2(0,1),
 				template.getPower());
-		projectile.setPosition(weapon.getPosition().x - template.getWidth() / 2, weapon.getPosition().y);
+//		projectile.setPosition(weapon.getPosition().x - template.getWidth() / 2, weapon.getPosition().y);
+		projectile.setPosition(weapon.getPosition().x, weapon.getPosition().y);
+		
+		projectile.setSize(template.getWidth(), template.getHeight());
+		
+		System.out.println("Weapon     x/y     = " + weapon.getPosition().x + "/" + weapon.getPosition().y);
+		System.out.println("Projectile x/y/w/h = " + projectile.getX() + "/" + projectile.getY() + "/" + projectile.getWidth() + "/" + projectile.getHeight());
 		
 		return projectile;
 	}

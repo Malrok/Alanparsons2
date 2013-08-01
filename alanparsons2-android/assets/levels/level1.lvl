@@ -43,7 +43,7 @@ host:ship
 sps:1
 [projectile]
 projectiletype:1
-speed:1
+speed:0.2
 width:1
 height:0.4
 texture:shot
@@ -63,7 +63,7 @@ power:1
 sps:1
 [projectile]
 type:2
-speed:1
+speed:0.2
 width:1
 height:0.4
 texture:shot

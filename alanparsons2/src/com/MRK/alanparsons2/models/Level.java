@@ -136,6 +136,7 @@ public class Level implements Disposable {
 		for (EnemyShip enemy : enemies)
 			enemy.draw(batch);
 		
+//		System.out.println("Drawing projectiles " + projectiles.size());
 		for (Projectile projectile : projectiles)
 			projectile.draw(batch);
 	}
@@ -145,6 +146,9 @@ public class Level implements Disposable {
 		if (enemies != null)
 			for (EnemyShip enemy : enemies)
 				enemy.dispose();
+		if (projectiles != null)
+			for (Projectile projectile : projectiles)
+				projectile.dispose();
 	}
 	
 	public void resize() {

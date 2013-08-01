@@ -9,7 +9,6 @@ import com.MRK.alanparsons2.models.PixmapSprite;
 import com.MRK.alanparsons2.models.Projectile;
 import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -21,7 +20,7 @@ public class ProjectileController implements Disposable {
 
 	private ProjectileFactory projectileFactory;
 	private List<Weapon> weapons = new ArrayList<Weapon>();
-	private List<Projectile> projectiles;// = new ArrayList<Projectile>();
+	private List<Projectile> projectiles;
 	private List<Sprite> targets = new ArrayList<Sprite>();
 	private List<Projectile> toBeRemoved = new ArrayList<Projectile>();
 	private final Vector2 position = new Vector2();	
@@ -41,7 +40,7 @@ public class ProjectileController implements Disposable {
 		for (Projectile projectile : projectiles)
 			projectile.dispose();
 		
-		projectiles.clear();
+//		projectiles.clear();
 	}
 	
 	/**
@@ -57,7 +56,7 @@ public class ProjectileController implements Disposable {
 	 * @param weapon
 	 */
 	public void addWeapons(List<Weapon> weapons) {
-		System.out.println("adding weapons " + weapons.size());
+//		System.out.println("adding weapons " + weapons.size());
 		this.weapons.addAll(weapons);
 	}
 	
@@ -83,13 +82,13 @@ public class ProjectileController implements Disposable {
 	public void update() {
 //		System.out.println("updating weapons " + weapons.size());
 		updateWeapons();
-		updateProjectiles();
+//		updateProjectiles();
 		fireWeapons();
 	}
 	
 	public void fireWeapons() {
 		for (Weapon weapon : weapons) {
-//			System.out.println("Weapon x/y = " + weapon.getPosition().x + "/" + weapon.getPosition().y + " shouldEmit = " + weapon.shouldEmitProjectile());
+//			System.out.println("Weapon " + weapon.getEmitterName() + " x/y = " + weapon.getPosition().x + "/" + weapon.getPosition().y + " shouldEmit = " + weapon.shouldEmitProjectile());
 			if (weapon.shouldEmitProjectile()) {
 //				Projectile projectile = new Projectile(weapon.getEmitter(), weapon.getProjectileTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
 //				projectile.setPosition(weapon.getPosition().x - Projectile.PROJECTILE_WIDTH / 2, weapon.getPosition().y);
@@ -122,7 +121,7 @@ public class ProjectileController implements Disposable {
 						collide = ((PixmapSprite) target).collides(position);
 						if (collide) {
 							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
-							((PixmapSprite) target).eraseCircle(position, projectile.getPower());
+							((PixmapSprite) target).eraseCircle(position, (int) projectile.getPower());
 						}
 					} else {
 						collide = true;
@@ -138,11 +137,11 @@ public class ProjectileController implements Disposable {
 		projectiles.removeAll(toBeRemoved);
 	}
 	
-	public void drawProjectiles(SpriteBatch batch) {
-		for (Projectile projectile : projectiles) {
-			projectile.draw(batch);
-		}
-	}
+//	public void drawProjectiles(SpriteBatch batch) {
+//		for (Projectile projectile : projectiles) {
+//			projectile.draw(batch);
+//		}
+//	}
 	
 	public List<Vector2> getImpacts() {
 		return impacts;

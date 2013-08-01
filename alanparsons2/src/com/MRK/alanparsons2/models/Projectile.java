@@ -17,11 +17,12 @@ public class Projectile implements Disposable {
 //	public static float PROJECTILE_HEIGHT = 0.4f;
 	
 	private TextureRegion texture;
-	private Vector2 position;
+//	private Vector2 position;
+	private float x, y;
 	private float angle;
 	
 	private Vector2 speed;
-	private int power;
+	private float power;
 	private float width, height;
 	
 	private Sprite emitter;
@@ -32,10 +33,12 @@ public class Projectile implements Disposable {
 	 * @param speed   - {@link Vector2}
 	 * @param power   - int
 	 */
-	public Projectile(Sprite emitter, TextureRegion texture, Vector2 speed, int power) {
+	public Projectile(Sprite emitter, TextureRegion texture, Vector2 speed, float power) {
 //		super(texture.getTexture());
 //		super.setSize(PROJECTILE_WIDTH, PROJECTILE_HEIGHT);
 //		super.setOrigin(PROJECTILE_WIDTH / 2, PROJECTILE_HEIGHT / 2);
+//		System.out.println("Projectile speed x/y = " + speed.x + "/" + speed.y);
+		
 		this.texture = texture;
 		this.emitter = emitter;
 		this.speed = speed;
@@ -52,24 +55,25 @@ public class Projectile implements Disposable {
 		return speed;
 	}
 	
-	public int getPower() {
+	public float getPower() {
 		return power;
 	}
 	
-	public void setPower(int power) {
+	public void setPower(float power) {
 		this.power = power;
 	}
 	
 	public float getX() {
-		return position.x;
+		return x;
 	}
 	
 	public float getY() {
-		return position.y;
+		return y;
 	}
 	
 	public void setPosition(float x, float y) {
-		this.position = new Vector2(x, y);
+		this.x = x;
+		this.y = y;
 	}
 	
 	public float getWidth() {
@@ -95,14 +99,16 @@ public class Projectile implements Disposable {
 	 * Calcul de la nouvelle position
 	 */
 	public void update() {
-		float x = getX() + speed.x,
-			  y = getY() + speed.y;
+//		float x = getX() + speed.x,
+//			  y = getY() + speed.y;
 		setPosition(x, y);
 	}
 	
 	public void draw(SpriteBatch batch) {
-		System.out.println("drawing projectile x/y/w/h " + getX() + "/" + getY() + "/" + width + "/" + height);
-		batch.draw(texture, getX() - width /2, getY() - height / 2, getX(), getY(), 
-				getWidth(), getHeight(), 1, 1, angle); 
+//		System.out.println("drawing projectile x/y/w/h " + x + "/" + y + "/" + width + "/" + height);
+//		batch.draw(texture, x - width / 2, y - height / 2, x, y, 
+//				width, height, 1, 1, angle);
+		batch.draw(texture, x, y, x, y, 
+				width, height, 1, 1, angle);
 	}
 }
