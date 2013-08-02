@@ -1,4 +1,4 @@
-package com.MRK.alanparsons2.screens;
+package com.MRK.alanparsons2.templates;
 
 public interface Screen {
 

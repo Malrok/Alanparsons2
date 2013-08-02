@@ -118,9 +118,9 @@ public class LevelBuilder implements Disposable {
 			}
 		}
 		
-//		for (EnemyShip enemy : level.getEnemies()) {
-//			enemy.setWeapons(weapons);
-//		}
+		for (EnemyShip enemy : level.getEnemies()) {
+			enemy.setWeapons(weapons);
+		}
 		
 		level.setProjectilesTemplates(projectiles);
 	}

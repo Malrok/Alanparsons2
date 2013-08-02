@@ -18,10 +18,6 @@ public class CircleHelper {
 	public static Vector2 getPointOnCircle(float originx, float originy, float radius, float angle) {
 		double x = originx + (radius * Math.cos(angle));
 		double y = originy + (radius * Math.sin(angle));
-
-//		System.out.println("getPointOnCircle origin x/y = " + origin.x + "/" + origin.y +
-//		" radius = " + radius + " angle = " + angle +
-//		"\nnew x/y = " + x + "/" + y);
 		
 		return new Vector2((float) x, (float) y);
 	}
@@ -40,8 +36,6 @@ public class CircleHelper {
 		
 		double x = getWay(originx, aimx) * speed * Math.cos(angle);
 		double y = getWay(originy, aimy) * speed * Math.sin(angle);
-		
-//		System.out.println("getVectorAimingAtCenter angle=" + Math.toDegrees(angle) + " x/y=" + x + "/" + y);
 		
 		return new Vector2((float)x, (float)y);
 	}

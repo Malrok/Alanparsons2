@@ -85,9 +85,8 @@ public class ProjectileController implements Disposable {
 	public void fireWeapons() {
 		for (Weapon weapon : weapons) {
 			if (weapon.shouldEmitProjectile()) {
-//				Projectile projectile = new Projectile(weapon.getEmitter(), weapon.getProjectileTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
-//				projectile.setPosition(weapon.getPosition().x - Projectile.PROJECTILE_WIDTH / 2, weapon.getPosition().y);
-				projectiles.add(projectileFactory.createProjectile(weapon));
+				Projectile projectile = projectileFactory.createProjectile(weapon);
+				if (projectile != null) projectiles.add(projectile);
 				weapon.projectileEmitted();
 			}
 		}
@@ -100,8 +99,6 @@ public class ProjectileController implements Disposable {
 	}
 	
 	public void updateProjectiles() {
-//		boolean collide;
-		
 		toBeRemoved.clear();
 		
 		for (Projectile projectile : projectiles) {
@@ -117,13 +114,9 @@ public class ProjectileController implements Disposable {
 	
 	private boolean collide(Projectile projectile) {
 		for (Sprite target : targets) {
-//			System.out.println("Projectile from " + projectile.getEmitter().getClass().toString() + " @ x/y/w/h " +
-//					projectile.getX() + "/" + projectile.getY() + "/" + projectile.getWidth() + "/" + projectile.getHeight() +
-//					" target " + target.getClass().toString() + " rect = " + target.getBoundingRectangle().toString());
 			if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() + projectile.getWidth() / 2, projectile.getY() + projectile.getHeight() / 2)) {
 				if (target instanceof PixmapSprite) {
 					((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
-//					System.out.println("projected position x/y " + position.x + "/" + position.y); 
 					if (((PixmapSprite) target).collides(position)) {
 						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 						((PixmapSprite) target).eraseCircle(position, (int) projectile.getPower());

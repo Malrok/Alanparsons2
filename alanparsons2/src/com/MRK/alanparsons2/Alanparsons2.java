@@ -5,7 +5,7 @@ import com.MRK.alanparsons2.interfaces.AndroidCallback;
 import com.MRK.alanparsons2.screens.LevelScreen;
 import com.MRK.alanparsons2.screens.LoadingScreen;
 import com.MRK.alanparsons2.screens.MainScreen;
-import com.MRK.alanparsons2.screens.Screen;
+import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Game;
 
 public class Alanparsons2 extends Game {

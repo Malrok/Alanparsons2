@@ -68,7 +68,6 @@ public class LevelRenderer implements Disposable {
 		batch.begin();
 		
 		level.draw(batch);		
-//		projectileController.drawProjectiles(batch);
 		particleController.draw(batch);
 		
 		batch.end();

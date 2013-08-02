@@ -14,6 +14,9 @@ public class ProjectileFactory {
 	
 	public ProjectileFactory(List<ProjectileTemplate> projectilesTemplates) {
 		this.projectilesTemplates = projectilesTemplates;
+		
+//		for (ProjectileTemplate template : projectilesTemplates)
+//			System.out.println("projectile template " + template.getType());
 	}
 	
 	public Projectile createProjectile(Weapon weapon) {
@@ -32,9 +35,6 @@ public class ProjectileFactory {
 				template.getPower());
 		projectile.setPosition(weapon.getPosition().x, weapon.getPosition().y);		
 		projectile.setSize(template.getWidth(), template.getHeight());
-		
-//		System.out.println("Weapon     x/y     = " + weapon.getPosition().x + "/" + weapon.getPosition().y);
-//		System.out.println("Projectile x/y/w/h = " + projectile.getX() + "/" + projectile.getY() + "/" + projectile.getWidth() + "/" + projectile.getHeight());
 		
 		return projectile;
 	}

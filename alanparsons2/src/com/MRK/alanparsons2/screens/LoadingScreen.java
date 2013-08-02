@@ -3,6 +3,7 @@ package com.MRK.alanparsons2.screens;
 import java.io.IOException;
 
 import com.MRK.alanparsons2.factories.LevelBuilder;
+import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;

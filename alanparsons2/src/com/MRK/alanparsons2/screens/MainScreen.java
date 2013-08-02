@@ -5,6 +5,7 @@ import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Linear;
 
 import com.MRK.alanparsons2.helpers.SpriteAccessor;
+import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;

@@ -10,16 +10,7 @@ import java.util.Map;
  */
 public class Resource {
 
-//	private String sectionName;
 	private Map<String, ResourceValue> values = new HashMap<String, ResourceValue>();
-	
-//	public Resource(String name) {
-//		sectionName = name;
-//	}
-//	
-//	public String getSectionName() {
-//		return sectionName;
-//	}
 	
 	public Map<String, ResourceValue> getValues() {
 		return values;

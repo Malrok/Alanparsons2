@@ -15,35 +15,14 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class Ship extends Sprite implements Disposable {
 	
-//	public static final float PROJECTILE_SPEED = .1f;
 	public static final int STILL = 0;
 	public static final int TURNING_LEFT = 1;
 	public static final int TURNING_RIGHT = 2;
-//	public static final int SHIP_WIDTH = 4;
-//	public static final int SHIP_HEIGHT= 4;
 	
 	private TextureRegion[] textures = new TextureRegion[3];
-	private Weapon weapon;
-	
+	private Weapon weapon;	
 	private int currentDirection = STILL;
-	
-//	public Ship() {
-//		super();
-////		textures[STILL] = new Texture(Gdx.files.internal("data/ship.png"));
-////		textures[TURNING_LEFT] = new Texture(Gdx.files.internal("data/ship_turning_left.png"));
-////		textures[TURNING_RIGHT] = new Texture(Gdx.files.internal("data/ship_turning_right.png"));
-//		
-////		setSize(SHIP_WIDTH, SHIP_HEIGHT);
-////		setOrigin(SHIP_WIDTH / 2, SHIP_HEIGHT / 2);
-//	}
-	
-//	public Ship clone() {
-//		Ship newShip = new Ship();
-//		newShip.set(this);
-//		for (int phase = 0; phase < 5; phase++)
-//			newShip.setTexture(phase, textures[phase]);
-//	}
-	
+		
 	public void dispose() {
 		weapon.dispose();
 	}
@@ -66,7 +45,6 @@ public class Ship extends Sprite implements Disposable {
 	 * Définit l'arme de la classe
 	 */
 	public void setWeapon(Map<String, Weapon> weapons) {
-//		weapon = new Weapon(this, texture, new Vector2(0, 1), 3, 1);
 		for (Entry<String, Weapon> entry : weapons.entrySet()) {
 			if (entry.getValue().getEmitter().equals(this)) {
 				weapon = entry.getValue();
@@ -82,8 +60,6 @@ public class Ship extends Sprite implements Disposable {
 	 * @param lastRotateValue - float : dernier angle de rotation appliqué au vaisseau
 	 */
 	public void update(float lastRotateValue, float x, float y) {
-//		weapon.setAimAt(CircleHelper.getVectorAimingAtCenter(getX() + getWidth() / 2, getY() + getHeight() / 2, x, y, PROJECTILE_SPEED));
-//		weapon.setAimAt(new Vector2(getX() + getWidth() / 2 - x, getY() + getHeight() / 2 - y));
 		weapon.setAimAt(new Vector2(x, y));
 		weapon.update();
 	}
@@ -95,8 +71,6 @@ public class Ship extends Sprite implements Disposable {
 	public void setPosition(float x, float y) {
 		super.setPosition(x, y);
 		weapon.setPosition(x + getWidth() / 2, y + getHeight() / 2);
-		
-//		System.out.println("Ship x/y=" + x + "/" + y + " weapon x/y=" + weapon.getPosition().x + "/" + weapon.getPosition().y);
 	}
 	
 	/**
@@ -106,32 +80,16 @@ public class Ship extends Sprite implements Disposable {
 		currentDirection = newDirection;
 	}
 	
-//	/**
-//	 * Récupération de la texture du vaisseau
-//	 */
-//	public TextureRegion getTexture() {
-//		return textures[currentDirection];
-//	}
-	
 	public void addTexture(int phase, TextureRegion texture) {
 		if (texture != null)
 			textures[phase] = texture;
 	}
 	
-//	public void setTexture(int phase, Texture texture) {
-//		textures[phase] = texture;
-//	}
-	
 	/**
 	 * rendering du vaisseau
 	 */
 	public void draw(SpriteBatch batch) {
-//		Texture texture = getTexture();
-//		System.out.println("drawing ship -- texture is null = " + (textures[currentDirection] == null) + " x/y/origx/origy/w/h " +
-//				getX() + "/" + getY() + "/" + getOriginX() + "/" + getOriginY() + "/" +  
-//				getWidth() + "/" + getHeight());
 		batch.draw(textures[currentDirection], getX(), getY(), getOriginX(), getOriginY(), 
 				getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90); 
-//				0, 0, texture.getWidth(), texture.getHeight(), false, false);
 	}
 }

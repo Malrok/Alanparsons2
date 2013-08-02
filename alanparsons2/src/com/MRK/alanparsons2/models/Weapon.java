@@ -14,31 +14,13 @@ public class Weapon implements Disposable {
 	private String name;
 	private boolean enabled = false;
 	private int projectileType;
-//	private TextureRegion projectileTexture;
 	private Vector2 position = new Vector2();
-//	private List<Vector2> aimAt = new ArrayList<Vector2>();
 	private Vector2 aimAt;
 	private int shootFrequency = 3; // shots per second
 	private long lastShoot;
 	private boolean shouldEmitProjectile = false;
 	private String emitterName;
 	private Sprite emitter;
-	
-//	/**
-//	 * Constructeur
-//	 * @param texture        - {@link Texture} : la texture à appliquer au projectile
-//	 * @param aimAt          - {@link Vector2} :  la direction vers laquelle pointe l'arme
-//	 * @param shootFrequency - int : le nombre de tirs par seconde
-//	 * @param shootPower     - int : la puissance d'un {@link Projectile}
-//	 */
-//	public Weapon(Sprite emitter, Texture texture, Vector2 aimAt, int shootFrequency, int shootPower) {
-//		this.emitter = emitter;
-////		this.projectileTexture = texture;
-//		this.position = new Vector2();
-//		this.aimAt.add(aimAt);
-//		this.shootFrequency = shootFrequency;
-//		this.shootPower = shootPower;
-//	}
 	
 	public String getName() {
 		return name;
@@ -62,14 +44,6 @@ public class Weapon implements Disposable {
 			lastShoot = TimeUtils.millis();
 	}
 	
-//	public TextureRegion getProjectileTexture() {
-//		return projectileTexture;
-//	}
-//	
-//	public void setProjectileTexture(TextureRegion texture) {
-//		projectileTexture = texture;
-//	}
-	
 	public int getProjectileType() {
 		return projectileType;
 	}
@@ -92,7 +66,6 @@ public class Weapon implements Disposable {
 	 * @return {@link Vector2}
 	 */
 	public Vector2 getAimAt() {
-//		return aimAt.get(0);
 		return aimAt;
 	}
 	
@@ -101,7 +74,6 @@ public class Weapon implements Disposable {
 	 * @param aimAt - {@link Vector2}
 	 */
 	public void setAimAt(Vector2 aimAt) {
-//		this.aimAt.get(0).set(aimAt);
 		this.aimAt = aimAt;
 	}
 	

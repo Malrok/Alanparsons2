@@ -72,11 +72,7 @@ public class Level implements Disposable {
 	public void addWeapon(Weapon weapon) {
 		this.weapons.add(weapon);
 	}
-	
-//	public void addWeapons(List<Weapon> weapons) {
-//		this.weapons.addAll(weapons);
-//	}
-	
+ 	
 	public List<ProjectileTemplate> getProjectilesTemplates() {
 		return projectilesTemplates;
 	}
@@ -124,8 +120,10 @@ public class Level implements Disposable {
 	}
 	
 	public void update() {
-		for (EnemyShip enemy : enemies)
+		for (EnemyShip enemy : enemies) {
+			enemy.updateWeapons(ship.getX(), ship.getY());
 			enemy.update();
+		}
 	}
 	
 	public void draw(SpriteBatch batch) {
@@ -136,7 +134,6 @@ public class Level implements Disposable {
 		for (EnemyShip enemy : enemies)
 			enemy.draw(batch);
 		
-//		System.out.println("Drawing projectiles " + projectiles.size());
 		for (Projectile projectile : projectiles)
 			projectile.draw(batch);
 	}

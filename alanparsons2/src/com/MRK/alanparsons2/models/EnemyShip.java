@@ -14,7 +14,7 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	private final Color color = new Color();
 	
 	private String name;
-//	private Vector2 position = new Vector2();
+	private Vector2 position = new Vector2();
 	
 //	private List<Weapon> weapons = new ArrayList<Weapon>();
 //	private List<PixmapPosition> weaponsPositions = new ArrayList<PixmapPosition>();
@@ -70,18 +70,23 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	public void setWeapons(Map<String, Weapon> weapons) {
 		initWeapons();
 		setWeaponsPositionOnSprite(weapons);
+		enableWeapons();
+		
+		// debug
+//		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+//			System.out.println(name + " weapon x/y " + entry.getKey().getX() + "/" + entry.getKey().getY() + " " + entry.getValue().getEmitterName());
+//		}
 	}
 	
 	/**
 	 * Mise à jour des armes afin qu'elles pointent dans la direction indiquée
 	 */
-	public void update(float aimX, float aimY) {
+	public void updateWeapons(float aimX, float aimY) {
 		super.update();
 //		for (Weapon weapon: shipWeapons) {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
 //			entry.getValue().setAimAt(CircleHelper.getVectorAimingAtCenter(entry.getValue().getPosition().x, entry.getValue().getPosition().y, aimX, aimY, Ship.PROJECTILE_SPEED));
 			entry.getValue().setAimAt(new Vector2(aimX, aimY));
-//			entry.getValue().setEnabled(true);
 //			entry.getValue().update();
 		}
 	}
@@ -90,6 +95,12 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 //		return weapons;
 //	}
 
+	public void enableWeapons() {
+		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+			entry.getValue().setEnabled(true);
+		}
+	}
+	
 	/**
 	 * Recherche sur la texture du vaisseau les points magenta définissant la position d'une arme, et la stocke<BR>
 	 * Les positions sont relatives au {@link Pixmap}
@@ -121,8 +132,13 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 		for (Entry<String, Weapon> weaponEntry : weapons.entrySet()) {
 			if (weaponEntry.getValue().getEmitter().equals(this)) {
 				for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {		
-					if (weaponEntry.getValue() == null)
-						weaponEntry.setValue(entry.getValue());
+					if (entry.getValue() == null) {
+						entry.setValue(weaponEntry.getValue());
+						
+						unproject(position, entry.getKey().getX(), entry.getKey().getY());
+						
+						entry.getValue().setPosition(position.x, position.y);
+					}
 				}
 			}
 		}
