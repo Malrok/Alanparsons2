@@ -199,10 +199,11 @@ public class LevelBuilder implements Disposable {
 					}
 		}
 		
-		if (width != 0 && height != 0)
+		if (ship instanceof EnemyShip && width != 0 && height != 0 && x != 0 && y != 0) {
 			ship.setSize(width, height);
-		if (x != 0 && y != 0)
-			ship.setPosition(x, y);
+			ship.setPosition(x - width / 2, y - height / 2);
+		} else if (width != 0 && height != 0)
+			ship.setSize(width, height);
 		
 		sprites.put((ship instanceof Ship) ? type : ((EnemyShip)ship).getName(), ship);
 	}

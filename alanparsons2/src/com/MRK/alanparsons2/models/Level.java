@@ -105,8 +105,8 @@ public class Level implements Disposable {
 		float minx = 999999999, maxx = 0;
 		
 		for (EnemyShip enemy : enemies) {
-			minx = Math.min(minx, enemy.getX());
-			maxx = Math.max(maxx, enemy.getX());
+			minx = Math.min(minx, enemy.getX() + enemy.getWidth() / 2);
+			maxx = Math.max(maxx, enemy.getX() + enemy.getWidth() / 2);
 		}
 		
 		return minx + ((maxx - minx) / 2);
@@ -116,8 +116,8 @@ public class Level implements Disposable {
 		float miny = 999999999, maxy = 0;
 		
 		for (EnemyShip enemy : enemies) {
-			miny = Math.min(miny, enemy.getY());
-			maxy = Math.max(maxy, enemy.getY());
+			miny = Math.min(miny, enemy.getY() + enemy.getHeight() / 2);
+			maxy = Math.max(maxy, enemy.getY() + enemy.getHeight() / 2);
 		}
 		
 		return miny + ((maxy - miny) / 2);

@@ -14,7 +14,7 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	private final Color color = new Color();
 	
 	private String name;
-	private Vector2 position = new Vector2();
+//	private Vector2 position = new Vector2();
 	
 //	private List<Weapon> weapons = new ArrayList<Weapon>();
 //	private List<PixmapPosition> weaponsPositions = new ArrayList<PixmapPosition>();
@@ -34,13 +34,19 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 		this.name = name;
 	}
 
-	public Vector2 getPosition() {
-		return position;
-	}
+//	public Vector2 getPosition() {
+//		return position;
+//	}
 	
-	public void setPosition(Vector2 position) {
-		this.position = position;
-	}
+//	public void setPosition(Vector2 position) {
+//		if (getWidth() != 0 && getHeight() != 0) {
+//			System.out.println("width = " + getWidth() + " height = " + getHeight());
+//			super.setPosition(position.x - getWidth() / 2, position.y - getHeight() / 2);
+//		} else {
+//			super.setPosition(position.x, position.y);
+//		}
+////		this.position = position;
+//	}
 	
 //	/**
 //	 * Définit la texture à appliquer

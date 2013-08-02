@@ -27,15 +27,15 @@ public class Ship extends Sprite implements Disposable {
 	
 	private int currentDirection = STILL;
 	
-	public Ship() {
-		super();
-//		textures[STILL] = new Texture(Gdx.files.internal("data/ship.png"));
-//		textures[TURNING_LEFT] = new Texture(Gdx.files.internal("data/ship_turning_left.png"));
-//		textures[TURNING_RIGHT] = new Texture(Gdx.files.internal("data/ship_turning_right.png"));
-		
-//		setSize(SHIP_WIDTH, SHIP_HEIGHT);
-//		setOrigin(SHIP_WIDTH / 2, SHIP_HEIGHT / 2);
-	}
+//	public Ship() {
+//		super();
+////		textures[STILL] = new Texture(Gdx.files.internal("data/ship.png"));
+////		textures[TURNING_LEFT] = new Texture(Gdx.files.internal("data/ship_turning_left.png"));
+////		textures[TURNING_RIGHT] = new Texture(Gdx.files.internal("data/ship_turning_right.png"));
+//		
+////		setSize(SHIP_WIDTH, SHIP_HEIGHT);
+////		setOrigin(SHIP_WIDTH / 2, SHIP_HEIGHT / 2);
+//	}
 	
 //	public Ship clone() {
 //		Ship newShip = new Ship();

@@ -99,8 +99,8 @@ public class Projectile implements Disposable {
 	 * Calcul de la nouvelle position
 	 */
 	public void update() {
-//		float x = getX() + speed.x,
-//			  y = getY() + speed.y;
+		float x = getX() + speed.x,
+			  y = getY() + speed.y;
 		setPosition(x, y);
 	}
 	
@@ -108,7 +108,6 @@ public class Projectile implements Disposable {
 //		System.out.println("drawing projectile x/y/w/h " + x + "/" + y + "/" + width + "/" + height);
 //		batch.draw(texture, x - width / 2, y - height / 2, x, y, 
 //				width, height, 1, 1, angle);
-		batch.draw(texture, x, y, x, y, 
-				width, height, 1, 1, angle);
+		batch.draw(texture, x, y, width / 2, height / 2, width, height, 1, 1, angle);
 	}
 }

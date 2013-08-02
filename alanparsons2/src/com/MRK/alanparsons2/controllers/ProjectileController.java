@@ -39,8 +39,6 @@ public class ProjectileController implements Disposable {
 		
 		for (Projectile projectile : projectiles)
 			projectile.dispose();
-		
-//		projectiles.clear();
 	}
 	
 	/**
@@ -56,7 +54,6 @@ public class ProjectileController implements Disposable {
 	 * @param weapon
 	 */
 	public void addWeapons(List<Weapon> weapons) {
-//		System.out.println("adding weapons " + weapons.size());
 		this.weapons.addAll(weapons);
 	}
 	
@@ -80,15 +77,13 @@ public class ProjectileController implements Disposable {
 	 * Mise à jour cyclique du controlleur
 	 */
 	public void update() {
-//		System.out.println("updating weapons " + weapons.size());
 		updateWeapons();
-//		updateProjectiles();
+		updateProjectiles();
 		fireWeapons();
 	}
 	
 	public void fireWeapons() {
 		for (Weapon weapon : weapons) {
-//			System.out.println("Weapon " + weapon.getEmitterName() + " x/y = " + weapon.getPosition().x + "/" + weapon.getPosition().y + " shouldEmit = " + weapon.shouldEmitProjectile());
 			if (weapon.shouldEmitProjectile()) {
 //				Projectile projectile = new Projectile(weapon.getEmitter(), weapon.getProjectileTexture(), new Vector2(weapon.getAimAt()), weapon.getShootPower());
 //				projectile.setPosition(weapon.getPosition().x - Projectile.PROJECTILE_WIDTH / 2, weapon.getPosition().y);
@@ -105,31 +100,14 @@ public class ProjectileController implements Disposable {
 	}
 	
 	public void updateProjectiles() {
-		boolean collide;
+//		boolean collide;
 		
 		toBeRemoved.clear();
 		
 		for (Projectile projectile : projectiles) {
-			collide = false;
-			
 			projectile.update();
 			
-			for (Sprite target : targets) {
-				if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2)) {
-					if (target instanceof PixmapSprite) {
-						((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth(), (int) projectile.getY() + projectile.getHeight() / 2);
-						collide = ((PixmapSprite) target).collides(position);
-						if (collide) {
-							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
-							((PixmapSprite) target).eraseCircle(position, (int) projectile.getPower());
-						}
-					} else {
-						collide = true;
-					}
-				}
-			}
-			
-			if (collide) {
+			if (collide(projectile)) {
 				toBeRemoved.add(projectile);
 			}
 		}
@@ -137,11 +115,27 @@ public class ProjectileController implements Disposable {
 		projectiles.removeAll(toBeRemoved);
 	}
 	
-//	public void drawProjectiles(SpriteBatch batch) {
-//		for (Projectile projectile : projectiles) {
-//			projectile.draw(batch);
-//		}
-//	}
+	private boolean collide(Projectile projectile) {
+		for (Sprite target : targets) {
+//			System.out.println("Projectile from " + projectile.getEmitter().getClass().toString() + " @ x/y/w/h " +
+//					projectile.getX() + "/" + projectile.getY() + "/" + projectile.getWidth() + "/" + projectile.getHeight() +
+//					" target " + target.getClass().toString() + " rect = " + target.getBoundingRectangle().toString());
+			if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() + projectile.getWidth() / 2, projectile.getY() + projectile.getHeight() / 2)) {
+				if (target instanceof PixmapSprite) {
+					((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
+//					System.out.println("projected position x/y " + position.x + "/" + position.y); 
+					if (((PixmapSprite) target).collides(position)) {
+						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
+						((PixmapSprite) target).eraseCircle(position, (int) projectile.getPower());
+						return true;
+					}
+				} else {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	public List<Vector2> getImpacts() {
 		return impacts;
