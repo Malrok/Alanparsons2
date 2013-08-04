@@ -50,7 +50,7 @@ public class LevelRenderer implements Disposable {
 		
 		weaponFactory = new WeaponFactory(level.getWeaponTemplates());
 		
-		shipController = new ShipController(level.getShip());
+		shipController = new ShipController(level.getShip(), level.getTouchTemplate());
 		enemyController = new EnemyController(level.getEnemies());
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
 		particleController = new ParticleController();

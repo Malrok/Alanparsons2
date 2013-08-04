@@ -15,7 +15,9 @@ import com.MRK.alanparsons2.models.Ship;
 import com.MRK.alanparsons2.resources.LevelFileHandler;
 import com.MRK.alanparsons2.resources.Resource;
 import com.MRK.alanparsons2.resources.ResourceValue;
+import com.MRK.alanparsons2.templates.CameraTemplate;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
+import com.MRK.alanparsons2.templates.TouchInputTemplate;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -38,6 +40,7 @@ public class LevelBuilder implements Disposable {
 	/* entités */
 	public static final String LEVEL = "level";
 	public static final String CAMERA = "camera";
+	public static final String INPUT = "input";
 	public static final String SHIP = "ship";
 	public static final String ENEMY = "enemy";
 	public static final String WEAPON = "weapon";
@@ -69,6 +72,12 @@ public class LevelBuilder implements Disposable {
 	private static final String AFTER_TIME_LEVEL_UP = "aftertimelevelup";
 	private static final String SHIP_LEVEL = "shiplevel";
 	private static final String SHOOTING_DISTANCE = "shootdistance";
+	private static final String UPPER_NORMAL_LIMIT = "upper";
+	private static final String LOWER_NORMAL_LIMIT = "lower";
+	private static final String MIN_SHIP_SPEED = "minspeed";
+	private static final String NORMAL_SHIP_SPEED = "normalspeed";
+	private static final String MAX_SHIP_SPEED = "maxspeed";
+	private static final String SPEED_DOWN_DELAY = "speeddowndelay";
 	
 	private FileHandle handle;
 	private LevelFileHandler levelHandler = new LevelFileHandler();
@@ -81,8 +90,9 @@ public class LevelBuilder implements Disposable {
 	private Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 	private List<WeaponTemplate> weapons = new ArrayList<WeaponTemplate>();
 	private List<ProjectileTemplate> projectiles = new ArrayList<ProjectileTemplate>();
-	private float cameraWidth, cameraHeight, cameraZoomMin, cameraZoomMax;
+	private CameraTemplate cameraTemplate;
 	private Background background = new Background();
+	private TouchInputTemplate touchTemplate;
 	
 	@Override
 	public void dispose() {
@@ -122,6 +132,8 @@ public class LevelBuilder implements Disposable {
 		}
 		
 		level.setProjectilesTemplates(projectiles);
+		level.setCameraTemplate(cameraTemplate);
+		level.setTouchTemplate(touchTemplate);
 	}
 	
 	private void constructObject(String entity, Map<String, ResourceValue> values) {
@@ -130,6 +142,9 @@ public class LevelBuilder implements Disposable {
 		}
 		if (entity.equalsIgnoreCase(CAMERA)) {
 			constructCamera(values);
+		}
+		if (entity.equalsIgnoreCase(INPUT)) {
+			constructInput(values);
 		}
 		if (entity.equalsIgnoreCase(SHIP) || entity.equalsIgnoreCase(ENEMY)) {
 			constructShip(entity, values);
@@ -150,6 +165,7 @@ public class LevelBuilder implements Disposable {
 
 	private void constructLevel(Map<String, ResourceValue> values) {
 		level = new Level();
+		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(NAME))
 				level.setName(value.getValue().getString());
@@ -161,15 +177,42 @@ public class LevelBuilder implements Disposable {
 	}
 	
 	private void constructCamera(Map<String, ResourceValue> values) {
+		cameraTemplate = new CameraTemplate();
+		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(WIDTH))
-				cameraWidth = value.getValue().getNumber();
+				cameraTemplate.setCameraWidth(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
-				cameraHeight = value.getValue().getNumber();
+				cameraTemplate.setCameraHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(ZOOM_MIN))
-				cameraZoomMin = value.getValue().getNumber();
+				cameraTemplate.setCameraZoomMin(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(ZOOM_MAX))
-				cameraZoomMax = value.getValue().getNumber();
+				cameraTemplate.setCameraZoomMax(value.getValue().getNumber());
+		}
+	}
+
+	private void constructInput(Map<String, ResourceValue> values) {
+		touchTemplate = new TouchInputTemplate();
+		
+		for (Entry<String, ResourceValue> value : values.entrySet()) {
+			if (value.getKey().equalsIgnoreCase(UPPER_NORMAL_LIMIT)) {
+				touchTemplate.setUpperNormalLimit(value.getValue().getNumber());
+			}
+			if (value.getKey().equalsIgnoreCase(LOWER_NORMAL_LIMIT)) {
+				touchTemplate.setLowerNormalLimit(value.getValue().getNumber());
+			}
+			if (value.getKey().equalsIgnoreCase(MIN_SHIP_SPEED)) {
+				touchTemplate.setMinSpeed(value.getValue().getNumber());
+			}
+			if (value.getKey().equalsIgnoreCase(NORMAL_SHIP_SPEED)) {
+				touchTemplate.setNormalSpeed(value.getValue().getNumber());
+			}
+			if (value.getKey().equalsIgnoreCase(MAX_SHIP_SPEED)) {
+				touchTemplate.setMaxSpeed(value.getValue().getNumber());
+			}
+			if (value.getKey().equalsIgnoreCase(SPEED_DOWN_DELAY)) {
+				touchTemplate.setSpeedDownDelay((int) value.getValue().getNumber());
+			}
 		}
 	}
 	
@@ -296,20 +339,8 @@ public class LevelBuilder implements Disposable {
 	public Map<String, Sprite> getSprites() {
 		return sprites;
 	}
-	
-	public float getCameraWidth() {
-		return cameraWidth;
-	}
 
-	public float getCameraHeight() {
-		return cameraHeight;
-	}
-
-	public float getCameraZoomMin() {
-		return cameraZoomMin;
-	}
-
-	public float getCameraZoomMax() {
-		return cameraZoomMax;
+	public CameraTemplate getCameraTemplate() {
+		return cameraTemplate;
 	}
 }

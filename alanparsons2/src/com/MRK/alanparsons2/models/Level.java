@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.MRK.alanparsons2.controllers.ShipController;
+import com.MRK.alanparsons2.templates.CameraTemplate;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
+import com.MRK.alanparsons2.templates.TouchInputTemplate;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
@@ -22,6 +24,8 @@ public class Level implements Disposable {
 	private List<ProjectileTemplate> projectilesTemplates = new ArrayList<ProjectileTemplate>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private Background background;
+	private CameraTemplate cameraTemplate;
+	private TouchInputTemplate touchTemplate;
 
 	public String getName() {
 		return name;
@@ -131,6 +135,22 @@ public class Level implements Disposable {
 		}
 		
 		return miny + ((maxy - miny) / 2);
+	}
+
+	public CameraTemplate getCameraTemplate() {
+		return cameraTemplate;
+	}
+
+	public void setCameraTemplate(CameraTemplate cameraTemplate) {
+		this.cameraTemplate = cameraTemplate;
+	}
+
+	public TouchInputTemplate getTouchTemplate() {
+		return touchTemplate;
+	}
+
+	public void setTouchTemplate(TouchInputTemplate touchTemplate) {
+		this.touchTemplate = touchTemplate;
 	}
 	
 	public void draw(SpriteBatch batch) {

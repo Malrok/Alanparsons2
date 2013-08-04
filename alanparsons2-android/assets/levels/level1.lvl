@@ -30,6 +30,13 @@ width:
 height:
 zoom_min:
 zoom_max:
+[input]
+upper:0.7
+lower:0.3
+minspeed:0.01
+normalspeed:0.05
+maxspeed:0.1
+speeddowndelay:100
 [ship]
 width:4
 height:4

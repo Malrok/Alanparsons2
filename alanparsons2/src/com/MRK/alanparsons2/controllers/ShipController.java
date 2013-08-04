@@ -8,6 +8,7 @@ import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.MRK.alanparsons2.models.RotatingCamera;
 import com.MRK.alanparsons2.models.Ship;
 import com.MRK.alanparsons2.models.Weapon;
+import com.MRK.alanparsons2.templates.TouchInputTemplate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -18,9 +19,7 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class ShipController {
 
-	private static float MIN_ANGLE = .01f;
-	private static float MAX_ANGLE = .1f;
-	private static long SPEED_DOWN_DELAY = 100;
+//	private static long SPEED_DOWN_DELAY = 100;
 	private static float SHIP_DISTANCE_FROM_FOE;
 	private static float LAPINY = 1.0f;
 	
@@ -28,6 +27,7 @@ public class ShipController {
 	private static Vector2 rotationCenter;
 	
 	private Ship ship;
+	private TouchInputTemplate touchTemplate;
 	private float currentDirection = 0;
 	private long lastTime = TimeUtils.millis();
 	
@@ -37,8 +37,9 @@ public class ShipController {
 	/** 
 	 * constructeur
 	 */
-	public ShipController(Ship ship) { 
+	public ShipController(Ship ship, TouchInputTemplate touchTemplate) { 
 		this.ship = ship;
+		this.touchTemplate = touchTemplate;
 	}
 	
 	/**
@@ -71,30 +72,30 @@ public class ShipController {
 		if(Gdx.input.isKeyPressed(Keys.LEFT) || touchLeft) {
 			touched = true;
 			if (currentDirection == 0 || currentDirection > 0){
-				currentDirection = -MIN_ANGLE;
+				currentDirection = -touchTemplate.getMinSpeed();
 			} else {
-				currentDirection -= MIN_ANGLE;
+				currentDirection -= touchTemplate.getMinSpeed();
 			}
 			ship.setDirection(Ship.TURNING_LEFT);
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT) || touchRight) {
 			touched = true;
 			if (currentDirection == 0 || currentDirection < 0) {
-				currentDirection = MIN_ANGLE;
+				currentDirection = touchTemplate.getMinSpeed();
 			} else {
-				currentDirection += MIN_ANGLE;
+				currentDirection += touchTemplate.getMinSpeed();
 			}
 			ship.setDirection(Ship.TURNING_RIGHT);
 		}
 		
-		if (Math.abs(currentDirection) > MAX_ANGLE) currentDirection = (Math.abs(currentDirection) / currentDirection) * MAX_ANGLE;
+		if (Math.abs(currentDirection) > touchTemplate.getMaxSpeed()) currentDirection = (Math.abs(currentDirection) / currentDirection) * touchTemplate.getMaxSpeed();
 		
-		if (!touched && (TimeUtils.millis() > lastTime + SPEED_DOWN_DELAY)) {
+		if (!touched && (TimeUtils.millis() > lastTime + touchTemplate.getSpeedDownDelay())) {
 			lastTime = TimeUtils.millis();
-			if (currentDirection != 0) currentDirection -= (Math.abs(currentDirection) / currentDirection) * MIN_ANGLE;
+			if (currentDirection != 0) currentDirection -= (Math.abs(currentDirection) / currentDirection) * touchTemplate.getMinSpeed();
 		}
-			
-		if (!touched && Math.abs(currentDirection) <= MIN_ANGLE) {
+		
+		if (!touched && Math.abs(currentDirection) <= touchTemplate.getMinSpeed()) {
 			currentDirection = 0;
 			ship.setDirection(Ship.STILL);
 		}
