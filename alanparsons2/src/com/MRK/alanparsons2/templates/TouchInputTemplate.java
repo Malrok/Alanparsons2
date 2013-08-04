@@ -2,24 +2,48 @@ package com.MRK.alanparsons2.templates;
 
 public class TouchInputTemplate {
 
-	private float lowerNormalLimit, upperNormalLimit;
+	//	private float lowerNormalLimit, upperNormalLimit;
+	private float lowerSpeedLimit, normalSpeedLimit, upperSpeedLimit;
 	private float minSpeed, normalSpeed, maxSpeed;
 	private int speedDownDelay;
 	
-	public float getLowerNormalLimit() {
-		return lowerNormalLimit;
+//	public float getLowerNormalLimit() {
+//		return lowerNormalLimit;
+//	}
+//	
+//	public void setLowerNormalLimit(float lowerNormalLimit) {
+//		this.lowerNormalLimit = lowerNormalLimit;
+//	}
+//	
+//	public float getUpperNormalLimit() {
+//		return upperNormalLimit;
+//	}
+//	
+//	public void setUpperNormalLimit(float upperNormalLimit) {
+//		this.upperNormalLimit = upperNormalLimit;
+//	}
+	public float getLowerSpeedLimit() {
+		return lowerSpeedLimit;
 	}
-	
-	public void setLowerNormalLimit(float lowerNormalLimit) {
-		this.lowerNormalLimit = lowerNormalLimit;
+
+	public void setLowerSpeedLimit(float lowerSpeedLimit) {
+		this.lowerSpeedLimit = lowerSpeedLimit;
 	}
-	
-	public float getUpperNormalLimit() {
-		return upperNormalLimit;
+
+	public float getNormalSpeedLimit() {
+		return normalSpeedLimit;
 	}
-	
-	public void setUpperNormalLimit(float upperNormalLimit) {
-		this.upperNormalLimit = upperNormalLimit;
+
+	public void setNormalSpeedLimit(float normalSpeedLimit) {
+		this.normalSpeedLimit = normalSpeedLimit;
+	}
+
+	public float getUpperSpeedLimit() {
+		return upperSpeedLimit;
+	}
+
+	public void setUpperSpeedLimit(float upperSpeedLimit) {
+		this.upperSpeedLimit = upperSpeedLimit;
 	}
 	
 	public float getMinSpeed() {

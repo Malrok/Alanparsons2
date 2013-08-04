@@ -28,6 +28,7 @@ public class ShipController {
 	
 	private Ship ship;
 	private TouchInputTemplate touchTemplate;
+	private float[] speedLimits = new float[3];
 	private float currentDirection = 0;
 	private long lastTime = TimeUtils.millis();
 	
@@ -52,6 +53,10 @@ public class ShipController {
 		screenMiddle = Gdx.graphics.getWidth() / 2;
 		rotationCenter = center;
 		
+		speedLimits[0] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse mini
+		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
+		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
+		
 		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY) + ship.getHeight() / 2);
 	}
 	
@@ -59,31 +64,47 @@ public class ShipController {
 	 * Réagit aux inputs utilisateur pour calculer la direction à donner au vaisseau
 	 */
 	public void getDirection() {
+		float newDirection = 0;
+		
 		boolean touched = false;
 		boolean touchLeft = false;
 		boolean touchRight = false;
 		
 		if(Gdx.input.isTouched()) {
 			int x = Gdx.input.getX();
+			int y = Gdx.input.getY();
 			
 			touchLeft = x < screenMiddle;
 			touchRight = x >= screenMiddle;
+			
+			if (y < speedLimits[0]) // vitesse mini
+				newDirection = touchTemplate.getMinSpeed();
+			else if (y > speedLimits[2]) // vitesse maxi
+				newDirection = touchTemplate.getMaxSpeed();
+			else
+				if (speedLimits[0] < x && x <= speedLimits[1]) // entre mini et normal
+					newDirection = (touchTemplate.getNormalSpeed() - touchTemplate.getMinSpeed()) * ((y / speedLimits[1]) * (speedLimits[1] / speedLimits[0]));
+				else // entre normal et maxi
+					newDirection = (touchTemplate.getMaxSpeed() - touchTemplate.getNormalSpeed()) * ((y / speedLimits[2]) * (speedLimits[2] / speedLimits[1]));
+		}
+		if (!touchLeft && !touchRight) {
+			newDirection = touchTemplate.getMinSpeed();
 		}
 		if(Gdx.input.isKeyPressed(Keys.LEFT) || touchLeft) {
 			touched = true;
 			if (currentDirection == 0 || currentDirection > 0){
-				currentDirection = -touchTemplate.getMinSpeed();
+				currentDirection = -newDirection;
 			} else {
-				currentDirection -= touchTemplate.getMinSpeed();
+				currentDirection -= newDirection;
 			}
 			ship.setDirection(Ship.TURNING_LEFT);
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT) || touchRight) {
 			touched = true;
 			if (currentDirection == 0 || currentDirection < 0) {
-				currentDirection = touchTemplate.getMinSpeed();
+				currentDirection = newDirection;
 			} else {
-				currentDirection += touchTemplate.getMinSpeed();
+				currentDirection += newDirection;
 			}
 			ship.setDirection(Ship.TURNING_RIGHT);
 		}

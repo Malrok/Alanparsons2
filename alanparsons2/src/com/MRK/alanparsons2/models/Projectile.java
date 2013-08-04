@@ -19,6 +19,7 @@ public class Projectile implements Disposable {
 	private Vector2 speed;
 	private float power;
 	private float width, height;
+	private float originX, originY;
 	
 	private Sprite emitter;
 
@@ -76,6 +77,9 @@ public class Projectile implements Disposable {
 	public void setSize(float width, float height) {
 		this.width = width;
 		this.height = height;
+		
+		this.originX = width / 2;
+		this.originY = height / 2;
 	}
 
 	public Sprite getEmitter() {
@@ -92,6 +96,6 @@ public class Projectile implements Disposable {
 	}
 	
 	public void draw(SpriteBatch batch) {
-		batch.draw(texture, x, y, width / 2, height / 2, width, height, 1, 1, angle);
+		batch.draw(texture, x, y, originX, originY, width, height, 1.0f, 1.0f, angle);
 	}
 }

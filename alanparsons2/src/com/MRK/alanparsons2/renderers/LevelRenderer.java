@@ -36,6 +36,8 @@ public class LevelRenderer implements Disposable {
 	private ParticleController particleController;
 
 	/* debug */
+//	private Matrix4 mx4Font = new Matrix4();
+//	private BitmapFont font;
 	private ShapeRenderer shapeRenderer;
 	
 	/**
@@ -54,6 +56,9 @@ public class LevelRenderer implements Disposable {
 		enemyController = new EnemyController(level.getEnemies());
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
 		particleController = new ParticleController();
+		
+//		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+//		font.setScale(.1f,.1f);
 		
 		shapeRenderer = new ShapeRenderer();
 	}
@@ -80,10 +85,24 @@ public class LevelRenderer implements Disposable {
 		level.draw(batch);		
 		particleController.draw(batch);
 		
+//		drawTexts();
+		
 		batch.end();
 		
 		drawDebug();
-	}	
+	}
+	
+//	private void drawTexts() {
+//		Vector3 position = new Vector3(26, 65, 0);
+//		
+//		camera.unproject(position);
+//		
+////		mx4Font.setToRotation(new Vector3(level.getLevelCenterX(), level.getLevelCenterY(), 0), - (float) Math.toDegrees(ShipController.currentAngle));
+////		batch.setTransformMatrix(mx4Font);
+//		font.draw(batch, "fps:"+Gdx.graphics.getFramesPerSecond(), position.x, position.y);
+//		
+//		
+//	}
 	
 	private void drawDebug() {
 		if (Alanparsons2.DEBUG) {

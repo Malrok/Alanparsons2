@@ -72,8 +72,11 @@ public class LevelBuilder implements Disposable {
 	private static final String AFTER_TIME_LEVEL_UP = "aftertimelevelup";
 	private static final String SHIP_LEVEL = "shiplevel";
 	private static final String SHOOTING_DISTANCE = "shootdistance";
-	private static final String UPPER_NORMAL_LIMIT = "upper";
-	private static final String LOWER_NORMAL_LIMIT = "lower";
+//	private static final String UPPER_NORMAL_LIMIT = "upper";
+//	private static final String LOWER_NORMAL_LIMIT = "lower";
+	private static final String UPPER_SPEED_LIMIT = "up";
+	private static final String NORMAL_SPEED_LIMIT = "middle";
+	private static final String LOWER_SPEED_LIMIT = "down";
 	private static final String MIN_SHIP_SPEED = "minspeed";
 	private static final String NORMAL_SHIP_SPEED = "normalspeed";
 	private static final String MAX_SHIP_SPEED = "maxspeed";
@@ -195,12 +198,21 @@ public class LevelBuilder implements Disposable {
 		touchTemplate = new TouchInputTemplate();
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
-			if (value.getKey().equalsIgnoreCase(UPPER_NORMAL_LIMIT)) {
-				touchTemplate.setUpperNormalLimit(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(UPPER_SPEED_LIMIT)) {
+				touchTemplate.setUpperSpeedLimit(value.getValue().getNumber());
 			}
-			if (value.getKey().equalsIgnoreCase(LOWER_NORMAL_LIMIT)) {
-				touchTemplate.setLowerNormalLimit(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(NORMAL_SPEED_LIMIT)) {
+				touchTemplate.setNormalSpeedLimit(value.getValue().getNumber());
 			}
+			if (value.getKey().equalsIgnoreCase(LOWER_SPEED_LIMIT)) {
+				touchTemplate.setLowerSpeedLimit(value.getValue().getNumber());
+			}
+//			if (value.getKey().equalsIgnoreCase(UPPER_NORMAL_LIMIT)) {
+//				touchTemplate.setUpperNormalLimit(value.getValue().getNumber());
+//			}
+//			if (value.getKey().equalsIgnoreCase(LOWER_NORMAL_LIMIT)) {
+//				touchTemplate.setLowerNormalLimit(value.getValue().getNumber());
+//			}
 			if (value.getKey().equalsIgnoreCase(MIN_SHIP_SPEED)) {
 				touchTemplate.setMinSpeed(value.getValue().getNumber());
 			}

@@ -9,8 +9,6 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 public class MainActivity extends AndroidApplication implements AndroidCallback {
 	
-	private int count = 0;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +26,12 @@ public class MainActivity extends AndroidApplication implements AndroidCallback 
 	@Override
 	public void beginRenderLevelCallback() {
 		if (Alanparsons2.DEBUG)
-			Debug.startMethodTracing("alanp.log");
+			Debug.startMethodTracing("alanp");
 	}
 
 	@Override
 	public void endRenderLevelCallback() {
-		if (Alanparsons2.DEBUG && count++ > 100)
+		if (Alanparsons2.DEBUG)
 			Debug.stopMethodTracing();
 	}
 }
