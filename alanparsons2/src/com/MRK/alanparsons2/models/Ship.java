@@ -1,8 +1,5 @@
 package com.MRK.alanparsons2.models;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,7 +17,8 @@ public class Ship extends Sprite implements Disposable {
 	public static final int TURNING_RIGHT = 2;
 	
 	private TextureRegion[] textures = new TextureRegion[3];
-	private Weapon weapon;	
+	private Weapon weapon;
+	private int level;
 	private int currentDirection = STILL;
 		
 	public void dispose() {
@@ -44,16 +42,20 @@ public class Ship extends Sprite implements Disposable {
 	/** 
 	 * Définit l'arme de la classe
 	 */
-	public void setWeapon(Map<String, Weapon> weapons) {
-		for (Entry<String, Weapon> entry : weapons.entrySet()) {
-			if (entry.getValue().getEmitter().equals(this)) {
-				weapon = entry.getValue();
-				weapon.setAimAt(new Vector2(0, 1));
-				weapon.setEnabled(true);
-			}
-		}
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+		this.weapon.setAimAt(new Vector2(0, 1));
+		this.weapon.setEnabled(true);
 	}
 	
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	/** 
 	 * mise à jour du vaisseau<BR>
 	 * réoriente l'arme<BR>

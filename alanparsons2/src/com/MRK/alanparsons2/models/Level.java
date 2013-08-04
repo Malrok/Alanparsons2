@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
+import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -16,6 +17,7 @@ public class Level implements Disposable {
 	
 	private Ship ship;
 	private List<EnemyShip> enemies = new ArrayList<EnemyShip>();
+	private List<WeaponTemplate> weaponsTemplates = new ArrayList<WeaponTemplate>();
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<ProjectileTemplate> projectilesTemplates = new ArrayList<ProjectileTemplate>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
@@ -65,6 +67,18 @@ public class Level implements Disposable {
 		this.enemies.addAll(enemies);
 	}
 
+	public List<WeaponTemplate> getWeaponTemplates() {
+		return weaponsTemplates;
+	}
+
+	public void setWeaponTemplates(List<WeaponTemplate> weaponsTemplates) {
+		this.weaponsTemplates = weaponsTemplates;
+	}
+	
+	public void addWeaponTemplate(WeaponTemplate weaponTemplate) {
+		this.weaponsTemplates.add(weaponTemplate);
+	}
+	
 	public List<Weapon> getWeapons() {
 		return weapons;
 	}
@@ -117,13 +131,6 @@ public class Level implements Disposable {
 		}
 		
 		return miny + ((maxy - miny) / 2);
-	}
-	
-	public void update() {
-		for (EnemyShip enemy : enemies) {
-			enemy.updateWeapons(ship.getX(), ship.getY());
-			enemy.update();
-		}
 	}
 	
 	public void draw(SpriteBatch batch) {

@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.Disposable;
 public class ProjectileController implements Disposable {
 
 	private ProjectileFactory projectileFactory;
-	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<Projectile> projectiles;
 	private List<Sprite> targets = new ArrayList<Sprite>();
 	private List<Projectile> toBeRemoved = new ArrayList<Projectile>();
@@ -32,29 +31,8 @@ public class ProjectileController implements Disposable {
 	}
 	
 	public void dispose() {
-		for (Weapon weapon : weapons)
-			weapon.dispose();
-		
-		weapons.clear();
-		
 		for (Projectile projectile : projectiles)
 			projectile.dispose();
-	}
-	
-	/**
-	 * Ajoute un objet de type {@link Weapon} à la liste des objets gérés 
-	 * @param weapon
-	 */
-	public void addWeapon(Weapon weapon) {
-		weapons.add(weapon);
-	}
-	
-	/**
-	 * Ajoute une liste d'objet de type {@link Weapon} à la liste des objets gérés 
-	 * @param weapon
-	 */
-	public void addWeapons(List<Weapon> weapons) {
-		this.weapons.addAll(weapons);
 	}
 	
 	/**
@@ -76,25 +54,18 @@ public class ProjectileController implements Disposable {
 	/**
 	 * Mise à jour cyclique du controlleur
 	 */
-	public void update() {
-		updateWeapons();
+	public void update(List<Weapon> weapons) {
 		updateProjectiles();
-		fireWeapons();
+		fireWeapons(weapons);
 	}
 	
-	public void fireWeapons() {
+	public void fireWeapons(List<Weapon> weapons) {
 		for (Weapon weapon : weapons) {
 			if (weapon.shouldEmitProjectile()) {
 				Projectile projectile = projectileFactory.createProjectile(weapon);
 				if (projectile != null) projectiles.add(projectile);
 				weapon.projectileEmitted();
 			}
-		}
-	}
-	
-	public void updateWeapons() {
-		for (Weapon weapon : weapons) {
-			weapon.update();
 		}
 	}
 	

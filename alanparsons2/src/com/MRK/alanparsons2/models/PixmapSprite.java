@@ -28,6 +28,10 @@ public class PixmapSprite extends Sprite implements Disposable {
 	private int lastModification = 0;
 	private PixmapChange[] modifications = new PixmapChange[10];	
 	
+	public void dispose() {
+		
+	}
+	
 	/**
 	 * Définit le texture depuis le chemin d'une texture en paramètre
 	 * @param texture
@@ -41,10 +45,6 @@ public class PixmapSprite extends Sprite implements Disposable {
 		for (int i = 0; i < modifications.length; i++)
 			modifications[i] = new PixmapChange();
 
-	}
-	
-	public void dispose() {
-		
 	}
 	
 	public Pixmap getPixmap() {

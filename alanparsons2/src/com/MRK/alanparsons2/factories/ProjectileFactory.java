@@ -14,9 +14,6 @@ public class ProjectileFactory {
 	
 	public ProjectileFactory(List<ProjectileTemplate> projectilesTemplates) {
 		this.projectilesTemplates = projectilesTemplates;
-		
-//		for (ProjectileTemplate template : projectilesTemplates)
-//			System.out.println("projectile template " + template.getType());
 	}
 	
 	public Projectile createProjectile(Weapon weapon) {

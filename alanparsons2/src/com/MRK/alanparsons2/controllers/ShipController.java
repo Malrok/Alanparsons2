@@ -1,8 +1,13 @@
 package com.MRK.alanparsons2.controllers;
 
+import java.util.List;
+
+import com.MRK.alanparsons2.factories.LevelBuilder;
+import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.MRK.alanparsons2.models.RotatingCamera;
 import com.MRK.alanparsons2.models.Ship;
+import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -122,5 +127,12 @@ public class ShipController {
 	 */
 	public Vector2 getRotationCenter() {
 		return rotationCenter;
+	}
+	
+	public void setWeapon(List<Weapon> weapons, WeaponFactory weaponFactory) {
+		Weapon weapon = weaponFactory.createWeapon(LevelBuilder.SHIP, ship.getLevel());
+		
+		weapons.add(weapon);
+		ship.setWeapon(weapon);
 	}
 }

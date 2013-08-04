@@ -1,5 +1,6 @@
 package com.MRK.alanparsons2.models;
 
+import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -16,7 +17,7 @@ public class Weapon implements Disposable {
 	private int projectileType;
 	private Vector2 position = new Vector2();
 	private Vector2 aimAt;
-	private int shootFrequency = 3; // shots per second
+	private int shootFrequency; // shots per second
 	private long lastShoot;
 	private boolean shouldEmitProjectile = false;
 	private String emitterName;
@@ -117,5 +118,10 @@ public class Weapon implements Disposable {
 	
 	public void setEmitter(Sprite emitter) {
 		this.emitter = emitter;
+	}
+	
+	public void upgrade(WeaponTemplate template) {
+		this.projectileType = template.getProjectileType();
+		this.shootFrequency = template.getShootFrequency();
 	}
 }

@@ -12,11 +12,11 @@ import com.MRK.alanparsons2.models.BackgroundElement;
 import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.Ship;
-import com.MRK.alanparsons2.models.Weapon;
 import com.MRK.alanparsons2.resources.LevelFileHandler;
 import com.MRK.alanparsons2.resources.Resource;
 import com.MRK.alanparsons2.resources.ResourceValue;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
+import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -32,7 +32,7 @@ public class LevelBuilder implements Disposable {
 	
 	/* extensions */
 	public static final String LEVEL_EXT = ".lvl";
-	public static final String ATLAS_EXT = ".pack";
+	public static final String ATLAS_EXT = ".atlas";
 	public static final String TEXTURES_EXT = ".png";
 	
 	/* entités */
@@ -64,6 +64,11 @@ public class LevelBuilder implements Disposable {
 	private static final String WEAPON_HOST = "host";
 	private static final String PROJECTILE_TYPE = "projectiletype";
 	private static final String Z_RANK = "zrank";
+	private static final String DAMAGE_PERCENTAGE_LEVEL_UP = "damagepercentagelevelup";
+	private static final String WEAPON_DESTRUCTION_LEVELS_UP = "weapondestructionlevelsup";
+	private static final String AFTER_TIME_LEVEL_UP = "aftertimelevelup";
+	private static final String SHIP_LEVEL = "shiplevel";
+	private static final String SHOOTING_DISTANCE = "shootdistance";
 	
 	private FileHandle handle;
 	private LevelFileHandler levelHandler = new LevelFileHandler();
@@ -74,10 +79,10 @@ public class LevelBuilder implements Disposable {
 	
 	private Level level;
 	private Map<String, Sprite> sprites = new HashMap<String, Sprite>();
-	private Map<String, Weapon> weapons = new HashMap<String, Weapon>();
+	private List<WeaponTemplate> weapons = new ArrayList<WeaponTemplate>();
+	private List<ProjectileTemplate> projectiles = new ArrayList<ProjectileTemplate>();
 	private float cameraWidth, cameraHeight, cameraZoomMin, cameraZoomMax;
 	private Background background = new Background();
-	private List<ProjectileTemplate> projectiles = new ArrayList<ProjectileTemplate>();
 	
 	@Override
 	public void dispose() {
@@ -104,22 +109,16 @@ public class LevelBuilder implements Disposable {
 	public void buildLevel() {
 		level.setBackground(background);
 		
-		for (Entry<String, Weapon> weapon : weapons.entrySet()) {
-			weapon.getValue().setEmitter(getSpriteByName(weapon.getValue().getEmitterName()));
-			level.addWeapon(weapon.getValue());
+		for (WeaponTemplate weapon : weapons) {
+			weapon.setEmitter(getSpriteByName(weapon.getEmitterName()));
+			level.addWeaponTemplate(weapon);
 		}
 		
 		for (Entry<String, Sprite> sprite : sprites.entrySet()) {
-			if (sprite.getValue() instanceof Ship) {
+			if (sprite.getValue() instanceof Ship)
 				level.setShip((Ship) sprite.getValue());
-				level.getShip().setWeapon(weapons);
-			} else if (sprite.getValue() instanceof EnemyShip) {
+			else if (sprite.getValue() instanceof EnemyShip)
 				level.addEnemy((EnemyShip) sprite.getValue());
-			}
-		}
-		
-		for (EnemyShip enemy : level.getEnemies()) {
-			enemy.setWeapons(weapons);
 		}
 		
 		level.setProjectilesTemplates(projectiles);
@@ -209,7 +208,7 @@ public class LevelBuilder implements Disposable {
 	}
 	
 	private void constructWeapon(Map<String, ResourceValue> values) {
-		Weapon weapon = new Weapon();
+		WeaponTemplate weapon = new WeaponTemplate();
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(NAME))
@@ -220,9 +219,11 @@ public class LevelBuilder implements Disposable {
 				weapon.setShootFrequency((int) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(PROJECTILE_TYPE))
 				weapon.setProjectileType((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(SHIP_LEVEL))
+				weapon.setShipLevel((int) value.getValue().getNumber());
 		}
 
-		weapons.put(weapon.getName(), weapon);
+		weapons.add(weapon);
 	}
 	
 	private void constructProjectile(Map<String, ResourceValue> values) {
