@@ -31,7 +31,7 @@ height:
 zoom_min:
 zoom_max:
 [input]
-up:0.7
+up:0.85
 middle:0.5
 down:0.3
 minspeed:0.01

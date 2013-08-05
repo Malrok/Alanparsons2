@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class LevelScreen implements Screen {
 
@@ -26,12 +25,8 @@ public class LevelScreen implements Screen {
 		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		
-//		final Table table = new Table();
-//        table.setFillParent(true);
-        
         label = new Label("", skin);
         label.setPosition(10, 10);
-//        table.add(label);
         stage.addActor(label);
 	}
 	
@@ -44,7 +39,6 @@ public class LevelScreen implements Screen {
 	@Override
 	public void render() {
 		renderer.render();
-//		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.draw();
 	}
 
