@@ -1,75 +1,29 @@
+name=level1
+filename=
+input=../images/level1
+output=
 
-level1.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-enemy
-  rotate: false
-  xy: 1, 139
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-planet
-  rotate: false
-  xy: 259, 139
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-stars
-  rotate: false
-  xy: 517, 139
-  size: 256, 256
-  orig: 256, 256
-  offset: 0, 0
-  index: -1
-ship0
-  rotate: false
-  xy: 1, 73
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-ship1
-  rotate: false
-  xy: 775, 331
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-ship2
-  rotate: false
-  xy: 1, 7
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-sun
-  rotate: false
-  xy: 67, 73
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-shot1
-  rotate: false
-  xy: 775, 325
-  size: 16, 4
-  orig: 16, 4
-  offset: 0, 0
-  index: -1
-shot2
-  rotate: false
-  xy: 841, 391
-  size: 16, 4
-  orig: 16, 4
-  offset: 0, 0
-  index: -1
-shot3
-  rotate: false
-  xy: 1, 1
-  size: 16, 4
-  orig: 16, 4
-  offset: 0, 0
-  index: -1
+alias=true
+alphaThreshold=0
+debug=false
+duplicatePadding=true
+edgePadding=true
+fast=false
+filterMag=Nearest
+filterMin=Nearest
+format=RGBA8888
+ignoreBlankImages=true
+jpegQuality=0.9
+maxHeight=1024
+maxWidth=1024
+minHeight=16
+minWidth=16
+outputFormat=png
+paddingX=2
+paddingY=2
+pot=true
+rotation=false
+stripWhitespaceX=false
+stripWhitespaceY=false
+wrapX=ClampToEdge
+wrapY=ClampToEdge

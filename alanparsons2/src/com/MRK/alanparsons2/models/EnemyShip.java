@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -18,11 +20,18 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	private Vector2 position = new Vector2();
 	private int shipLevel = 1;
 	private Map<PixmapPosition, Weapon> shipWeapons = new HashMap<PixmapPosition, Weapon>();
+	private TextureRegion structure;
 	
 	public void dispose() {
 		shipWeapons.clear();
 	}
 
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.draw(structure, getX(), getY(), getWidth(), getHeight());
+		super.draw(batch);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -100,5 +109,13 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
 			entry.getValue().upgrade(weaponTemplate);
 		}
+	}
+
+	public TextureRegion getStructure() {
+		return structure;
+	}
+
+	public void setStructure(TextureRegion structure) {
+		this.structure = structure;
 	}
 }

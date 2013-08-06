@@ -34,7 +34,7 @@ public class LevelBuilder implements Disposable {
 	
 	/* extensions */
 	public static final String LEVEL_EXT = ".lvl";
-	public static final String ATLAS_EXT = ".atlas";
+	public static final String ATLAS_EXT = ".pack";
 	public static final String TEXTURES_EXT = ".png";
 	
 	/* entités */
@@ -54,6 +54,8 @@ public class LevelBuilder implements Disposable {
 	private static final String WIDTH = "width";
 	private static final String HEIGHT = "height";
 	private static final String TEXTURE = "texture";
+	private static final String SHELL_TEXTURE = "shelltexture";
+	private static final String STRUCTURE_TEXTURE = "structuretexture";
 	private static final String POWER = "power";
 	private static final String SHOTS_PER_SECOND = "sps";
 	private static final String SPEED = "speed";
@@ -245,12 +247,16 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(Y))
 				y = value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
-				if (ship instanceof EnemyShip) {
-					((EnemyShip)ship).setTexture(pixmapAtlas.createPixmap(value.getValue().getString()));
-				} else
-					for (int phase = 0; phase < 5; phase++) {
-						((Ship)ship).addTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
-					}
+//				if (ship instanceof EnemyShip) {
+//					((EnemyShip)ship).setTexture(pixmapAtlas.createPixmap(value.getValue().getString()));
+//				} else
+				for (int phase = 0; phase < 5; phase++) {
+					((Ship)ship).addTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
+				}
+			if (value.getKey().equalsIgnoreCase(SHELL_TEXTURE))
+				((EnemyShip)ship).setTexture(pixmapAtlas.createPixmap(value.getValue().getString()));
+			if (value.getKey().equalsIgnoreCase(STRUCTURE_TEXTURE))
+				((EnemyShip)ship).setStructure(atlas.findRegion(value.getValue().getString()));
 		}
 		
 		if (ship instanceof EnemyShip && width != 0 && height != 0 && x != 0 && y != 0) {

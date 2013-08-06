@@ -61,7 +61,8 @@ x:50
 y:50
 width:30
 height:30
-texture:enemy
+shelltexture:enemy
+structuretexture:enemy_structure
 damagepercentagelevelup:10
 weapondestructionlevelsup:1
 [weapon]
