@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class ShipController {
 
-//	private static long SPEED_DOWN_DELAY = 100;
 	private static float SHIP_DISTANCE_FROM_FOE;
 	private static float LAPINY = 1.0f;
 	
@@ -53,9 +52,9 @@ public class ShipController {
 		screenMiddle = Gdx.graphics.getWidth() / 2;
 		rotationCenter = center;
 		
-		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse mini
+		speedLimits[0] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse mini
 		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
-		speedLimits[0] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
+		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
 		
 		System.out.println("speedLimits 0=" + speedLimits[0] + " 1=" + speedLimits[1] + " 2=" + speedLimits[2]);
 		
@@ -84,11 +83,10 @@ public class ShipController {
 			} else if (y < speedLimits[2]) {// vitesse maxi
 				newDirection = touchTemplate.getMaxSpeed();
 			} else {
-				if (speedLimits[0] < x && x <= speedLimits[1]) // entre mini et normal
-					newDirection = (touchTemplate.getNormalSpeed() - touchTemplate.getMinSpeed()) * ((y / speedLimits[1]) * (speedLimits[1] / speedLimits[0]));
+				if (speedLimits[0] > y && y >= speedLimits[1]) // entre mini et normal
+					newDirection = touchTemplate.getMinSpeed() + (speedLimits[0] - y) * (touchTemplate.getNormalSpeed() - touchTemplate.getMinSpeed()) / ((speedLimits[0] - speedLimits[1]));
 				else // entre normal et maxi
-					newDirection = (touchTemplate.getMaxSpeed() - touchTemplate.getNormalSpeed()) * ((y / speedLimits[2]) * (speedLimits[2] / speedLimits[1]));
-//				newDirection = touchTemplate.getNormalSpeed();
+					newDirection = touchTemplate.getNormalSpeed() + (y - speedLimits[1]) * (touchTemplate.getMaxSpeed() - touchTemplate.getNormalSpeed()) / ((speedLimits[2] - speedLimits[1]));
 			}
 		}
 		if (!touchLeft && !touchRight) {
