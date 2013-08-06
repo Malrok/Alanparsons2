@@ -11,11 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class LevelScreen implements Screen {
 
 	private Stage stage = new Stage();
-	private Skin skin; // = new Skin();
+	private Skin skin;
 	private Label label;
 	
 	private LevelRenderer renderer; 	
 	private String result = "";
+	
+	private boolean paused = false;
 	
 	public LevelScreen(Level level, int width, int height) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -30,10 +32,20 @@ public class LevelScreen implements Screen {
         stage.addActor(label);
 	}
 	
+	public void pause() {
+		paused = true;
+	}
+	
+	public void resume() {
+		paused = false;
+	}
+	
 	@Override
 	public void update() {
-		label.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
-		renderer.update();
+		if (!paused) {
+			label.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
+			renderer.update();
+		}
 	}
 
 	@Override
@@ -49,6 +61,7 @@ public class LevelScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		stage.dispose();
 		renderer.dispose();
 	}
 

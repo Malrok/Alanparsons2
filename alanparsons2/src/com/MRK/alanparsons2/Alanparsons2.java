@@ -24,6 +24,20 @@ public class Alanparsons2 extends Game {
 	}
 	
 	@Override
+	public void pause() {
+		super.pause();
+		if (screen instanceof LevelScreen)
+			((LevelScreen)screen).pause();
+	}
+	
+	@Override
+	public void resume() {
+		super.resume();
+		if (screen instanceof LevelScreen)
+			((LevelScreen)screen).resume();
+	}
+	
+	@Override
 	public void render() {
 		if (screen == null)
 			screen = new MainScreen(width, height);
@@ -50,6 +64,8 @@ public class Alanparsons2 extends Game {
 				if (screen.result().equalsIgnoreCase("lose"))
 					screen = new MainScreen(width, height);
 			}
+			
+			screen.resize(width, height);
 		}
 	}
 
@@ -57,9 +73,6 @@ public class Alanparsons2 extends Game {
 	public void resize(int width, int height) {
 		this.width = width;
 		this.height = height;
-		
-		if (screen != null)
-			screen.resize(width, height);
 	}
 
 	@Override
