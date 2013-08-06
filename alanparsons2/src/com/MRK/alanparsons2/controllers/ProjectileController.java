@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.MRK.alanparsons2.factories.ProjectileFactory;
 import com.MRK.alanparsons2.models.EnemyShip;
-import com.MRK.alanparsons2.models.PixmapSprite;
 import com.MRK.alanparsons2.models.Projectile;
 import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -59,7 +58,7 @@ public class ProjectileController implements Disposable {
 		fireWeapons(weapons);
 	}
 	
-	public void fireWeapons(List<Weapon> weapons) {
+	private void fireWeapons(List<Weapon> weapons) {
 		for (Weapon weapon : weapons) {
 			if (weapon.shouldEmitProjectile()) {
 				Projectile projectile = projectileFactory.createProjectile(weapon);
@@ -69,7 +68,7 @@ public class ProjectileController implements Disposable {
 		}
 	}
 	
-	public void updateProjectiles() {
+	private void updateProjectiles() {
 		toBeRemoved.clear();
 		
 		for (Projectile projectile : projectiles) {
@@ -86,11 +85,11 @@ public class ProjectileController implements Disposable {
 	private boolean collide(Projectile projectile) {
 		for (Sprite target : targets) {
 			if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() + projectile.getWidth() / 2, projectile.getY() + projectile.getHeight() / 2)) {
-				if (target instanceof PixmapSprite) {
-					((PixmapSprite) target).project(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
-					if (((PixmapSprite) target).collides(position)) {
+				if (target instanceof EnemyShip) {
+					((EnemyShip) target).project(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
+					if (((EnemyShip) target).collides(position)) {
 						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
-						((PixmapSprite) target).eraseCircle(position, (int) projectile.getPower());
+						((EnemyShip) target).eraseCircle(position, (int) projectile.getPower());
 						return true;
 					}
 				} else {

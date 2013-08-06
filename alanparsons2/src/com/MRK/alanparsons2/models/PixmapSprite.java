@@ -19,24 +19,62 @@ import com.badlogic.gdx.utils.Disposable;
  * @author malrok
  *
  */
-public class PixmapSprite extends Sprite implements Disposable {
+public class PixmapSprite implements Disposable {
 
-	protected Pixmap pixmap;
-	protected Texture texture;
+	private Pixmap pixmap;
+	private Texture texture;
 
 	private final Color color = new Color();
 	private int lastModification = 0;
 	private PixmapChange[] modifications = new PixmapChange[10];	
 	
+	private float x, y;
+	private float width, height;
+	
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public float getPixmapWidth() {
+		return pixmap.getWidth();
+	}
+
+	public float getPixmapHeight() {
+		return pixmap.getHeight();
+	}	
+	
+	public void setSize(float width, float height) {
+		this.width = width;
+		this.height = height;
+	}
+
 	public void dispose() {
-		
+		pixmap.dispose();
+		texture.dispose();
 	}
 	
 	/**
 	 * Définit le texture depuis le chemin d'une texture en paramètre
 	 * @param texture
 	 */
-	public void setTexture(Pixmap pixmap) {
+	public void init(Pixmap pixmap) {
 		this.pixmap = pixmap;
 
 		this.texture = new Texture(new PixmapTextureData(pixmap, pixmap.getFormat(), false, false));
@@ -51,7 +89,7 @@ public class PixmapSprite extends Sprite implements Disposable {
 		return pixmap;
 	}
 	
-	@Override
+//	@Override
 	public void draw(SpriteBatch batch) {
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
 	}

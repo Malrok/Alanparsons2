@@ -7,29 +7,46 @@ import java.util.Map.Entry;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
-public class EnemyShip extends PixmapSprite implements Disposable {
+public class EnemyShip extends Sprite implements Disposable {
 	
 	private final Color color = new Color();
 	
 	private String name;
-	private Vector2 position = new Vector2();
+//	private Vector2 position = new Vector2();
 	private int shipLevel = 1;
 	private Map<PixmapPosition, Weapon> shipWeapons = new HashMap<PixmapPosition, Weapon>();
+	
+	private PixmapSprite shell = new PixmapSprite();
 	private TextureRegion structure;
+	
+	@Override
+	public void setSize(float width, float height) {
+		super.setSize(width, height);
+		shell.setSize(width, height);
+	}
+	
+	@Override
+	public void setPosition(float x, float y) {
+		super.setPosition(x, y);
+		shell.setPosition(x, y);
+	}
 	
 	public void dispose() {
 		shipWeapons.clear();
+		shell.dispose();
 	}
 
-	@Override
+//	@Override
 	public void draw(SpriteBatch batch) {
 		batch.draw(structure, getX(), getY(), getWidth(), getHeight());
-		super.draw(batch);
+//		super.draw(batch);
+		shell.draw(batch);
 	}
 	
 	public String getName() {
@@ -48,11 +65,23 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 		shipLevel += levelInc;
 	}
 	
+	public void setShell(Pixmap pixmap) {
+		shell.init(pixmap);
+	}
+	
+	public TextureRegion getStructure() {
+		return structure;
+	}
+
+	public void setStructure(TextureRegion structure) {
+		this.structure = structure;
+	}
+	
 	/**
 	 * Mise à jour des armes afin qu'elles pointent dans la direction indiquée
 	 */
 	public void updateWeapons(float aimX, float aimY) {
-		super.update();
+//		super.update();
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
 			entry.getValue().setAimAt(new Vector2(aimX, aimY));
 			entry.getValue().update();
@@ -73,11 +102,12 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 	 * Les positions sont relatives au {@link Pixmap}
 	 */
 	public void initWeapons() {
-		for (int x = 0; x < pixmap.getWidth(); x++) {
-			for (int y = 0; y < pixmap.getHeight(); y++) {
-				super.getPixelColor(color, new Vector2(x, y));
-				
+		for (int x = 0; x < shell.getPixmapWidth(); x++) {
+			for (int y = 0; y < shell.getPixmapHeight(); y++) {
+				shell.getPixelColor(color, new Vector2(x, y));
+				System.out.println("color a/r/g/b" + color.a + "/" + color.r + "/" + color.g + "/" + color.b);
 				if (color.r == 1.0f && color.b == 1.0f) { // magenta
+					System.out.println("initWeapons addingweapon");
 					shipWeapons.put(new PixmapPosition(x, y), null);
 				}
 			}
@@ -99,9 +129,9 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 		if (entry.getValue() == null) {
 			entry.setValue(weapon);
 			
-			unproject(position, entry.getKey().getX(), entry.getKey().getY());
+			shell.unproject(new Vector2(getX(), getY()), entry.getKey().getX(), entry.getKey().getY());
 			
-			entry.getValue().setPosition(position.x, position.y);
+			entry.getValue().setPosition(getX(), getY());
 		}
 	}
 	
@@ -110,12 +140,24 @@ public class EnemyShip extends PixmapSprite implements Disposable {
 			entry.getValue().upgrade(weaponTemplate);
 		}
 	}
-
-	public TextureRegion getStructure() {
-		return structure;
+	
+	public void update() {
+		shell.update();
 	}
-
-	public void setStructure(TextureRegion structure) {
-		this.structure = structure;
+	
+	public void project(Vector2 position, float onScreenX, float onScreenY) {
+		shell.project(position, onScreenX, onScreenY);
+	}
+	
+	public void unproject(Vector2 position, float onPixmapX, float onPixmapY) {
+		shell.unproject(position, onPixmapX, onPixmapY);
+	}
+	
+	public void eraseCircle(Vector2 position, int radius) {
+		shell.eraseCircle(position, radius);
+	}
+	
+	public boolean collides(Vector2 position) {
+		return shell.collides(position);
 	}
 }

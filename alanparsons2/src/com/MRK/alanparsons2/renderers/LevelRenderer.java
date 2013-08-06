@@ -24,20 +24,17 @@ import com.badlogic.gdx.utils.Disposable;
 public class LevelRenderer implements Disposable {
 
 	private Level level;
-	
 	private SpriteBatch batch;
 	private RotatingCamera camera;
-	
 	private WeaponFactory weaponFactory;
-	
 	private ShipController shipController;
 	private EnemyController enemyController;
 	private ProjectileController projectileController;
 	private ParticleController particleController;
+	
+	private boolean init = false;
 
 	/* debug */
-//	private Matrix4 mx4Font = new Matrix4();
-//	private BitmapFont font;
 	private ShapeRenderer shapeRenderer;
 	
 	/**
@@ -57,13 +54,13 @@ public class LevelRenderer implements Disposable {
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
 		particleController = new ParticleController();
 		
-//		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
-//		font.setScale(.1f,.1f);
-		
 		shapeRenderer = new ShapeRenderer();
 	}
 	
 	public void update() {
+		if (!init)
+			init();
+		
 		camera.rotateCameraAround(level.getLevelCenterX(), level.getLevelCenterY(), shipController.getLastRotateValue());
 		
 		shipController.update();
@@ -85,24 +82,10 @@ public class LevelRenderer implements Disposable {
 		level.draw(batch);		
 		particleController.draw(batch);
 		
-//		drawTexts();
-		
 		batch.end();
 		
 		drawDebug();
 	}
-	
-//	private void drawTexts() {
-//		Vector3 position = new Vector3(26, 65, 0);
-//		
-//		camera.unproject(position);
-//		
-////		mx4Font.setToRotation(new Vector3(level.getLevelCenterX(), level.getLevelCenterY(), 0), - (float) Math.toDegrees(ShipController.currentAngle));
-////		batch.setTransformMatrix(mx4Font);
-//		font.draw(batch, "fps:"+Gdx.graphics.getFramesPerSecond(), position.x, position.y);
-//		
-//		
-//	}
 	
 	private void drawDebug() {
 		if (Alanparsons2.DEBUG) {
@@ -121,16 +104,24 @@ public class LevelRenderer implements Disposable {
 		
 		level.resize();
 		
-		shipController.init(new Vector2(level.getLevelCenterX(), level.getLevelCenterY()));
-		shipController.setWeapon(level.getWeapons(), weaponFactory);
-		shipController.update();
-		
-		camera.setRadius(Math.abs(level.getLevelCenterY() - camera.position.y));
-		
-		enemyController.setEnemiesWeapons(level.getWeapons(), weaponFactory);
-		
-		projectileController.addTarget(level.getShip());
-		projectileController.addTargets(level.getEnemies());
+//		init();
+	}
+	
+	public void init() {
+		if (!init) {
+			shipController.init(new Vector2(level.getLevelCenterX(), level.getLevelCenterY()));
+			shipController.setWeapon(level.getWeapons(), weaponFactory);
+			shipController.update();
+			
+			camera.setRadius(Math.abs(level.getLevelCenterY() - camera.position.y));
+			
+			enemyController.setEnemiesWeapons(level.getWeapons(), weaponFactory);
+			
+			projectileController.addTarget(level.getShip());
+			projectileController.addTargets(level.getEnemies());
+			
+			init = true;
+		}
 	}
 	
 	public void dispose() {

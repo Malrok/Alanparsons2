@@ -56,7 +56,7 @@ public class ShipController {
 		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
 		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
 		
-		System.out.println("speedLimits 0=" + speedLimits[0] + " 1=" + speedLimits[1] + " 2=" + speedLimits[2]);
+//		System.out.println("speedLimits 0=" + speedLimits[0] + " 1=" + speedLimits[1] + " 2=" + speedLimits[2]);
 		
 		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY) + ship.getHeight() / 2);
 	}
