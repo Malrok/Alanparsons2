@@ -83,7 +83,7 @@ public class ShipController {
 			} else if (y < speedLimits[2]) {// vitesse maxi
 				newDirection = touchTemplate.getMaxSpeed();
 			} else {
-				if (speedLimits[0] > y && y >= speedLimits[1]) // entre mini et normal
+				if (speedLimits[0] >= y && y >= speedLimits[1]) // entre mini et normal
 					newDirection = touchTemplate.getMinSpeed() + (speedLimits[0] - y) * (touchTemplate.getNormalSpeed() - touchTemplate.getMinSpeed()) / ((speedLimits[0] - speedLimits[1]));
 				else // entre normal et maxi
 					newDirection = touchTemplate.getNormalSpeed() + (y - speedLimits[1]) * (touchTemplate.getMaxSpeed() - touchTemplate.getNormalSpeed()) / ((speedLimits[2] - speedLimits[1]));
@@ -94,7 +94,7 @@ public class ShipController {
 		}
 		if(Gdx.input.isKeyPressed(Keys.LEFT) || touchLeft) {
 			touched = true;
-			if (currentDirection == 0 || currentDirection > 0){
+			if (currentDirection == 0 || currentDirection > 0 || !touchLeft){
 				currentDirection -= newDirection;
 			} else {
 				currentDirection = -newDirection;
@@ -103,7 +103,7 @@ public class ShipController {
 		}
 		if(Gdx.input.isKeyPressed(Keys.RIGHT) || touchRight) {
 			touched = true;
-			if (currentDirection == 0 || currentDirection < 0) {
+			if (currentDirection == 0 || currentDirection < 0  || !touchRight) {
 				currentDirection += newDirection;
 			} else {
 				currentDirection = newDirection;
