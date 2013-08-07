@@ -86,7 +86,7 @@ public class ProjectileController implements Disposable {
 		for (Sprite target : targets) {
 			if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() + projectile.getWidth() / 2, projectile.getY() + projectile.getHeight() / 2)) {
 				if (target instanceof EnemyShip) {
-					((EnemyShip) target).project(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
+					((EnemyShip) target).screenCoordsToPixmap(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
 					if (((EnemyShip) target).collides(position)) {
 						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 						((EnemyShip) target).eraseCircle(position, (int) projectile.getPower());

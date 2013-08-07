@@ -105,9 +105,9 @@ public class EnemyShip extends Sprite implements Disposable {
 		for (int x = 0; x < shell.getPixmapWidth(); x++) {
 			for (int y = 0; y < shell.getPixmapHeight(); y++) {
 				shell.getPixelColor(color, new Vector2(x, y));
-				System.out.println("color a/r/g/b" + color.a + "/" + color.r + "/" + color.g + "/" + color.b);
+//				System.out.println("color a/r/g/b" + color.a + "/" + color.r + "/" + color.g + "/" + color.b);
 				if (color.r == 1.0f && color.b == 1.0f) { // magenta
-					System.out.println("initWeapons addingweapon");
+					System.out.println("initWeapons addingweapon x/y=" + x + "/" + y);
 					shipWeapons.put(new PixmapPosition(x, y), null);
 				}
 			}
@@ -127,11 +127,13 @@ public class EnemyShip extends Sprite implements Disposable {
 	 */
 	public void setWeaponsPositionOnSprite(Entry<PixmapPosition, Weapon> entry, Weapon weapon) {
 		if (entry.getValue() == null) {
+			Vector2 position = new Vector2(getX(), getY());
+			
 			entry.setValue(weapon);
 			
-			shell.unproject(new Vector2(getX(), getY()), entry.getKey().getX(), entry.getKey().getY());
+			shell.unproject(position, entry.getKey().getX(), entry.getKey().getY());
 			
-			entry.getValue().setPosition(getX(), getY());
+			entry.getValue().setPosition(position.x, position.y);
 		}
 	}
 	
@@ -145,11 +147,11 @@ public class EnemyShip extends Sprite implements Disposable {
 		shell.update();
 	}
 	
-	public void project(Vector2 position, float onScreenX, float onScreenY) {
+	public void screenCoordsToPixmap(Vector2 position, float onScreenX, float onScreenY) {
 		shell.project(position, onScreenX, onScreenY);
 	}
 	
-	public void unproject(Vector2 position, float onPixmapX, float onPixmapY) {
+	public void pixmapCoordsToScreen(Vector2 position, float onPixmapX, float onPixmapY) {
 		shell.unproject(position, onPixmapX, onPixmapY);
 	}
 	
