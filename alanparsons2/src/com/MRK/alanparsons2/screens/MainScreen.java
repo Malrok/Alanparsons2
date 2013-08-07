@@ -4,16 +4,18 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.equations.Linear;
 
-import com.MRK.alanparsons2.helpers.SpriteAccessor;
+import com.MRK.alanparsons2.helpers.ImageAccessor;
 import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 public class MainScreen implements Screen {
@@ -21,40 +23,47 @@ public class MainScreen implements Screen {
 	private final float PULSE = 1.0f;
 	
 	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Sprite start;
-
+	private Stage stage = new Stage();
+	private Skin skin;
+	private Image start;
+	private CheckBox checkBox;
 	private TweenManager tweenManager = new TweenManager();
 	
 	private String result = "";
 	
 	public MainScreen(int width, int height) {
 		camera = new OrthographicCamera();
-		batch = new SpriteBatch();
-		start = new Sprite(new Texture(Gdx.files.internal("buttons/start.png")));
-		start.setOrigin(start.getWidth()/2, start.getHeight()/2);
 		
 		resize(width, height);
 		
-		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
+		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-		Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.1f, 1.1f).repeatYoyo(-1, 0).start(tweenManager);
+		start = new Image(new Texture(Gdx.files.internal("buttons/start.png")));
+		start.setOrigin(start.getWidth()/2, start.getHeight()/2);
+		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
+		start.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				result = "play level1 " + (checkBox.isChecked() ? "internal" : "external");
+			}
+		});
+		
+		stage.addActor(start);
+
+		checkBox = new CheckBox("Read level from game files", skin);
+		checkBox.setPosition(10,10);
+
+		stage.addActor(checkBox);
+		
+		Tween.registerAccessor(Image.class, new ImageAccessor());
+		Tween.to(start, ImageAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.1f, 1.1f).repeatYoyo(-1, 0).start(tweenManager);
+		
+		Gdx.input.setInputProcessor(stage);
 	}
 	
 	@Override
 	public void update() {
-		if(Gdx.input.isTouched()) {
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			camera.unproject(touchPos);
-			
-			if (start.getBoundingRectangle().contains(new Vector2(touchPos.x, touchPos.y))) {
-//				tweenManager.killAll();
-////				Tween.to(start, SpriteAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.4f, 1.4f).call(tweenCallback).start(tweenManager);
-//				Tween.call(tweenCallback).start(tweenManager);
-				result = "play level1";
-			}
-		}
+
 	}
 
 	@Override
@@ -62,10 +71,7 @@ public class MainScreen implements Screen {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		start.draw(batch);
-		batch.end();
+		stage.draw();
 		
 		tweenManager.update(Gdx.graphics.getDeltaTime());
 	}
@@ -77,13 +83,13 @@ public class MainScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		batch.dispose();
+		stage.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		camera.setToOrtho(false, width, height);
-		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
+		stage.setViewport(width, height, false);
 	}
 	
 //	private final TweenCallback tweenCallback = new TweenCallback() {

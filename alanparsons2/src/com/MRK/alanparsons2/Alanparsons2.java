@@ -55,7 +55,7 @@ public class Alanparsons2 extends Game {
 
 			if (screen instanceof MainScreen) {
 				if (screen.result().startsWith("play"))
-					screen = new LoadingScreen(screen.result().split(" ")[1], levelBuilder, width, height);
+					screen = new LoadingScreen((screen.result().split(" ")[2]).equalsIgnoreCase("internal"), screen.result().split(" ")[1], levelBuilder, width, height);
 			}
 			if (screen instanceof LoadingScreen)
 				if (screen.result().startsWith("loaded"))

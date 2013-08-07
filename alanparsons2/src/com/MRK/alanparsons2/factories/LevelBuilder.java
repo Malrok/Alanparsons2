@@ -28,7 +28,8 @@ import com.badlogic.gdx.utils.Disposable;
 public class LevelBuilder implements Disposable {
 
 	/* répertoires */
-	public static final String LEVEL_DIR = "levels/";
+	public static final String LEVEL_DIR_INTERNAL = "levels/";
+	public static final String LEVEL_DIR_EXTERNAL = "Progzzz/alanp/";
 	public static final String ATLAS_DIR = "atlas/";
 	public static final String PARTICLES_DIR = "particles/";
 	
@@ -74,8 +75,6 @@ public class LevelBuilder implements Disposable {
 	private static final String AFTER_TIME_LEVEL_UP = "aftertimelevelup";
 	private static final String SHIP_LEVEL = "shiplevel";
 	private static final String SHOOTING_DISTANCE = "shootdistance";
-//	private static final String UPPER_NORMAL_LIMIT = "upper";
-//	private static final String LOWER_NORMAL_LIMIT = "lower";
 	private static final String UPPER_SPEED_LIMIT = "up";
 	private static final String NORMAL_SPEED_LIMIT = "middle";
 	private static final String LOWER_SPEED_LIMIT = "down";
@@ -105,10 +104,14 @@ public class LevelBuilder implements Disposable {
 			level.dispose();
 	}
 	
-	public void setLevel(String levelFile) throws IOException {
+	public void setLevel(boolean internal, String levelFile) throws IOException {
 		atlas = new TextureAtlas(Gdx.files.internal(ATLAS_DIR + levelFile + ATLAS_EXT));
 		pixmapAtlas = new PixmapTextureAtlas(Gdx.files.internal(ATLAS_DIR + levelFile + TEXTURES_EXT), Gdx.files.internal(ATLAS_DIR + levelFile + ATLAS_EXT));
-		handle = Gdx.files.internal(LEVEL_DIR + levelFile + LEVEL_EXT);
+		
+		if (internal)
+			handle = Gdx.files.internal(LEVEL_DIR_INTERNAL + levelFile + LEVEL_EXT);
+		else
+			handle = Gdx.files.external(LEVEL_DIR_EXTERNAL + levelFile + LEVEL_EXT);
 	}
 	
 	public void load() throws IOException {

@@ -19,7 +19,7 @@ public class LoadingScreen implements Screen {
 	private float width, height;	
 	private Thread thread;
 	
-	public LoadingScreen(final String lvlStr, final LevelBuilder levelBuilder, int width, int height) {
+	public LoadingScreen(final boolean internal, final String lvlStr, final LevelBuilder levelBuilder, int width, int height) {
 		camera = new OrthographicCamera();
 		batch = new SpriteBatch();
 		loadingTexture = new Texture(Gdx.files.internal("images/loading.png"));
@@ -34,7 +34,7 @@ public class LoadingScreen implements Screen {
 					@Override
 					public void run() {
 						try {
-							levelBuilder.setLevel(lvlStr);
+							levelBuilder.setLevel(internal, lvlStr);
 						} catch (IOException e) {
 							result = "erreur 1";
 							e.printStackTrace();
