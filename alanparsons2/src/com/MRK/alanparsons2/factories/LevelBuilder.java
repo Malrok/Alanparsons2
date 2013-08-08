@@ -309,6 +309,8 @@ public class LevelBuilder implements Disposable {
 		
 		element.setMoveable(moveable);
 		
+		float x = 0, y = 0;
+		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(Z_RANK))
 				element.setZrank((int) value.getValue().getNumber());
@@ -319,9 +321,11 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
 				element.setHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(X))
-				element.setX(value.getValue().getNumber());
+//				element.setX(value.getValue().getNumber());
+				x= value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(Y))
-				element.setY(value.getValue().getNumber());
+//				element.setY(value.getValue().getNumber());
+				y = value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(SHIFTX))
 				element.setShiftx(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(SHIFTY))
@@ -331,7 +335,10 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(REPEAT_HEIGHT))
 				element.setRepeatHeight(value.getValue().getNumber());
 		}
-
+		
+		element.setX(x - element.getWidth() / 2);
+		element.setY(y - element.getHeight() / 2);
+		
 		background.addElement(element);		
 	}
 	
