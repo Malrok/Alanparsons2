@@ -10,6 +10,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -22,7 +25,12 @@ public class MainScreen implements Screen {
 
 	private final float PULSE = 1.0f;
 	
+	private float width, height;
+	
+	private TextureRegion background;
 	private OrthographicCamera camera;
+	private SpriteBatch batch;
+	
 	private Stage stage = new Stage();
 	private Skin skin;
 	private Image start;
@@ -32,9 +40,19 @@ public class MainScreen implements Screen {
 	private String result = "";
 	
 	public MainScreen(int width, int height) {
+		this.width = width;
+		this.height = height;
+		
+		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		
 		resize(width, height);
+		
+		Texture texture = new Texture(Gdx.files.internal("images/menu.png"));
+		
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		background = new TextureRegion(texture,0,0,texture.getWidth(),texture.getHeight() * texture.getHeight() / height);
 		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
@@ -70,6 +88,13 @@ public class MainScreen implements Screen {
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+
+		batch.draw(background, 0, 0, width, height);
+		
+		batch.end();
 		
 		stage.draw();
 		
