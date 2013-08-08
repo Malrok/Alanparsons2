@@ -52,7 +52,7 @@ public class MainScreen implements Screen {
 		
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		background = new TextureRegion(texture,0,0,texture.getWidth(),texture.getHeight() * texture.getHeight() / height);
+		background = new TextureRegion(texture,0,0,texture.getWidth(),texture.getHeight() * height / width);
 		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
