@@ -23,8 +23,7 @@ public class Background {
 	}
 	
 	public void draw(SpriteBatch batch, float deltax, float deltay) {
-		
-		for (BackgroundElement element : elements) {
+		for (BackgroundElement element : elements) {	
 			if (element.isMoveable()) {
 				batch.draw(element.getTexture(), element.getX() + element.getShiftx() * deltax, element.getY() + element.getShifty() * deltay, element.getWidth(), element.getHeight());
 			} else {

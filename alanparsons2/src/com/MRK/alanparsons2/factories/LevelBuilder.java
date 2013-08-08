@@ -312,8 +312,10 @@ public class LevelBuilder implements Disposable {
 		float x = 0, y = 0;
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
-			if (value.getKey().equalsIgnoreCase(Z_RANK))
+			if (value.getKey().equalsIgnoreCase(Z_RANK)) {
+				System.out.println("zrank " + value.getValue().getNumber());
 				element.setZrank((int) value.getValue().getNumber());
+			}
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				element.setTexture(atlas.findRegion(value.getValue().getString()));
 			if (value.getKey().equalsIgnoreCase(WIDTH))
