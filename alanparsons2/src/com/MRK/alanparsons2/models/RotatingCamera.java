@@ -7,44 +7,51 @@ import com.badlogic.gdx.math.Vector2;
 
 public class RotatingCamera extends OrthographicCamera {
 	
-	public static float VIEWPORT_WIDTH;
-	public static float VIEWPORT_HEIGHT;
-	
-	private float levelWidth, levelHeight;
-	
-	private static float radius;
+	private float rotateCenterx, rotateCentery;
+	private float radius;
 	
 	public RotatingCamera() {
 		super();
 	}
 	
-	public void init(float levelWidth, float levelHeight, float screenWidth, float screenHeight) {
-		this.levelWidth = levelWidth;
-		this.levelHeight = levelHeight;
-		
-		VIEWPORT_WIDTH = levelWidth / 2;
-		VIEWPORT_HEIGHT = screenHeight * VIEWPORT_WIDTH / screenWidth;
-		setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+	public void initViewport(float screenWidth, float screenHeight, float viewportWidth) {
+		this.viewportWidth = viewportWidth;
+		this.viewportHeight = screenHeight * this.viewportWidth / screenWidth;
+		setToOrtho(false, this.viewportWidth, this.viewportHeight);
+	}
+	
+	@Override
+	public void setToOrtho(boolean yDown, float viewportWidth, float viewportHeight) {
+		super.setToOrtho(yDown, viewportWidth, viewportHeight);
+		ShipController.currentAngle = (float) Math.toRadians(270);
+	}
+
+	public float getRadius() {
+		return radius;
 	}
 	
 	public void setRadius(float value) {
 		radius = value;
 	}
 	
-	@Override
-	public void setToOrtho(boolean yDown, float viewportWidth, float viewportHeight) {
-		super.setToOrtho(yDown, viewportWidth, viewportHeight);
-		
-		position.x = levelWidth / 2;
-		position.y = levelHeight / 2 - VIEWPORT_HEIGHT / 2;
-		
-		ShipController.currentAngle = (float) Math.toRadians(270);
+	public void setRotateCenter(float originx, float originy) {
+		this.rotateCenterx = originx;
+		this.rotateCentery = originy;
 	}
 	
-	public void rotateCameraAround(float originx, float originy, float angle) {
+	public void initPosition(float levelWidth) {
+		position.x = levelWidth / 2;
+		position.y = rotateCentery - radius - viewportHeight / 2;
+	}
+	
+	public float getViewportHeight() {
+		return viewportHeight;
+	}
+	
+	public void rotateCameraAround(float angle) {
 		ShipController.currentAngle += angle;
 		
-		Vector2 newPos = CircleHelper.getPointOnCircle(originx, originy, radius, ShipController.currentAngle);
+		Vector2 newPos = CircleHelper.getPointOnCircle(rotateCenterx, rotateCentery, radius, ShipController.currentAngle);
 		
 		position.x = newPos.x;
 		position.y = newPos.y;

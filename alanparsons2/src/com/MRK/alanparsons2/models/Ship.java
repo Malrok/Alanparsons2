@@ -20,6 +20,7 @@ public class Ship extends Sprite implements Disposable {
 	private Weapon weapon;
 	private int level;
 	private int currentDirection = STILL;
+	private float yFromScreen;
 		
 	public void dispose() {
 		weapon.dispose();
@@ -82,6 +83,14 @@ public class Ship extends Sprite implements Disposable {
 		currentDirection = newDirection;
 	}
 	
+	public float getyFromScreen() {
+		return yFromScreen;
+	}
+
+	public void setyFromScreen(float yFromScreen) {
+		this.yFromScreen = yFromScreen;
+	}
+
 	public void addTexture(int phase, TextureRegion texture) {
 		if (texture != null)
 			textures[phase] = texture;

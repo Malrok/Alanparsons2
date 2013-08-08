@@ -82,6 +82,7 @@ public class LevelBuilder implements Disposable {
 	private static final String NORMAL_SHIP_SPEED = "normalspeed";
 	private static final String MAX_SHIP_SPEED = "maxspeed";
 	private static final String SPEED_DOWN_DELAY = "speeddowndelay";
+	private static final String CAMERA_RADIUS = "radius";
 	
 	private FileHandle handle;
 	private LevelFileHandler levelHandler = new LevelFileHandler();
@@ -190,12 +191,12 @@ public class LevelBuilder implements Disposable {
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(WIDTH))
 				cameraTemplate.setCameraWidth(value.getValue().getNumber());
-			if (value.getKey().equalsIgnoreCase(HEIGHT))
-				cameraTemplate.setCameraHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(ZOOM_MIN))
 				cameraTemplate.setCameraZoomMin(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(ZOOM_MAX))
 				cameraTemplate.setCameraZoomMax(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(CAMERA_RADIUS))
+				cameraTemplate.setCameraRadius(value.getValue().getNumber());
 		}
 	}
 
@@ -212,12 +213,6 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(LOWER_SPEED_LIMIT)) {
 				touchTemplate.setLowerSpeedLimit(value.getValue().getNumber());
 			}
-//			if (value.getKey().equalsIgnoreCase(UPPER_NORMAL_LIMIT)) {
-//				touchTemplate.setUpperNormalLimit(value.getValue().getNumber());
-//			}
-//			if (value.getKey().equalsIgnoreCase(LOWER_NORMAL_LIMIT)) {
-//				touchTemplate.setLowerNormalLimit(value.getValue().getNumber());
-//			}
 			if (value.getKey().equalsIgnoreCase(MIN_SHIP_SPEED)) {
 				touchTemplate.setMinSpeed(value.getValue().getNumber());
 			}
@@ -261,8 +256,10 @@ public class LevelBuilder implements Disposable {
 		if (ship instanceof EnemyShip && width != 0 && height != 0 && x != 0 && y != 0) {
 			ship.setSize(width, height);
 			ship.setPosition(x - width / 2, y - height / 2);
-		} else if (width != 0 && height != 0)
+		} else if (width != 0 && height != 0) {
 			ship.setSize(width, height);
+			((Ship)ship).setyFromScreen(y);
+		}
 		
 		sprites.put((ship instanceof Ship) ? type : ((EnemyShip)ship).getName(), ship);
 	}

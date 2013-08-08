@@ -5,7 +5,6 @@ import java.util.List;
 import com.MRK.alanparsons2.factories.LevelBuilder;
 import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.CircleHelper;
-import com.MRK.alanparsons2.models.RotatingCamera;
 import com.MRK.alanparsons2.models.Ship;
 import com.MRK.alanparsons2.models.Weapon;
 import com.MRK.alanparsons2.templates.TouchInputTemplate;
@@ -19,11 +18,9 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class ShipController {
 
-	private static float SHIP_DISTANCE_FROM_FOE;
-	private static float LAPINY = 1.0f;
-	
-	private static float screenMiddle;
-	private static Vector2 rotationCenter;
+	private float distanceFromFoe;
+	private float screenMiddle;
+	private float rotationCenterx, rotationCentery;
 	
 	private Ship ship;
 	private TouchInputTemplate touchTemplate;
@@ -48,17 +45,16 @@ public class ShipController {
 	 * @param screenHeight - float : hauteur de l'écran
 	 * @param center       - {@link Vector2} : centre de rotation du monde
 	 */
-	public void init(Vector2 center) {
+	public void init(float centerx, float centery, float distanceFromFoe) {
 		screenMiddle = Gdx.graphics.getWidth() / 2;
-		rotationCenter = center;
+		rotationCenterx = centerx;
+		rotationCentery = centery;
 		
 		speedLimits[0] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse mini
 		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
 		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
 		
-//		System.out.println("speedLimits 0=" + speedLimits[0] + " 1=" + speedLimits[1] + " 2=" + speedLimits[2]);
-		
-		SHIP_DISTANCE_FROM_FOE = Math.abs(center.y - (RotatingCamera.VIEWPORT_HEIGHT * LAPINY) + ship.getHeight() / 2);
+		this.distanceFromFoe = distanceFromFoe;
 	}
 	
 	/**
@@ -130,12 +126,12 @@ public class ShipController {
 	public void update() {
 		getDirection();
 		
-		Vector2 newShipPos = CircleHelper.getPointOnCircle(rotationCenter.x, rotationCenter.y, SHIP_DISTANCE_FROM_FOE, currentAngle);
+		Vector2 newShipPos = CircleHelper.getPointOnCircle(rotationCenterx, rotationCentery, distanceFromFoe, currentAngle);
 
 		deltaX = newShipPos.x - ship.getWidth() / 2;
 		deltaY = newShipPos.y - ship.getHeight() / 2;
 		
-		ship.update(currentDirection, rotationCenter.y, rotationCenter.y);
+		ship.update(currentDirection, rotationCentery, rotationCentery);
 		ship.setPosition(newShipPos.x - ship.getWidth() / 2, newShipPos.y - ship.getHeight() / 2);
 	}
 	
@@ -150,7 +146,7 @@ public class ShipController {
 	 * centre de rotation du monde
 	 */
 	public Vector2 getRotationCenter() {
-		return rotationCenter;
+		return new Vector2(rotationCenterx, rotationCentery);
 	}
 	
 	public void setWeapon(List<Weapon> weapons, WeaponFactory weaponFactory) {

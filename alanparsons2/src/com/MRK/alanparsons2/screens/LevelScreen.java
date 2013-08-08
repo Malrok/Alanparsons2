@@ -24,6 +24,7 @@ public class LevelScreen implements Screen {
 		
 		renderer = new LevelRenderer(level);		
 		renderer.resize(width, height);
+		renderer.init();
 		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		

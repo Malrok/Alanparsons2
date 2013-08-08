@@ -26,8 +26,7 @@ y:0
 shiftx:0.3
 shifty:0.3
 [camera]
-width:
-height:
+width:30
 zoom_min:
 zoom_max:
 [input]
