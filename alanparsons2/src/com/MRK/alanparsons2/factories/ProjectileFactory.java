@@ -30,8 +30,8 @@ public class ProjectileFactory {
 						weapon.getX() - template.getWidth() / 2, weapon.getY() - template.getHeight() / 2, 
 						weapon.getAimAt().x, weapon.getAimAt().y, template.getSpeed()),
 				template.getPower());
-		projectile.setPosition(weapon.getX(), weapon.getY());		
 		projectile.setSize(template.getWidth(), template.getHeight());
+		projectile.setPosition(weapon.getX() - template.getWidth() / 2, weapon.getY() - template.getHeight() / 2);
 		
 		return projectile;
 	}

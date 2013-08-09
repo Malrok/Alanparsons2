@@ -147,5 +147,6 @@ public class Weapon extends Sprite implements Disposable {
 	public void upgrade(WeaponTemplate template) {
 		this.projectileType = template.getProjectileType();
 		this.shootFrequency = template.getShootFrequency();
+		this.hps = template.getHps();
 	}
 }
