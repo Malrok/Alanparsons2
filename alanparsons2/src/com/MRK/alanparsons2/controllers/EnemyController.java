@@ -11,11 +11,12 @@ import com.MRK.alanparsons2.models.Weapon;
 
 public class EnemyController {
 
-	private PixmapHelper pixHelper = new PixmapHelper();
+	private PixmapHelper pixHelper;
 	private List<EnemyShip> enemies;
 	
-	public EnemyController(List<EnemyShip> enemies) {
+	public EnemyController(List<EnemyShip> enemies, PixmapHelper pixHelper) {
 		this.enemies = enemies;
+		this.pixHelper = pixHelper;
 	}
 	
 	public void setEnemiesWeapons(List<Weapon> weapons, WeaponFactory weaponFactory) {
@@ -61,7 +62,8 @@ public class EnemyController {
 	public void update(float aimX, float aimY) {
 		for (EnemyShip enemy : enemies) {
 			enemy.updateWeapons(aimX, aimY);
-			enemy.update();
+//			enemy.update();
+			pixHelper.update(enemy.getHull());
 		}
 	}
 	

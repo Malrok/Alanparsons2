@@ -38,5 +38,26 @@ public class PixmapHelper {
 		pixSprite.unproject(position, entry.getKey().getX(), entry.getKey().getY());
 		
 		entry.getValue().setPosition(position.x, position.y);
-	}	
+	}
+	
+	public void update(PixmapSprite pixSprite) {
+		pixSprite.update();
+	}
+	
+	public void screenCoordsToPixmap(PixmapSprite pixSprite, Vector2 position, float onScreenX, float onScreenY) {
+		pixSprite.project(position, onScreenX, onScreenY);
+	}
+	
+	public void pixmapCoordsToScreen(PixmapSprite pixSprite, Vector2 position, float onPixmapX, float onPixmapY) {
+		pixSprite.unproject(position, onPixmapX, onPixmapY);
+	}
+	
+	public void eraseCircle(PixmapSprite pixSprite, Vector2 position, int radius) {
+		pixSprite.eraseCircle(position, radius);
+	}
+	
+	public boolean collides(PixmapSprite pixSprite, Vector2 position) {
+		return pixSprite.collides(position);
+	}
+
 }
