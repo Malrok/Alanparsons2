@@ -63,7 +63,6 @@ public class EnemyController {
 	public void update(float aimX, float aimY) {
 		for (EnemyShip enemy : enemies) {
 			enemy.updateWeapons(aimX, aimY);
-//			enemy.update();
 			pixHelper.update(enemy.getHull());
 		}
 	}

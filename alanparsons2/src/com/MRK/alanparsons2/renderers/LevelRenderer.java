@@ -1,5 +1,8 @@
 package com.MRK.alanparsons2.renderers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.MRK.alanparsons2.Alanparsons2;
 import com.MRK.alanparsons2.controllers.CollisionController;
 import com.MRK.alanparsons2.controllers.EnemyController;
@@ -13,6 +16,7 @@ import com.MRK.alanparsons2.helpers.PixmapHelper;
 import com.MRK.alanparsons2.helpers.WeaponHelper;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.RotatingCamera;
+import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -41,6 +45,8 @@ public class LevelRenderer implements Disposable {
 	private PixmapHelper pixHelper = new PixmapHelper();
 	private WeaponHelper weaponHelper;
 	
+	private List<Weapon> toBeRemoved = new ArrayList<Weapon>();
+	
 	/* debug */
 	private ShapeRenderer shapeRenderer;
 	
@@ -68,6 +74,8 @@ public class LevelRenderer implements Disposable {
 	}
 	
 	public void update() {
+		toBeRemoved.clear();
+		
 		camera.rotateCameraAround(shipController.getLastRotateValue());
 		
 		shipController.update();
@@ -76,7 +84,8 @@ public class LevelRenderer implements Disposable {
 		collisionController.computeCollisions(projectileController.getToBeRemovedList());
 		projectileController.refreshProjectilesList();
 		particleController.update(collisionController.getImpacts());
-		weaponController.update(weaponHelper);
+		weaponController.update(toBeRemoved, weaponHelper);
+		collisionController.removeWeaponTargets(toBeRemoved);
 		
 		collisionController.clearImpacts();
 	}

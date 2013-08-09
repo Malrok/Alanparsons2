@@ -13,7 +13,9 @@ public class WeaponHelper {
 	}
 	
 	public WeaponTemplate getMatchingTemplate(String emitterName, int shipLevel) {
+		
 		for (WeaponTemplate template : weaponsTemplates) {
+//			System.out.println("getMatchingTemplate " + emitterName + " " + shipLevel + " template " + template.getEmitterName() + " " + template.getShipLevel());
 			if (template.getEmitterName().equals(emitterName) && template.getShipLevel() == shipLevel)
 				return template;
 		}

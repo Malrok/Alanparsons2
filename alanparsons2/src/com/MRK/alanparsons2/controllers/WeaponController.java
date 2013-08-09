@@ -1,6 +1,5 @@
 package com.MRK.alanparsons2.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.MRK.alanparsons2.helpers.WeaponHelper;
@@ -16,8 +15,8 @@ public class WeaponController {
 		this.weapons = weapons;
 	}
 	
-	public void update(WeaponHelper helper) {
-		List<Weapon> toBeRemoved = new ArrayList<Weapon>();
+	public void update(List<Weapon> toBeRemoved, WeaponHelper helper) {
+//		List<Weapon> toBeRemoved = new ArrayList<Weapon>();
 		
 		for (Weapon weapon : weapons) {
 			if (weapon.getHps() < 0) {
