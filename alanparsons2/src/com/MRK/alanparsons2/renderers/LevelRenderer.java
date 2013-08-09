@@ -1,6 +1,7 @@
 package com.MRK.alanparsons2.renderers;
 
 import com.MRK.alanparsons2.Alanparsons2;
+import com.MRK.alanparsons2.controllers.CollisionController;
 import com.MRK.alanparsons2.controllers.EnemyController;
 import com.MRK.alanparsons2.controllers.ParticleController;
 import com.MRK.alanparsons2.controllers.ProjectileController;
@@ -29,6 +30,7 @@ public class LevelRenderer implements Disposable {
 	private ShipController shipController;
 	private EnemyController enemyController;
 	private ProjectileController projectileController;
+	private CollisionController collisionController;
 	private ParticleController particleController;
 	
 	/* debug */
@@ -49,6 +51,7 @@ public class LevelRenderer implements Disposable {
 		shipController = new ShipController(level.getShip(), level.getTouchTemplate());
 		enemyController = new EnemyController(level.getEnemies());
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
+		collisionController = new CollisionController(level.getProjectiles());
 		particleController = new ParticleController();
 		
 		shapeRenderer = new ShapeRenderer();
@@ -60,9 +63,15 @@ public class LevelRenderer implements Disposable {
 		shipController.update();
 		enemyController.update(level.getShip().getX(), level.getShip().getY());
 		projectileController.update(level.getWeapons());
-		particleController.update(projectileController.getImpacts());
+//		particleController.update(projectileController.getImpacts());
+		collisionController.computeCollisions(projectileController.getToBeRemovedList());
 		
-		projectileController.clearImpacts();		
+		projectileController.refreshProjectilesList();
+		
+		particleController.update(collisionController.getImpacts());
+		
+//		projectileController.clearImpacts();
+		collisionController.clearImpacts();
 	}
 	
 	public void render() {
@@ -87,8 +96,8 @@ public class LevelRenderer implements Disposable {
 			shapeRenderer.begin(ShapeType.Line);
 			shapeRenderer.setColor(Color.RED);
 			shapeRenderer.rect(level.getShip().getX(), level.getShip().getY(), level.getShip().getWidth(), level.getShip().getWidth());
-			shapeRenderer.circle(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, 0.4f);
-			shapeRenderer.line(level.getShip().getWeapon().getPosition().x, level.getShip().getWeapon().getPosition().y, level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
+			shapeRenderer.circle(level.getShip().getWeapon().getX(), level.getShip().getWeapon().getY(), 0.4f);
+			shapeRenderer.line(level.getShip().getWeapon().getX(), level.getShip().getWeapon().getY(), level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
 			shapeRenderer.end();
 		}
 	}
@@ -110,8 +119,10 @@ public class LevelRenderer implements Disposable {
 		
 		enemyController.setEnemiesWeapons(level.getWeapons(), weaponFactory);
 		
-		projectileController.addTarget(level.getShip());
-		projectileController.addTargets(level.getEnemies());
+//		projectileController.addTarget(level.getShip());
+//		projectileController.addTargets(level.getEnemies());
+		collisionController.addTarget(level.getShip());
+		collisionController.addTargets(level.getEnemies());
 	}
 	
 	public void dispose() {

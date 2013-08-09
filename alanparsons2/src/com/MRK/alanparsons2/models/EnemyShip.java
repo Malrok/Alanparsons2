@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.MRK.alanparsons2.templates.WeaponTemplate;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +13,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class EnemyShip extends Sprite implements Disposable {
 	
-	private final Color color = new Color();
+//	private final Color color = new Color();
 	
 	private String name;
 	private int shipLevel = 1;
@@ -64,6 +63,10 @@ public class EnemyShip extends Sprite implements Disposable {
 		shipLevel += levelInc;
 	}
 	
+	public PixmapSprite getHull() {
+		return hull;
+	}
+	
 	public void setHull(Pixmap pixmap) {
 		hull.init(pixmap);
 	}
@@ -92,22 +95,6 @@ public class EnemyShip extends Sprite implements Disposable {
 	}
 	
 	/**
-	 * Recherche sur la texture du vaisseau les points magenta définissant la position d'une arme, et la stocke<BR>
-	 * Les positions sont relatives au {@link Pixmap}
-	 */
-	public void initWeapons() {
-		for (int x = 0; x < hull.getPixmapWidth(); x++) {
-			for (int y = 0; y < hull.getPixmapHeight(); y++) {
-				hull.getPixelColor(color, new Vector2(x, y));
-				if (color.r == 1.0f && color.b == 1.0f) { // magenta
-					System.out.println("initWeapons addingweapon x/y=" + x + "/" + y);
-					shipWeapons.put(new PixmapPosition(x, y), null);
-				}
-			}
-		}
-	}
-	
-	/**
 	 * Renvoie la liste de positions d'armes construite en cherchant les points magenta sur la texture
 	 * @return Map<PixmapPosition, Weapon>
 	 */
@@ -115,20 +102,36 @@ public class EnemyShip extends Sprite implements Disposable {
 		return shipWeapons;
 	}
 	
-	/**
-	 * Place les armes du vaisseau sur ce dernier, en positions réelles, à partir des {@link PixmapPosition}
-	 */
-	public void setWeaponsPositionOnSprite(Entry<PixmapPosition, Weapon> entry, Weapon weapon) {
-		if (entry.getValue() == null) {
-			Vector2 position = new Vector2(getX(), getY());
-			
-			entry.setValue(weapon);
-			
-			hull.unproject(position, entry.getKey().getX(), entry.getKey().getY());
-			
-			entry.getValue().setPosition(position.x, position.y);
-		}
-	}
+//	/**
+//	 * Recherche sur la texture du vaisseau les points magenta définissant la position d'une arme, et la stocke<BR>
+//	 * Les positions sont relatives au {@link Pixmap}
+//	 */
+//	public void initWeapons() {
+//		for (int x = 0; x < hull.getPixmapWidth(); x++) {
+//			for (int y = 0; y < hull.getPixmapHeight(); y++) {
+//				hull.getPixelColor(color, new Vector2(x, y));
+//				if (color.r == 1.0f && color.b == 1.0f) { // magenta
+////					System.out.println("initWeapons addingweapon x/y=" + x + "/" + y);
+//					shipWeapons.put(new PixmapPosition(x, y), null);
+//				}
+//			}
+//		}
+//	}
+	
+//	/**
+//	 * Place les armes du vaisseau sur ce dernier, en positions réelles, à partir des {@link PixmapPosition}
+//	 */
+//	public void setWeaponsPositionOnSprite(Entry<PixmapPosition, Weapon> entry, Weapon weapon) {
+//		if (entry.getValue() == null) {
+//			Vector2 position = new Vector2(getX(), getY());
+//			
+//			entry.setValue(weapon);
+//			
+//			hull.unproject(position, entry.getKey().getX(), entry.getKey().getY());
+//			
+//			entry.getValue().setPosition(position.x, position.y);
+//		}
+//	}
 	
 	public void upgradeWeapons(WeaponTemplate weaponTemplate) {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {

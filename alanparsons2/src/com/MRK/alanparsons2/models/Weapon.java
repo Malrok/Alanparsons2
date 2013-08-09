@@ -10,12 +10,12 @@ import com.badlogic.gdx.utils.TimeUtils;
  * Une arme<BR>
  * Modèle destiné à émettre des {@link Projectile}
  */
-public class Weapon implements Disposable {
+public class Weapon extends Sprite implements Disposable {
 
 	private String name;
 	private boolean enabled = false;
 	private int projectileType;
-	private Vector2 position = new Vector2();
+//	private Vector2 position = new Vector2();
 	private Vector2 aimAt;
 	private int shootFrequency; // shots per second
 	private long lastShoot;
@@ -53,14 +53,14 @@ public class Weapon implements Disposable {
 		this.projectileType = projectileType;
 	}
 
-	public void setPosition(float x, float y) {
-		this.position.x = x;
-		this.position.y = y;
-	}
-	
-	public Vector2 getPosition() {
-		return position;
-	}
+//	public void setPosition(float x, float y) {
+//		this.position.x = x;
+//		this.position.y = y;
+//	}
+//	
+//	public Vector2 getPosition() {
+//		return position;
+//	}
 	
 	/**
 	 * Renvoie la direction dans laquelle pointe l'arme

@@ -27,10 +27,10 @@ public class ProjectileFactory {
 		Projectile projectile = new Projectile(
 				weapon.getEmitter(), template.getTexture(), 
 				CircleHelper.getVectorAimingAtCenter(
-						weapon.getPosition().x - template.getWidth() / 2, weapon.getPosition().y - template.getHeight() / 2, 
+						weapon.getX() - template.getWidth() / 2, weapon.getY() - template.getHeight() / 2, 
 						weapon.getAimAt().x, weapon.getAimAt().y, template.getSpeed()),
 				template.getPower());
-		projectile.setPosition(weapon.getPosition().x, weapon.getPosition().y);		
+		projectile.setPosition(weapon.getX(), weapon.getY());		
 		projectile.setSize(template.getWidth(), template.getHeight());
 		
 		return projectile;
