@@ -3,7 +3,6 @@ package com.MRK.alanparsons2.helpers;
 import java.util.List;
 
 import com.MRK.alanparsons2.templates.WeaponTemplate;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class WeaponHelper {
 
@@ -13,9 +12,9 @@ public class WeaponHelper {
 		this.weaponsTemplates = weaponsTemplates;
 	}
 	
-	public WeaponTemplate getMatchingTemplate(Sprite emitter, int shipLevel) {
+	public WeaponTemplate getMatchingTemplate(String emitterName, int shipLevel) {
 		for (WeaponTemplate template : weaponsTemplates) {
-			if (template.getEmitter().equals(emitter) && template.getShipLevel() == shipLevel)
+			if (template.getEmitterName().equals(emitterName) && template.getShipLevel() == shipLevel)
 				return template;
 		}
 		

@@ -65,9 +65,11 @@ public class CollisionController {
 							toBeRemoved.add(projectile);
 						}
 					} else if (target instanceof Weapon) {
-						((Weapon)target).setHps((int) (((Weapon)target).getHps() - projectile.getPower()));
-						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
-						toBeRemoved.add(projectile);
+						if (((Weapon)target).getEmitter() != projectile.getEmitter()) {
+							((Weapon)target).setHps((int) (((Weapon)target).getHps() - projectile.getPower()));
+							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
+							toBeRemoved.add(projectile);
+						}
 					}
 				}
 			}

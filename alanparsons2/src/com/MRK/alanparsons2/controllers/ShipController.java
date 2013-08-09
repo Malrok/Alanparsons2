@@ -2,6 +2,7 @@ package com.MRK.alanparsons2.controllers;
 
 import java.util.List;
 
+import com.MRK.alanparsons2.factories.LevelBuilder;
 import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.MRK.alanparsons2.helpers.WeaponHelper;
@@ -150,7 +151,7 @@ public class ShipController {
 	}
 	
 	public void setWeapon(WeaponHelper helper, List<Weapon> weapons, WeaponFactory weaponFactory) {
-		Weapon weapon = weaponFactory.createWeapon(helper, ship, ship.getLevel());
+		Weapon weapon = weaponFactory.createWeapon(helper, LevelBuilder.SHIP, ship.getLevel());
 		
 		weapons.add(weapon);
 		ship.setWeapon(weapon);

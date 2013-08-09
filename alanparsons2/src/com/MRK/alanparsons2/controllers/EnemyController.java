@@ -28,7 +28,7 @@ public class EnemyController {
 			
 			for (Entry<PixmapPosition, Weapon> entry : enemy.getWeaponsPosition().entrySet()) {
 			
-				Weapon weapon = weaponFactory.createWeapon(helper, enemy, enemy.getLevel());
+				Weapon weapon = weaponFactory.createWeapon(helper, enemy.getName(), enemy.getLevel());
 				weapon.setName(enemy.getName() + rank++);
 				weapons.add(weapon);
 				
@@ -48,7 +48,7 @@ public class EnemyController {
 			
 			for (Entry<PixmapPosition, Weapon> entry : enemy.getWeaponsPosition().entrySet()) {
 			
-				Weapon weapon = weaponFactory.createWeapon(helper, enemy, enemy.getLevel());
+				Weapon weapon = weaponFactory.createWeapon(helper, enemy.getName(), enemy.getLevel());
 				weapon.setName(enemy.getName() + rank++);
 				weapons.add(weapon);
 				

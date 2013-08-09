@@ -6,14 +6,13 @@ import java.util.List;
 import com.MRK.alanparsons2.helpers.WeaponHelper;
 import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.Weapon;
+import com.MRK.alanparsons2.templates.WeaponTemplate;
 
 public class WeaponController {
 
-//	private List<WeaponTemplate> weaponsTemplates;
 	private List<Weapon> weapons;
 	
 	public WeaponController(List<Weapon> weapons) {
-//		this.weaponsTemplates = weaponsTemplates;
 		this.weapons = weapons;
 	}
 	
@@ -29,13 +28,14 @@ public class WeaponController {
 					
 					enemy.removeWeapon(weapon);
 					enemy.addLevel(1);
-					enemy.upgradeWeapons(helper.getMatchingTemplate(enemy, enemy.getLevel()));
+					
+					WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
+					
+					if (template != null) enemy.upgradeWeapons(template);
 				}
 			}
 		}
 		
 		weapons.removeAll(toBeRemoved);
-	}
-	
-	
+	}	
 }
