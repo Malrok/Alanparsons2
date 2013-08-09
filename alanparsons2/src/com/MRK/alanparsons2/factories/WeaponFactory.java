@@ -19,6 +19,8 @@ public class WeaponFactory {
 		
 		if (template != null) {
 			weapon.setName(template.getName());
+			weapon.setTexture(template.getTexture());
+			weapon.setSize(template.getWidth(), template.getHeight());
 			weapon.setEmitterName(template.getEmitterName());
 			weapon.setEmitter(template.getEmitter());
 			weapon.setShootFrequency(template.getShootFrequency());

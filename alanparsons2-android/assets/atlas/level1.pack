@@ -66,23 +66,30 @@ sun
   orig: 64, 64
   offset: 0, 0
   index: -1
-shot1
+weapon
   rotate: false
-  xy: 517, 775
-  size: 16, 4
-  orig: 16, 4
+  xy: 517, 715
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
-shot2
+shot1
   rotate: false
   xy: 583, 841
   size: 16, 4
   orig: 16, 4
   offset: 0, 0
   index: -1
-shot3
+shot2
   rotate: false
   xy: 1, 1
+  size: 16, 4
+  orig: 16, 4
+  offset: 0, 0
+  index: -1
+shot3
+  rotate: false
+  xy: 67, 67
   size: 16, 4
   orig: 16, 4
   offset: 0, 0

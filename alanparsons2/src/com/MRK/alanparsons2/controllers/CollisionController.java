@@ -49,12 +49,9 @@ public class CollisionController {
 			for (Sprite target : targets) {
 				if (projectile.getEmitter() != target && target.getBoundingRectangle().contains(projectile.getX() + projectile.getWidth() / 2, projectile.getY() + projectile.getHeight() / 2)) {
 					if (target instanceof EnemyShip) {
-//						((EnemyShip) target).screenCoordsToPixmap(position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
 						pixHelper.screenCoordsToPixmap(((EnemyShip) target).getHull(), position, (int) projectile.getX() + projectile.getWidth() / 2, (int) projectile.getY() + projectile.getHeight() / 2);
-//						if (((EnemyShip) target).collides(position)) {
 						if (pixHelper.collides(((EnemyShip) target).getHull(), position)) {
 							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
-//							((EnemyShip) target).eraseCircle(position, (int) projectile.getPower());
 							pixHelper.eraseCircle(((EnemyShip) target).getHull(), position, (int) projectile.getPower());
 							toBeRemoved.add(projectile);
 						}

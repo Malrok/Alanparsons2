@@ -1,7 +1,10 @@
 package com.MRK.alanparsons2.models;
 
+import com.MRK.alanparsons2.helpers.CircleHelper;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -13,15 +16,39 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Weapon extends Sprite implements Disposable {
 
 	private String name;
+	private TextureRegion texture;
 	private boolean enabled = false;
 	private int projectileType;
-//	private Vector2 position = new Vector2();
 	private Vector2 aimAt;
+	private float angle;
 	private int shootFrequency; // shots per second
 	private long lastShoot;
 	private boolean shouldEmitProjectile = false;
 	private String emitterName;
 	private Sprite emitter;
+
+	public void setTexture(TextureRegion texture) {
+		this.texture = texture;
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch) {
+		if (texture != null) {
+			batch.draw(texture, getX() - getWidth() / 2, getY() - getHeight() / 2, getOriginX(), getOriginY(), getWidth(), getHeight(), 1, 1, angle, true);
+		}
+	}
+	
+	@Override
+	public void setPosition(float x, float y) {
+		super.setPosition(x, y);
+		if (getWidth() != 0 && getHeight() != 0) {
+			setOrigin(getWidth() / 2, getHeight() / 2);
+		}
+	}
+	
+	public void dispose() {
+		emitter = null;
+	}
 	
 	public String getName() {
 		return name;
@@ -29,10 +56,6 @@ public class Weapon extends Sprite implements Disposable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void dispose() {
-		emitter = null;
 	}
 	
 	public boolean isEnabled() {
@@ -52,15 +75,6 @@ public class Weapon extends Sprite implements Disposable {
 	public void setProjectileType(int projectileType) {
 		this.projectileType = projectileType;
 	}
-
-//	public void setPosition(float x, float y) {
-//		this.position.x = x;
-//		this.position.y = y;
-//	}
-//	
-//	public Vector2 getPosition() {
-//		return position;
-//	}
 	
 	/**
 	 * Renvoie la direction dans laquelle pointe l'arme
@@ -76,6 +90,7 @@ public class Weapon extends Sprite implements Disposable {
 	 */
 	public void setAimAt(Vector2 aimAt) {
 		this.aimAt = aimAt;
+		angle = CircleHelper.getDAngle(getX() - aimAt.x, getY() - aimAt.y);
 	}
 	
 	public int getShootFrequency() {

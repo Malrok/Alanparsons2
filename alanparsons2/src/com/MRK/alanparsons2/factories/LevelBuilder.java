@@ -278,8 +278,14 @@ public class LevelBuilder implements Disposable {
 				weapon.setProjectileType((int) value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(SHIP_LEVEL))
 				weapon.setShipLevel((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(TEXTURE))
+				weapon.setTexture(atlas.findRegion(value.getValue().getString()));
+			if (value.getKey().equalsIgnoreCase(WIDTH))
+				weapon.setWidth(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(HEIGHT))
+				weapon.setHeight(value.getValue().getNumber());
 		}
-
+		
 		weapons.add(weapon);
 	}
 	
@@ -312,10 +318,8 @@ public class LevelBuilder implements Disposable {
 		float x = 0, y = 0;
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
-			if (value.getKey().equalsIgnoreCase(Z_RANK)) {
-				System.out.println("zrank " + value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(Z_RANK))
 				element.setZrank((int) value.getValue().getNumber());
-			}
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				element.setTexture(atlas.findRegion(value.getValue().getString()));
 			if (value.getKey().equalsIgnoreCase(WIDTH))
@@ -323,10 +327,8 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
 				element.setHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(X))
-//				element.setX(value.getValue().getNumber());
 				x= value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(Y))
-//				element.setY(value.getValue().getNumber());
 				y = value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(SHIFTX))
 				element.setShiftx(value.getValue().getNumber());

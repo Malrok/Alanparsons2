@@ -1,10 +1,13 @@
 package com.MRK.alanparsons2.templates;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class WeaponTemplate {
 
 	private String name;
+	private TextureRegion texture;
+	private float width = 0, height = 0;
 	private String emitterName;
 	private Sprite emitter;
 	private int shipLevel;
@@ -19,6 +22,30 @@ public class WeaponTemplate {
 		this.name = name;
 	}
 	
+	public TextureRegion getTexture() {
+		return texture;
+	}
+
+	public void setTexture(TextureRegion texture) {
+		this.texture = texture;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
 	public String getEmitterName() {
 		return emitterName;
 	}

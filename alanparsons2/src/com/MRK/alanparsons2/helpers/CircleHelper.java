@@ -57,7 +57,12 @@ public class CircleHelper {
 	 * @return  - float
 	 */
 	public static float getDAngle(float x, float y) {
-		return (float) Math.toDegrees(Math.atan(y / x));
+		float angle = (float) Math.toDegrees(Math.atan(y / x));
+		
+		if (x < 0)
+			angle += 180;
+		
+		return angle;
 	}
 	
 	/**
