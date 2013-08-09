@@ -13,6 +13,7 @@ public class WeaponTemplate {
 	private int shipLevel;
 	private int shootFrequency;
 	private int projectileType;
+	private int hps;
 	
 	public String getName() {
 		return name;
@@ -84,5 +85,13 @@ public class WeaponTemplate {
 	
 	public void setProjectileType(int projectileType) {
 		this.projectileType = projectileType;
+	}
+
+	public int getHps() {
+		return hps;
+	}
+
+	public void setHps(int hps) {
+		this.hps = hps;
 	}
 }

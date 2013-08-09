@@ -6,6 +6,7 @@ import java.util.List;
 import com.MRK.alanparsons2.helpers.PixmapHelper;
 import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.Projectile;
+import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -31,13 +32,21 @@ public class CollisionController {
 	}
 	
 	/**
-	 * Ajoute une liste de cibles de type {@link Sprite} à la liste des objets gérés 
+	 * Ajoute une liste de cibles de type {@link EnemyShip} à la liste des objets gérés 
 	 * @param weapon
 	 */
-	public void addTargets(List<EnemyShip> list) {
+	public void addEnemyTargets(List<EnemyShip> list) {
 		this.targets.addAll(list);
 	}
 
+	/**
+	 * Ajoute une liste de cibles de type {@link Weapon} à la liste des objets gérés 
+	 * @param weapon
+	 */
+	public void addWeaponTargets(List<Weapon> list) {
+		this.targets.addAll(list);
+	}
+	
 	/**
 	 * Vérifie si les projectiles passés en paramètre touche une cible<BR>
 	 * Génère un impact<BR>
@@ -55,7 +64,9 @@ public class CollisionController {
 							pixHelper.eraseCircle(((EnemyShip) target).getHull(), position, (int) projectile.getPower());
 							toBeRemoved.add(projectile);
 						}
-					} else {
+					} else if (target instanceof Weapon) {
+						((Weapon)target).setHps((int) (((Weapon)target).getHps() - projectile.getPower()));
+						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 						toBeRemoved.add(projectile);
 					}
 				}

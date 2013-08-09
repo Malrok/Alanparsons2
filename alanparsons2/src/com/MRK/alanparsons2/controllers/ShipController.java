@@ -2,9 +2,9 @@ package com.MRK.alanparsons2.controllers;
 
 import java.util.List;
 
-import com.MRK.alanparsons2.factories.LevelBuilder;
 import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.CircleHelper;
+import com.MRK.alanparsons2.helpers.WeaponHelper;
 import com.MRK.alanparsons2.models.Ship;
 import com.MRK.alanparsons2.models.Weapon;
 import com.MRK.alanparsons2.templates.TouchInputTemplate;
@@ -149,8 +149,8 @@ public class ShipController {
 		return new Vector2(rotationCenterx, rotationCentery);
 	}
 	
-	public void setWeapon(List<Weapon> weapons, WeaponFactory weaponFactory) {
-		Weapon weapon = weaponFactory.createWeapon(LevelBuilder.SHIP, ship.getLevel());
+	public void setWeapon(WeaponHelper helper, List<Weapon> weapons, WeaponFactory weaponFactory) {
+		Weapon weapon = weaponFactory.createWeapon(helper, ship, ship.getLevel());
 		
 		weapons.add(weapon);
 		ship.setWeapon(weapon);

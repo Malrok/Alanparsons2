@@ -6,9 +6,11 @@ import com.MRK.alanparsons2.controllers.EnemyController;
 import com.MRK.alanparsons2.controllers.ParticleController;
 import com.MRK.alanparsons2.controllers.ProjectileController;
 import com.MRK.alanparsons2.controllers.ShipController;
+import com.MRK.alanparsons2.controllers.WeaponController;
 import com.MRK.alanparsons2.factories.ProjectileFactory;
 import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.PixmapHelper;
+import com.MRK.alanparsons2.helpers.WeaponHelper;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.RotatingCamera;
 import com.badlogic.gdx.Gdx;
@@ -28,12 +30,16 @@ public class LevelRenderer implements Disposable {
 	private SpriteBatch batch;
 	private RotatingCamera camera;
 	private WeaponFactory weaponFactory;
+	
 	private ShipController shipController;
 	private EnemyController enemyController;
 	private ProjectileController projectileController;
 	private CollisionController collisionController;
 	private ParticleController particleController;
+	private WeaponController weaponController;
+	
 	private PixmapHelper pixHelper = new PixmapHelper();
+	private WeaponHelper weaponHelper;
 	
 	/* debug */
 	private ShapeRenderer shapeRenderer;
@@ -48,13 +54,15 @@ public class LevelRenderer implements Disposable {
 		batch = new SpriteBatch();
 		camera = new RotatingCamera();
 		
-		weaponFactory = new WeaponFactory(level.getWeaponTemplates());
+		weaponHelper = new WeaponHelper(level.getWeaponTemplates());
+		weaponFactory = new WeaponFactory();
 		
 		shipController = new ShipController(level.getShip(), level.getTouchTemplate());
 		enemyController = new EnemyController(level.getEnemies(), pixHelper);
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
 		collisionController = new CollisionController(level.getProjectiles(), pixHelper);
 		particleController = new ParticleController();
+		weaponController = new WeaponController(level.getWeapons());
 		
 		shapeRenderer = new ShapeRenderer();
 	}
@@ -68,6 +76,8 @@ public class LevelRenderer implements Disposable {
 		collisionController.computeCollisions(projectileController.getToBeRemovedList());
 		projectileController.refreshProjectilesList();
 		particleController.update(collisionController.getImpacts());
+		weaponController.update(weaponHelper);
+		
 		collisionController.clearImpacts();
 	}
 	
@@ -111,13 +121,14 @@ public class LevelRenderer implements Disposable {
 		camera.initPosition(level.getWidth());
 		
 		shipController.init(level.getLevelCenterX(), level.getLevelCenterY(), camera.getRadius() + camera.getViewportHeight() / 2 - level.getShip().getHeight() / 2 - level.getShip().getyFromScreen());
-		shipController.setWeapon(level.getWeapons(), weaponFactory);
+		shipController.setWeapon(weaponHelper, level.getWeapons(), weaponFactory);
 		shipController.update();
 		
-		enemyController.setEnemiesWeapons(level.getWeapons(), weaponFactory);
+		enemyController.setEnemiesWeapons(weaponHelper, level.getWeapons(), weaponFactory);
 
 		collisionController.addTarget(level.getShip());
-		collisionController.addTargets(level.getEnemies());
+		collisionController.addEnemyTargets(level.getEnemies());
+		collisionController.addWeaponTargets(level.getWeapons());
 	}
 	
 	public void dispose() {

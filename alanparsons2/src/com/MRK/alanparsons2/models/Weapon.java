@@ -26,6 +26,7 @@ public class Weapon extends Sprite implements Disposable {
 	private boolean shouldEmitProjectile = false;
 	private String emitterName;
 	private Sprite emitter;
+	private int hps;
 
 	public void setTexture(TextureRegion texture) {
 		this.texture = texture;
@@ -135,6 +136,14 @@ public class Weapon extends Sprite implements Disposable {
 		this.emitter = emitter;
 	}
 	
+	public int getHps() {
+		return hps;
+	}
+
+	public void setHps(int hps) {
+		this.hps = hps;
+	}
+
 	public void upgrade(WeaponTemplate template) {
 		this.projectileType = template.getProjectileType();
 		this.shootFrequency = template.getShootFrequency();

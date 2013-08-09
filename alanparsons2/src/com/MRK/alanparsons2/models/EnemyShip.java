@@ -57,7 +57,7 @@ public class EnemyShip extends Sprite implements Disposable {
 		return shipLevel;
 	}
 	
-	public void addLevel(int levelInc, WeaponTemplate weaponTemplate) {
+	public void addLevel(int levelInc) {
 		shipLevel += levelInc;
 	}
 	
@@ -90,6 +90,10 @@ public class EnemyShip extends Sprite implements Disposable {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
 			entry.getValue().setEnabled(true);
 		}
+	}
+	
+	public void removeWeapon(Weapon weapon) {
+		shipWeapons.remove(weapon);
 	}
 	
 	/**

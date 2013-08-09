@@ -83,6 +83,7 @@ public class LevelBuilder implements Disposable {
 	private static final String MAX_SHIP_SPEED = "maxspeed";
 	private static final String SPEED_DOWN_DELAY = "speeddowndelay";
 	private static final String CAMERA_RADIUS = "radius";
+	private static final String HEALTH_POINTS = "hp";
 	
 	private FileHandle handle;
 	private LevelFileHandler levelHandler = new LevelFileHandler();
@@ -284,6 +285,8 @@ public class LevelBuilder implements Disposable {
 				weapon.setWidth(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
 				weapon.setHeight(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(HEALTH_POINTS))
+				weapon.setHps((int)value.getValue().getNumber());
 		}
 		
 		weapons.add(weapon);
