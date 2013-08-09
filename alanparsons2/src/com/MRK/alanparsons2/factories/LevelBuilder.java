@@ -248,9 +248,9 @@ public class LevelBuilder implements Disposable {
 				for (int phase = 0; phase < 5; phase++)
 					((Ship)ship).addTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
 			if (value.getKey().equalsIgnoreCase(SHELL_TEXTURE))
-				((EnemyShip)ship).setShell(pixmapAtlas.createPixmap(value.getValue().getString()));
+				((EnemyShip)ship).setHull(pixmapAtlas.createPixmap(value.getValue().getString()));
 			if (value.getKey().equalsIgnoreCase(STRUCTURE_TEXTURE))
-				((EnemyShip)ship).setStructure(atlas.findRegion(value.getValue().getString()));
+				((EnemyShip)ship).setStructure(pixmapAtlas.createPixmap(value.getValue().getString()));
 		}
 		
 		if (ship instanceof EnemyShip && width != 0 && height != 0 && x != 0 && y != 0) {
