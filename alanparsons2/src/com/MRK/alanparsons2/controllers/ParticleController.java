@@ -13,14 +13,20 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class ParticleController implements Disposable {
 
-	private ParticleEffectPool effectPool;
+	public static int COLLISION = 1;
+	public static int EXPLOSION = 2;
+	
+	private ParticleEffectPool collideEffectPool, explosionEffectPool;
 	private List<PooledEffect> effects = new ArrayList<PooledEffect>();
 	private List<PooledEffect> toBeRemoved = new ArrayList<PooledEffect>();
 	
 	public ParticleController() {
-		ParticleEffect effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("particles/collision_effect.p"), Gdx.files.internal("particles"));
-		effectPool = new ParticleEffectPool(effect, 1, 2);
+		ParticleEffect collisionEffect = new ParticleEffect();
+		collisionEffect.load(Gdx.files.internal("particles/collision_effect.p"), Gdx.files.internal("particles"));
+		collideEffectPool = new ParticleEffectPool(collisionEffect, 1, 2);
+		ParticleEffect explosionEffect = new ParticleEffect();
+		explosionEffect.load(Gdx.files.internal("particles/explosion_effect.p"), Gdx.files.internal("particles"));
+		explosionEffectPool = new ParticleEffectPool(explosionEffect, 1, 2);
 	}
 	
 	@Override
@@ -28,10 +34,10 @@ public class ParticleController implements Disposable {
 		
 	}
 
-	public void update(List<Vector2> positions) {
+	public void update(int type, List<Vector2> positions) {
 		synchronized(effects) {
 			for (Vector2 position : positions) {
-				PooledEffect effect = effectPool.obtain();
+				PooledEffect effect = (type == COLLISION ? collideEffectPool.obtain() : explosionEffectPool.obtain());
 				effect.setPosition(position.x, position.y);
 				effects.add(effect);
 			}

@@ -30,7 +30,6 @@ public class MainScreen implements Screen {
 	private SpriteBatch batch;
 	
 	private Stage stage = new Stage();
-//	private Skin skin;
 	private Image start;
 	private TweenManager tweenManager = new TweenManager();
 	
@@ -50,8 +49,6 @@ public class MainScreen implements Screen {
 		backgroundTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		background = new TextureRegion(backgroundTexture,0,0,backgroundTexture.getWidth(),backgroundTexture.getHeight() * height / width);
-		
-//		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		Texture startTexture = new Texture(Gdx.files.internal("buttons/start.png"));
 		startTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -63,7 +60,6 @@ public class MainScreen implements Screen {
 		start.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-//				result = "play level1 " + (checkBox.isChecked() ? "internal" : "external");
 				result = "next";
 			}
 		});
@@ -78,7 +74,7 @@ public class MainScreen implements Screen {
 	
 	@Override
 	public void update() {
-
+		stage.act();
 	}
 
 	@Override

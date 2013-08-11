@@ -79,13 +79,14 @@ public class LevelRenderer implements Disposable {
 		camera.rotateCameraAround(shipController.getLastRotateValue());
 		
 		shipController.update();
-		enemyController.update(level.getShip().getX(), level.getShip().getY());
+		enemyController.update(level.getShip().getX() + level.getShip().getWidth() / 2, level.getShip().getY() + level.getShip().getHeight() / 2);
 		projectileController.update(level.getWeapons());
 		collisionController.computeCollisions(projectileController.getToBeRemovedList());
 		projectileController.refreshProjectilesList();
-		particleController.update(collisionController.getImpacts());
+		particleController.update(ParticleController.COLLISION, collisionController.getImpacts());
 		weaponController.update(toBeRemoved, weaponHelper);
 		collisionController.removeWeaponTargets(toBeRemoved);
+		particleController.update(ParticleController.EXPLOSION, weaponController.getExplodingWeapons());
 		
 		collisionController.clearImpacts();
 	}

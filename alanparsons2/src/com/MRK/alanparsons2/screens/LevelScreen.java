@@ -24,16 +24,11 @@ public class LevelScreen implements Screen {
 	
 	private LevelRenderer renderer; 	
 	private String result = "";
-	private int levelWidth, levelHeight;
 	
 	private boolean paused = false;
 	
 	public LevelScreen(Level level, int width, int height) {
-		levelWidth = width;
-		levelHeight = height;
-		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Dialog.fadeDuration = 0;
 		
 		renderer = new LevelRenderer(level);		
 		renderer.resize(width, height);
@@ -83,6 +78,7 @@ public class LevelScreen implements Screen {
 			label.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
 			renderer.update();
 		}
+		stage.act();
 	}
 
 	@Override

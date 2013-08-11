@@ -247,7 +247,6 @@ public class LevelBuilder implements Disposable {
 				y = value.getValue().getNumber();
 			if (value.getKey().equalsIgnoreCase(TEXTURE))
 				for (int phase = 0; phase < 5; phase++) {
-					System.out.println("texture " + (atlas.findRegion(value.getValue().getString() + phase)));
 					((Ship)ship).addTexture(phase, atlas.findRegion(value.getValue().getString() + phase));
 				}
 			if (value.getKey().equalsIgnoreCase(SHELL_TEXTURE))

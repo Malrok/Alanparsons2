@@ -4,7 +4,7 @@ width:100
 height:100
 [staticbackground]
 zrank:4
-texture:stars
+#texture:stars
 repeatwidth:4
 repeatheight:4
 [movingbackground]
@@ -76,6 +76,10 @@ structuretexture:enemy_structure
 damagepercentagelevelup:10
 weapondestructionlevelsup:1
 [weapon]
+texture:weapon
+width:4
+height:4
+hp:10
 shiplevel:1
 projectiletype:2
 name:enemy1
@@ -84,6 +88,10 @@ power:1
 sps:1
 shootdistance:50
 [weapon]
+texture:weapon
+width:4
+height:4
+hp:15
 shiplevel:2
 projectiletype:3
 name:enemy1
