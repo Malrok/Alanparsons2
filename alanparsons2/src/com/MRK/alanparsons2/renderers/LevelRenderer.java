@@ -93,6 +93,7 @@ public class LevelRenderer implements Disposable {
 	public void render() {
 		camera.update();
 		
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		batch.setProjectionMatrix(camera.combined);

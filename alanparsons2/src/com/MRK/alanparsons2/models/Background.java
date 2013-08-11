@@ -23,15 +23,17 @@ public class Background {
 	}
 	
 	public void draw(SpriteBatch batch, float deltax, float deltay) {
-		for (BackgroundElement element : elements) {	
-			if (element.isMoveable()) {
-				batch.draw(element.getTexture(), element.getX() + element.getShiftx() * deltax, element.getY() + element.getShifty() * deltay, element.getWidth(), element.getHeight());
-			} else {
-				for (int w = 0; w < element.getRepeatWidth(); w++) {
-					for (int h = 0; h < element.getRepeatHeight(); h++) {
-						batch.draw(element.getTexture(), 
-								w * levelWidth / element.getRepeatWidth(), h * levelHeight / element.getRepeatHeight(), 
-								levelWidth / element.getRepeatWidth(), levelHeight / element.getRepeatHeight());
+		for (BackgroundElement element : elements) {
+			if (element.getTexture() != null) {
+				if (element.isMoveable()) {
+					batch.draw(element.getTexture(), element.getX() + element.getShiftx() * deltax, element.getY() + element.getShifty() * deltay, element.getWidth(), element.getHeight());
+				} else {
+					for (int w = 0; w < element.getRepeatWidth(); w++) {
+						for (int h = 0; h < element.getRepeatHeight(); h++) {
+							batch.draw(element.getTexture(), 
+									w * levelWidth / element.getRepeatWidth(), h * levelHeight / element.getRepeatHeight(), 
+									levelWidth / element.getRepeatWidth(), levelHeight / element.getRepeatHeight());
+						}
 					}
 				}
 			}

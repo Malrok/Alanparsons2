@@ -3,6 +3,7 @@ package com.MRK.alanparsons2;
 import com.MRK.alanparsons2.factories.LevelBuilder;
 import com.MRK.alanparsons2.interfaces.AndroidCallback;
 import com.MRK.alanparsons2.screens.LevelScreen;
+import com.MRK.alanparsons2.screens.LevelSelect;
 import com.MRK.alanparsons2.screens.LoadingScreen;
 import com.MRK.alanparsons2.screens.MainScreen;
 import com.MRK.alanparsons2.templates.Screen;
@@ -54,15 +55,18 @@ public class Alanparsons2 extends Game {
 			screen.dispose();
 
 			if (screen instanceof MainScreen) {
+				if (screen.result().equalsIgnoreCase("next"))
+					screen = new LevelSelect(width, height);
+			}
+			if (screen instanceof LevelSelect)
 				if (screen.result().startsWith("play"))
 					screen = new LoadingScreen((screen.result().split(" ")[2]).equalsIgnoreCase("internal"), screen.result().split(" ")[1], levelBuilder, width, height);
-			}
 			if (screen instanceof LoadingScreen)
 				if (screen.result().startsWith("loaded"))
 					screen = new LevelScreen(levelBuilder.getLevel(), width, height);
 			if (screen instanceof LevelScreen) {
-				if (screen.result().equalsIgnoreCase("lose"))
-					screen = new MainScreen(width, height);
+				if (screen.result().equalsIgnoreCase("cancel"))
+					screen = new LevelSelect(width, height);
 			}
 			
 			screen.resize(width, height);

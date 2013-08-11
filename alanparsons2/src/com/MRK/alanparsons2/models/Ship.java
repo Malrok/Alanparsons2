@@ -17,6 +17,7 @@ public class Ship extends Sprite implements Disposable {
 	public static final int TURNING_RIGHT = 2;
 	
 	private TextureRegion[] textures = new TextureRegion[3];
+//	private Shape shape;
 	private Weapon weapon;
 	private int level;
 	private int currentDirection = STILL;
@@ -96,11 +97,23 @@ public class Ship extends Sprite implements Disposable {
 			textures[phase] = texture;
 	}
 	
+//	public Shape getShape() {
+//		return shape;
+//	}
+//
+//	public void setShape(Shape shape) {
+//		this.shape = shape;
+//	}
+
 	/**
 	 * rendering du vaisseau
 	 */
 	public void draw(SpriteBatch batch) {
-		batch.draw(textures[currentDirection], getX(), getY(), getOriginX(), getOriginY(), 
-				getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90); 
+//		if (shape == null) {
+			batch.draw(textures[currentDirection], getX(), getY(), getOriginX(), getOriginY(), 
+					getWidth(), getHeight(), 1, 1, (float)Math.toDegrees(ShipController.currentAngle) + 90);
+//		} else {
+//			
+//		}
 	}
 }

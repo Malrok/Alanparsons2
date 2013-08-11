@@ -15,9 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
@@ -32,9 +30,8 @@ public class MainScreen implements Screen {
 	private SpriteBatch batch;
 	
 	private Stage stage = new Stage();
-	private Skin skin;
+//	private Skin skin;
 	private Image start;
-	private CheckBox checkBox;
 	private TweenManager tweenManager = new TweenManager();
 	
 	private String result = "";
@@ -48,31 +45,31 @@ public class MainScreen implements Screen {
 		
 		resize(width, height);
 		
-		Texture texture = new Texture(Gdx.files.internal("images/menu.png"));
+		Texture backgroundTexture = new Texture(Gdx.files.internal("images/menu.png"));
 		
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		backgroundTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		background = new TextureRegion(texture,0,0,texture.getWidth(),texture.getHeight() * height / width);
+		background = new TextureRegion(backgroundTexture,0,0,backgroundTexture.getWidth(),backgroundTexture.getHeight() * height / width);
 		
-		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+//		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-		start = new Image(new Texture(Gdx.files.internal("buttons/start.png")));
+		Texture startTexture = new Texture(Gdx.files.internal("buttons/start.png"));
+		startTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		start = new Image(startTexture);
+		start.setSize(width / 5, width / 5);
 		start.setOrigin(start.getWidth()/2, start.getHeight()/2);
 		start.setPosition(width / 2 - start.getWidth() / 2, height / 2 - start.getHeight() / 2);
 		start.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				result = "play level1 " + (checkBox.isChecked() ? "internal" : "external");
+//				result = "play level1 " + (checkBox.isChecked() ? "internal" : "external");
+				result = "next";
 			}
 		});
 		
 		stage.addActor(start);
 
-		checkBox = new CheckBox("Read level from game files", skin);
-		checkBox.setPosition(10,10);
-
-		stage.addActor(checkBox);
-		
 		Tween.registerAccessor(Image.class, new ImageAccessor());
 		Tween.to(start, ImageAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.1f, 1.1f).repeatYoyo(-1, 0).start(tweenManager);
 		
