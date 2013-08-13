@@ -7,6 +7,7 @@ import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.templates.CameraTemplate;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
 import com.MRK.alanparsons2.templates.TouchInputTemplate;
+import com.MRK.alanparsons2.templates.WeakPointTemplate;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
@@ -20,7 +21,9 @@ public class Level implements Disposable {
 	private Ship ship;
 	private List<EnemyShip> enemies = new ArrayList<EnemyShip>();
 	private List<WeaponTemplate> weaponsTemplates = new ArrayList<WeaponTemplate>();
+	private List<WeakPointTemplate> weakPointsTemplates = new ArrayList<WeakPointTemplate>();
 	private List<Weapon> weapons = new ArrayList<Weapon>();
+	private List<WeakPoint> weakPoints = new ArrayList<WeakPoint>();
 	private List<ProjectileTemplate> projectilesTemplates = new ArrayList<ProjectileTemplate>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private Background background;
@@ -82,6 +85,18 @@ public class Level implements Disposable {
 	public void addWeaponTemplate(WeaponTemplate weaponTemplate) {
 		this.weaponsTemplates.add(weaponTemplate);
 	}
+
+	public List<WeakPointTemplate> getWeakPointsTemplates() {
+		return weakPointsTemplates;
+	}
+
+	public void setWeakPointsTemplates(List<WeakPointTemplate> weakPointsTemplates) {
+		this.weakPointsTemplates = weakPointsTemplates;
+	}
+	
+	public void addWeakPointTemplate(WeakPointTemplate weakPointTemplate) {
+		this.weakPointsTemplates.add(weakPointTemplate);
+	}
 	
 	public List<Weapon> getWeapons() {
 		return weapons;
@@ -90,7 +105,15 @@ public class Level implements Disposable {
 	public void addWeapon(Weapon weapon) {
 		this.weapons.add(weapon);
 	}
- 	
+
+	public List<WeakPoint> getWeakPoints() {
+		return weakPoints;
+	}
+	
+	public void addWeakPoint(WeakPoint weakPoint) {
+		this.weakPoints.add(weakPoint);
+	}
+	
 	public List<ProjectileTemplate> getProjectilesTemplates() {
 		return projectilesTemplates;
 	}
@@ -161,8 +184,8 @@ public class Level implements Disposable {
 		for (EnemyShip enemy : enemies)
 			enemy.draw(batch);
 	
-		for (Weapon weapon : weapons)
-			weapon.draw(batch);
+//		for (Weapon weapon : weapons)
+//			weapon.draw(batch);
 		
 		for (Projectile projectile : projectiles)
 			projectile.draw(batch);

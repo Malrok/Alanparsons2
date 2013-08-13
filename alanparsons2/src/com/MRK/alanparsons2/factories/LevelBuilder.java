@@ -18,6 +18,7 @@ import com.MRK.alanparsons2.resources.ResourceValue;
 import com.MRK.alanparsons2.templates.CameraTemplate;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
 import com.MRK.alanparsons2.templates.TouchInputTemplate;
+import com.MRK.alanparsons2.templates.WeakPointTemplate;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -45,6 +46,7 @@ public class LevelBuilder implements Disposable {
 	public static final String SHIP = "ship";
 	public static final String ENEMY = "enemy";
 	public static final String WEAPON = "weapon";
+	public static final String WEAK_POINT = "weakpoint";
 	public static final String PROJECTILE = "projectile";
 	public static final String STATIC_BACKGROUND = "staticbackground";
 	public static final String MOVING_BACKGROUND = "movingbackground";
@@ -67,7 +69,7 @@ public class LevelBuilder implements Disposable {
 	private static final String SHIFTX = "shiftx";
 	private static final String SHIFTY = "shifty";
 	private static final String NAME = "name";
-	private static final String WEAPON_HOST = "host";
+	private static final String HOST = "host";
 	private static final String PROJECTILE_TYPE = "projectiletype";
 	private static final String Z_RANK = "zrank";
 	private static final String DAMAGE_PERCENTAGE_LEVEL_UP = "damagepercentagelevelup";
@@ -95,6 +97,7 @@ public class LevelBuilder implements Disposable {
 	private Level level;
 	private Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 	private List<WeaponTemplate> weapons = new ArrayList<WeaponTemplate>();
+	private List<WeakPointTemplate> weakPoints = new ArrayList<WeakPointTemplate>();
 	private List<ProjectileTemplate> projectiles = new ArrayList<ProjectileTemplate>();
 	private CameraTemplate cameraTemplate;
 	private Background background = new Background();
@@ -134,6 +137,11 @@ public class LevelBuilder implements Disposable {
 			level.addWeaponTemplate(weapon);
 		}
 		
+		for (WeakPointTemplate weakPoint : weakPoints) {
+			weakPoint.setHost(getSpriteByName(weakPoint.getHostName()));
+			level.addWeakPointTemplate(weakPoint);
+		}
+		
 		for (Entry<String, Sprite> sprite : sprites.entrySet()) {
 			if (sprite.getValue() instanceof Ship)
 				level.setShip((Ship) sprite.getValue());
@@ -161,6 +169,9 @@ public class LevelBuilder implements Disposable {
 		}
 		if (entity.equalsIgnoreCase(WEAPON)) {
 			constructWeapon(values);
+		}
+		if (entity.equalsIgnoreCase(WEAK_POINT)) {
+			constructWeakPoint(values);
 		}
 		if (entity.equalsIgnoreCase(PROJECTILE)) {
 			constructProjectile(values);
@@ -272,7 +283,7 @@ public class LevelBuilder implements Disposable {
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(NAME))
 				weapon.setName(value.getValue().getString());
-			if (value.getKey().equalsIgnoreCase(WEAPON_HOST))
+			if (value.getKey().equalsIgnoreCase(HOST))
 				weapon.setEmitterName(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(SHOTS_PER_SECOND))
 				weapon.setShootFrequency((int) value.getValue().getNumber());
@@ -291,6 +302,25 @@ public class LevelBuilder implements Disposable {
 		}
 		
 		weapons.add(weapon);
+	}
+
+	private void constructWeakPoint(Map<String, ResourceValue> values) {
+		WeakPointTemplate weakPoint = new WeakPointTemplate();
+		
+		for (Entry<String, ResourceValue> value : values.entrySet()) {
+			if (value.getKey().equalsIgnoreCase(HOST))
+				weakPoint.setHostName(value.getValue().getString());
+			if (value.getKey().equalsIgnoreCase(TEXTURE))
+				weakPoint.setTexture(atlas.findRegion(value.getValue().getString()));
+			if (value.getKey().equalsIgnoreCase(WIDTH))
+				weakPoint.setWidth(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(HEIGHT))
+				weakPoint.setHeight(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(HEALTH_POINTS))
+				weakPoint.setEnergy((int)value.getValue().getNumber());
+		}
+		
+		weakPoints.add(weakPoint);
 	}
 	
 	private void constructProjectile(Map<String, ResourceValue> values) {

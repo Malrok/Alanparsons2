@@ -11,8 +11,10 @@ import com.MRK.alanparsons2.controllers.ProjectileController;
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.controllers.WeaponController;
 import com.MRK.alanparsons2.factories.ProjectileFactory;
+import com.MRK.alanparsons2.factories.WeakPointFactory;
 import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.PixmapHelper;
+import com.MRK.alanparsons2.helpers.WeakPointHelper;
 import com.MRK.alanparsons2.helpers.WeaponHelper;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.RotatingCamera;
@@ -34,6 +36,7 @@ public class LevelRenderer implements Disposable {
 	private SpriteBatch batch;
 	private RotatingCamera camera;
 	private WeaponFactory weaponFactory;
+	private WeakPointFactory weakPointFactory;
 	
 	private ShipController shipController;
 	private EnemyController enemyController;
@@ -44,6 +47,7 @@ public class LevelRenderer implements Disposable {
 	
 	private PixmapHelper pixHelper = new PixmapHelper();
 	private WeaponHelper weaponHelper;
+	private WeakPointHelper weakPointsHelper;
 	
 	private List<Weapon> toBeRemoved = new ArrayList<Weapon>();
 	
@@ -61,7 +65,9 @@ public class LevelRenderer implements Disposable {
 		camera = new RotatingCamera();
 		
 		weaponHelper = new WeaponHelper(level.getWeaponTemplates());
+		weakPointsHelper = new WeakPointHelper(level.getWeakPointsTemplates());
 		weaponFactory = new WeaponFactory();
+		weakPointFactory = new WeakPointFactory();
 		
 		shipController = new ShipController(level.getShip(), level.getTouchTemplate());
 		enemyController = new EnemyController(level.getEnemies(), pixHelper);
@@ -136,6 +142,7 @@ public class LevelRenderer implements Disposable {
 		shipController.update();
 		
 		enemyController.setEnemiesWeapons(weaponHelper, level.getWeapons(), weaponFactory);
+		enemyController.setEnemiesWeakPoints(weakPointsHelper, level.getWeakPoints(), weakPointFactory);
 
 		collisionController.addTarget(level.getShip());
 		collisionController.addEnemyTargets(level.getEnemies());

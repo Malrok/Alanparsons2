@@ -16,6 +16,7 @@ public class EnemyShip extends Sprite implements Disposable {
 	private String name;
 	private int shipLevel = 1;
 	private Map<PixmapPosition, Weapon> shipWeapons = new HashMap<PixmapPosition, Weapon>();
+	private Map<PixmapPosition, WeakPoint> shipWeakPoints = new HashMap<PixmapPosition, WeakPoint>();
 	
 	private PixmapSprite hull = new PixmapSprite();
 	private PixmapSprite structure = new PixmapSprite();
@@ -36,13 +37,20 @@ public class EnemyShip extends Sprite implements Disposable {
 	
 	public void dispose() {
 		shipWeapons.clear();
+		shipWeakPoints.clear();
 		hull.dispose();
 		structure.dispose();
 	}
 
 	public void draw(SpriteBatch batch) {
 		structure.draw(batch);
+		for (Entry<PixmapPosition, WeakPoint> entry : shipWeakPoints.entrySet()) {
+			((WeakPoint)entry.getValue()).draw(batch);
+		}
 		hull.draw(batch);
+		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+			((Weapon)entry.getValue()).draw(batch);
+		}
 	}
 	
 	public String getName() {
@@ -69,6 +77,10 @@ public class EnemyShip extends Sprite implements Disposable {
 		hull.init(pixmap);
 	}
 
+	public PixmapSprite getStructure() {
+		return structure;
+	}
+	
 	public void setStructure(Pixmap pixmap) {
 		structure.init(pixmap);
 	}
@@ -108,5 +120,17 @@ public class EnemyShip extends Sprite implements Disposable {
 		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
 			entry.getValue().upgrade(weaponTemplate);
 		}
+	}
+	
+	public void removeWeakPoint(WeakPoint weakPoint) {
+		shipWeakPoints.remove(weakPoint);
+	}
+	
+	/**
+	 * Renvoie la liste de positions des points faibles construite en cherchant les points magenta sur la texture
+	 * @return Map<PixmapPosition, Weapon>
+	 */
+	public Map<PixmapPosition, WeakPoint> getWeakPointsPosition() {
+		return shipWeakPoints;
 	}
 }
