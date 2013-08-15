@@ -24,11 +24,6 @@ public class Alanparsons2 extends Game {
 	
 	private String currentLevel;
 	
-//	public Alanparsons2() {
-//		levelController = new LevelController();
-//		levelController.init();
-//	}
-	
 	public void setCallback(AndroidCallback callback) {
 		this.callback = callback;
 	}
@@ -78,8 +73,14 @@ public class Alanparsons2 extends Game {
 			if (screen instanceof LevelScreen) {
 				if (screen.result().equalsIgnoreCase(LevelScreen.SELECT))
 					screen = new LevelSelect(levelController.getLevels(), width, height);
-				else if (screen.result().equalsIgnoreCase(LevelScreen.NEXT))
-					screen = new LevelSelect(levelController.getLevels(), width, height);
+				else if (screen.result().equalsIgnoreCase(LevelScreen.NEXT)) {
+					currentLevel = levelController.getNextLevel(currentLevel);
+					if (currentLevel != null) {
+						screen = new LoadingScreen(true, currentLevel, levelBuilder, width, height);
+					} else {
+						screen = new LevelSelect(levelController.getLevels(), width, height);
+					}
+				}
 			}
 			
 			screen.resize(width, height);

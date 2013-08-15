@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LevelScreen implements Screen {
 
-//	public static final String WIN = "win";
 	public static final String NEXT = "next";
 	public static final String SELECT = "select";
 	

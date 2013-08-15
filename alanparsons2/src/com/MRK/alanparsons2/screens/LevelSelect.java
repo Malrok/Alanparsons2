@@ -114,7 +114,6 @@ public class LevelSelect implements Screen {
 		for (int y=0 ; y<columns ; y++) {
 			for (int x=0 ; x<rows ; x++) {
 				if (y * x + x < levels.size()) {
-//					TextButton button = new TextButton(levels.get(y * x + x).getName(), skin);
 					LevelButton button = new LevelButton(levels.get(y * x + x).getName(), skin);
 					button.setLevel(levels.get(y * x + x));
 					coordx = (int) ((x + 1) * WIDTH_SPAN + buttonWidth * x);

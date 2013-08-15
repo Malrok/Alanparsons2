@@ -33,15 +33,13 @@ public class LevelController {
 		return levels;
 	}
 	
-	public boolean getNextLevel(String currentLevelFileName) {
+	public String getNextLevel(String currentLevelFileName) {
 		int index = getLevelIndex(currentLevelFileName);
 		
-		if (index < levels.size()) {
-			currentLevelFileName = levels.get(index + 1).getFile().name();
-			return true;
-		}
+		if (index < levels.size())
+			return levels.get(index + 1).getFile().nameWithoutExtension();
 		
-		return false;
+		return null;
 	}
 	
 	private void initList() {
@@ -93,7 +91,7 @@ public class LevelController {
 		int ret = -1;
 		
 		for (Level level : levels) {
-			if (level.getFile().name().equalsIgnoreCase(levelFileName))
+			if (level.getFile().nameWithoutExtension().equalsIgnoreCase(levelFileName))
 				return levels.indexOf(level);
 		}
 		

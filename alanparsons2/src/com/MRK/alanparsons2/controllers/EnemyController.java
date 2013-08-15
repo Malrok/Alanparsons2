@@ -71,18 +71,12 @@ public class EnemyController {
 	}
 	
 	public void updateEnemies(float aimX, float aimY) {
-//		List<EnemyShip> toBeRemoved = new ArrayList<EnemyShip>();
-		
 		for (EnemyShip enemy : enemies) {
 			if (enemy.getWeakPointsPosition().size() > 0) {
 				enemy.updateWeapons(aimX, aimY);
 				pixHelper.update(enemy.getHull());
-//			} else {
-//				toBeRemoved.add(enemy);
 			}
 		}
-		
-//		enemies.removeAll(toBeRemoved);
 	}
 	
 	public void updateWeapons(List<Weapon> toBeRemoved, WeaponHelper helper) {
