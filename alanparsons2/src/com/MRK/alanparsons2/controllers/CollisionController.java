@@ -57,7 +57,11 @@ public class CollisionController {
 		this.targets.addAll(list);
 	}
 	
-	public void removeWeaponTargets(List<Weapon> list) {
+	public void removeWeaponsTargets(List<Weapon> list) {
+		targets.removeAll(list);
+	}
+	
+	public void removeWeakPointsTargets(List<WeakPoint> list) {
 		targets.removeAll(list);
 	}
 	

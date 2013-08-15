@@ -21,15 +21,17 @@ public class EnemyController {
 	private PixmapHelper pixHelper;
 	private List<EnemyShip> enemies;
 	private List<Weapon> weapons;
-	private List<Vector2> explodingWeapons = new ArrayList<Vector2>();
+	private List<WeakPoint> weakPoints;
+	private List<Vector2> explodingParts = new ArrayList<Vector2>();
 	
-	public EnemyController(List<EnemyShip> enemies, List<Weapon> weapons, PixmapHelper pixHelper) {
+	public EnemyController(List<EnemyShip> enemies, List<Weapon> weapons, List<WeakPoint> weakPoints, PixmapHelper pixHelper) {
 		this.enemies = enemies;
 		this.weapons = weapons;
+		this.weakPoints = weakPoints;
 		this.pixHelper = pixHelper;
 	}
 	
-	public void setEnemiesWeapons(WeaponHelper helper, List<Weapon> weapons, WeaponFactory weaponFactory) {
+	public void setEnemiesWeapons(WeaponHelper helper, WeaponFactory weaponFactory) {
 		int rank = 0;
 		
 		for (EnemyShip enemy : enemies) {
@@ -49,7 +51,7 @@ public class EnemyController {
 		}
 	}
 
-	public void setEnemiesWeakPoints(WeakPointHelper helper, List<WeakPoint> weakPoints, WeakPointFactory weakPointFactory) {
+	public void setEnemiesWeakPoints(WeakPointHelper helper, WeakPointFactory weakPointFactory) {
 		int rank = 0;
 		
 		for (EnemyShip enemy : enemies) {
@@ -70,8 +72,10 @@ public class EnemyController {
 	
 	public void updateEnemies(float aimX, float aimY) {
 		for (EnemyShip enemy : enemies) {
-			enemy.updateWeapons(aimX, aimY);
-			pixHelper.update(enemy.getHull());
+			if (enemy.getWeakPointsPosition().size() > 0) {
+				enemy.updateWeapons(aimX, aimY);
+				pixHelper.update(enemy.getHull());
+			}
 		}
 	}
 	
@@ -79,7 +83,7 @@ public class EnemyController {
 		for (Weapon weapon : weapons) {
 			if (weapon.getEmitter() instanceof EnemyShip && weapon.getHps() <= 0) {
 				toBeRemoved.add(weapon);
-				explodingWeapons.add(new Vector2(weapon.getX(), weapon.getY()));
+				explodingParts.add(new Vector2(weapon.getX(), weapon.getY()));
 				
 				if (weapon.getEmitter() instanceof EnemyShip) {
 					EnemyShip enemy = (EnemyShip)weapon.getEmitter();
@@ -97,13 +101,33 @@ public class EnemyController {
 		weapons.removeAll(toBeRemoved);
 	}
 	
-	public List<Vector2> getExplodingWeapons() {
+	public void updateWeakPoint(List<WeakPoint> toBeRemoved, WeaponHelper helper) {
+		for (WeakPoint weakPoint : weakPoints) {
+			if (weakPoint.getEnergy() <= 0) {
+				toBeRemoved.add(weakPoint);
+				explodingParts.add(new Vector2(weakPoint.getX(), weakPoint.getY()));
+				
+				EnemyShip enemy = (EnemyShip)weakPoint.getHost();
+				
+				enemy.removeWeakPoint(weakPoint);
+				enemy.addLevel(1);
+				
+				WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
+				
+				if (template != null) enemy.upgradeWeapons(template);
+			}
+		}
+		
+		weakPoints.removeAll(toBeRemoved);
+	}
+	
+	public List<Vector2> getExplodingParts() {
 		List<Vector2> ret = new ArrayList<Vector2>();
 		
-		for (Vector2 pos : explodingWeapons)
+		for (Vector2 pos : explodingParts)
 			ret.add(new Vector2(pos));
 		
-		explodingWeapons.clear();
+		explodingParts.clear();
 		return ret;
 	}
 }

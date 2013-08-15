@@ -17,6 +17,7 @@ import com.MRK.alanparsons2.helpers.WeakPointHelper;
 import com.MRK.alanparsons2.helpers.WeaponHelper;
 import com.MRK.alanparsons2.models.Level;
 import com.MRK.alanparsons2.models.RotatingCamera;
+import com.MRK.alanparsons2.models.WeakPoint;
 import com.MRK.alanparsons2.models.Weapon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -47,7 +48,8 @@ public class LevelRenderer implements Disposable {
 	private WeaponHelper weaponHelper;
 	private WeakPointHelper weakPointsHelper;
 	
-	private List<Weapon> toBeRemoved = new ArrayList<Weapon>();
+	private List<Weapon> removedWeapons = new ArrayList<Weapon>();
+	private List<WeakPoint> removedWeakPoints = new ArrayList<WeakPoint>();
 	
 	/* debug */
 	private ShapeRenderer shapeRenderer;
@@ -68,7 +70,7 @@ public class LevelRenderer implements Disposable {
 		weakPointFactory = new WeakPointFactory();
 		
 		shipController = new ShipController(level.getShip(), level.getTouchTemplate());
-		enemyController = new EnemyController(level.getEnemies(), level.getWeapons(), pixHelper);
+		enemyController = new EnemyController(level.getEnemies(), level.getWeapons(), level.getWeakPoints(), pixHelper);
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
 		collisionController = new CollisionController(level.getProjectiles(), pixHelper);
 		particleController = new ParticleController();
@@ -77,7 +79,8 @@ public class LevelRenderer implements Disposable {
 	}
 	
 	public void update() {
-		toBeRemoved.clear();
+		removedWeapons.clear();
+		removedWeakPoints.clear();
 		
 		camera.rotateCameraAround(shipController.getLastRotateValue());
 		
@@ -87,9 +90,11 @@ public class LevelRenderer implements Disposable {
 		collisionController.computeCollisions(projectileController.getToBeRemovedList());
 		projectileController.refreshProjectilesList();
 		particleController.update(ParticleController.COLLISION, collisionController.getImpacts());
-		enemyController.updateWeapons(toBeRemoved, weaponHelper);
-		collisionController.removeWeaponTargets(toBeRemoved);
-		particleController.update(ParticleController.EXPLOSION, enemyController.getExplodingWeapons());
+		enemyController.updateWeapons(removedWeapons, weaponHelper);
+		enemyController.updateWeakPoint(removedWeakPoints, weaponHelper);
+		collisionController.removeWeaponsTargets(removedWeapons);
+		collisionController.removeWeakPointsTargets(removedWeakPoints);
+		particleController.update(ParticleController.EXPLOSION, enemyController.getExplodingParts());
 		
 		collisionController.clearImpacts();
 	}
@@ -138,8 +143,8 @@ public class LevelRenderer implements Disposable {
 		shipController.setWeapon(weaponHelper, level.getWeapons(), weaponFactory);
 		shipController.update();
 		
-		enemyController.setEnemiesWeapons(weaponHelper, level.getWeapons(), weaponFactory);
-		enemyController.setEnemiesWeakPoints(weakPointsHelper, level.getWeakPoints(), weakPointFactory);
+		enemyController.setEnemiesWeapons(weaponHelper, weaponFactory);
+		enemyController.setEnemiesWeakPoints(weakPointsHelper, weakPointFactory);
 
 		collisionController.addTarget(level.getShip());
 		collisionController.addEnemyTargets(level.getEnemies());

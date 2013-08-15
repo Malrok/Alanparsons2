@@ -130,7 +130,14 @@ public class EnemyShip extends Sprite implements Disposable {
 	}
 	
 	public void removeWeakPoint(WeakPoint weakPoint) {
-		shipWeakPoints.remove(weakPoint);
+		PixmapPosition key = null;
+		
+		for (Entry<PixmapPosition, WeakPoint> entry : shipWeakPoints.entrySet()) {
+			if (entry.getValue().equals(weakPoint))
+				key = entry.getKey();
+		}
+		
+		shipWeakPoints.remove(key);
 	}
 	
 	/**
