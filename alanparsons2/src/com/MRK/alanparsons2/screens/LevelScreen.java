@@ -22,7 +22,7 @@ public class LevelScreen implements Screen {
 	private Label label;
 	private Button pause;
 	
-	private LevelRenderer renderer; 	
+	private LevelRenderer renderer;
 	private String result = "";
 	
 	private boolean paused = false;

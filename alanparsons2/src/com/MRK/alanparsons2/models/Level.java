@@ -183,9 +183,6 @@ public class Level implements Disposable {
 		
 		for (EnemyShip enemy : enemies)
 			enemy.draw(batch);
-	
-//		for (Weapon weapon : weapons)
-//			weapon.draw(batch);
 		
 		for (Projectile projectile : projectiles)
 			projectile.draw(batch);

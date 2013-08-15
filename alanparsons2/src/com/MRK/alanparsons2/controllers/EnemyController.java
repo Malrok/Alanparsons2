@@ -1,5 +1,6 @@
 package com.MRK.alanparsons2.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -12,14 +13,19 @@ import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.PixmapPosition;
 import com.MRK.alanparsons2.models.WeakPoint;
 import com.MRK.alanparsons2.models.Weapon;
+import com.MRK.alanparsons2.templates.WeaponTemplate;
+import com.badlogic.gdx.math.Vector2;
 
 public class EnemyController {
 
 	private PixmapHelper pixHelper;
 	private List<EnemyShip> enemies;
+	private List<Weapon> weapons;
+	private List<Vector2> explodingWeapons = new ArrayList<Vector2>();
 	
-	public EnemyController(List<EnemyShip> enemies, PixmapHelper pixHelper) {
+	public EnemyController(List<EnemyShip> enemies, List<Weapon> weapons, PixmapHelper pixHelper) {
 		this.enemies = enemies;
+		this.weapons = weapons;
 		this.pixHelper = pixHelper;
 	}
 	
@@ -59,15 +65,45 @@ public class EnemyController {
 				
 				pixHelper.setOnScreenPosition(enemy.getStructure(), entry);
 			}
-			enemy.enableWeapons();
 		}
 	}
 	
-	public void update(float aimX, float aimY) {
+	public void updateEnemies(float aimX, float aimY) {
 		for (EnemyShip enemy : enemies) {
 			enemy.updateWeapons(aimX, aimY);
 			pixHelper.update(enemy.getHull());
 		}
 	}
 	
+	public void updateWeapons(List<Weapon> toBeRemoved, WeaponHelper helper) {
+		for (Weapon weapon : weapons) {
+			if (weapon.getEmitter() instanceof EnemyShip && weapon.getHps() <= 0) {
+				toBeRemoved.add(weapon);
+				explodingWeapons.add(new Vector2(weapon.getX(), weapon.getY()));
+				
+				if (weapon.getEmitter() instanceof EnemyShip) {
+					EnemyShip enemy = (EnemyShip)weapon.getEmitter();
+					
+					enemy.removeWeapon(weapon);
+					enemy.addLevel(1);
+					
+					WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
+					
+					if (template != null) enemy.upgradeWeapons(template);
+				}
+			}
+		}
+		
+		weapons.removeAll(toBeRemoved);
+	}
+	
+	public List<Vector2> getExplodingWeapons() {
+		List<Vector2> ret = new ArrayList<Vector2>();
+		
+		for (Vector2 pos : explodingWeapons)
+			ret.add(new Vector2(pos));
+		
+		explodingWeapons.clear();
+		return ret;
+	}
 }

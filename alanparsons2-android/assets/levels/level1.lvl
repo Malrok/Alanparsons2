@@ -113,3 +113,9 @@ width:1
 height:0.4
 texture:shot3
 power:1
+[weakpoint]
+host:enemy1
+texture:weakpoint
+width:4
+height:4
+hp:10

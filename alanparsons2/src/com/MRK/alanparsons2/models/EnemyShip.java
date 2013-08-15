@@ -105,7 +105,14 @@ public class EnemyShip extends Sprite implements Disposable {
 	}
 	
 	public void removeWeapon(Weapon weapon) {
-		shipWeapons.remove(weapon);
+		PixmapPosition key = null;
+		
+		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+			if (entry.getValue().equals(weapon))
+				key = entry.getKey();
+		}
+		
+		shipWeapons.remove(key);
 	}
 	
 	/**

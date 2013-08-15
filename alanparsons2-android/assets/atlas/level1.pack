@@ -5,91 +5,98 @@ filter: Nearest,Nearest
 repeat: none
 enemy
   rotate: false
-  xy: 1, 589
+  xy: 1, 649
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 enemy_structure
   rotate: false
-  xy: 1, 331
+  xy: 1, 391
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 planet
   rotate: false
-  xy: 259, 589
+  xy: 259, 649
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 stars
   rotate: false
-  xy: 1, 73
+  xy: 1, 133
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+weakpoint
+  rotate: false
+  xy: 259, 391
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 flare
   rotate: false
-  xy: 259, 459
+  xy: 517, 777
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 ship0
   rotate: false
-  xy: 517, 781
+  xy: 1, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 ship1
   rotate: false
-  xy: 1, 7
+  xy: 259, 325
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 ship2
   rotate: false
-  xy: 259, 393
+  xy: 517, 711
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 sun
   rotate: false
-  xy: 389, 523
+  xy: 647, 841
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 weapon
   rotate: false
-  xy: 517, 715
+  xy: 1, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 shot1
   rotate: false
-  xy: 583, 841
+  xy: 67, 127
   size: 16, 4
   orig: 16, 4
   offset: 0, 0
   index: -1
 shot2
   rotate: false
-  xy: 1, 1
+  xy: 259, 319
   size: 16, 4
   orig: 16, 4
   offset: 0, 0
   index: -1
 shot3
   rotate: false
-  xy: 67, 67
+  xy: 325, 385
   size: 16, 4
   orig: 16, 4
   offset: 0, 0
