@@ -12,7 +12,7 @@ import com.MRK.alanparsons2.templates.WeaponTemplate;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
-public class Level implements Disposable {
+public class GameLevel implements Disposable {
 
 	private String name;	
 	private float width = 100f;

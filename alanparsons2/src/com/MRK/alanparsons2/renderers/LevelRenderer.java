@@ -15,7 +15,7 @@ import com.MRK.alanparsons2.factories.WeaponFactory;
 import com.MRK.alanparsons2.helpers.PixmapHelper;
 import com.MRK.alanparsons2.helpers.WeakPointHelper;
 import com.MRK.alanparsons2.helpers.WeaponHelper;
-import com.MRK.alanparsons2.models.Level;
+import com.MRK.alanparsons2.models.GameLevel;
 import com.MRK.alanparsons2.models.RotatingCamera;
 import com.MRK.alanparsons2.models.WeakPoint;
 import com.MRK.alanparsons2.models.Weapon;
@@ -32,7 +32,7 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class LevelRenderer implements Disposable {
 
-	private Level level;
+	private GameLevel level;
 	private SpriteBatch batch;
 	private RotatingCamera camera;
 	private WeaponFactory weaponFactory;
@@ -51,6 +51,8 @@ public class LevelRenderer implements Disposable {
 	private List<Weapon> removedWeapons = new ArrayList<Weapon>();
 	private List<WeakPoint> removedWeakPoints = new ArrayList<WeakPoint>();
 	
+	private boolean win = false;
+	
 	/* debug */
 	private ShapeRenderer shapeRenderer;
 	
@@ -58,7 +60,7 @@ public class LevelRenderer implements Disposable {
 	 * Constructeur
 	 * @param level
 	 */
-	public LevelRenderer(Level level) {
+	public LevelRenderer(GameLevel level) {
 		this.level = level;
 		
 		batch = new SpriteBatch();
@@ -97,6 +99,9 @@ public class LevelRenderer implements Disposable {
 		particleController.update(ParticleController.EXPLOSION, enemyController.getExplodingParts());
 		
 		collisionController.clearImpacts();
+		
+		if (enemyController.getEnemiesNumber() <= 0)
+			win = true;
 	}
 	
 	public void render() {
@@ -150,6 +155,10 @@ public class LevelRenderer implements Disposable {
 		collisionController.addEnemyTargets(level.getEnemies());
 		collisionController.addWeaponTargets(level.getWeapons());
 		collisionController.addWeakPointsTargets(level.getWeakPoints());
+	}
+	
+	public boolean win() {
+		return win;
 	}
 	
 	public void dispose() {

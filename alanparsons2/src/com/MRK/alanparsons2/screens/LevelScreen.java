@@ -1,6 +1,6 @@
 package com.MRK.alanparsons2.screens;
 
-import com.MRK.alanparsons2.models.Level;
+import com.MRK.alanparsons2.models.GameLevel;
 import com.MRK.alanparsons2.renderers.LevelRenderer;
 import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
@@ -17,6 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LevelScreen implements Screen {
 
+//	public static final String WIN = "win";
+	public static final String NEXT = "next";
+	public static final String SELECT = "select";
+	
 	private Stage stage = new Stage();
 	private Skin skin;
 	private Label label;
@@ -24,10 +28,11 @@ public class LevelScreen implements Screen {
 	
 	private LevelRenderer renderer;
 	private String result = "";
+	private boolean win = false;
 	
 	private boolean paused = false;
 	
-	public LevelScreen(Level level, int width, int height) {
+	public LevelScreen(GameLevel level, int width, int height) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		
 		renderer = new LevelRenderer(level);		
@@ -53,7 +58,7 @@ public class LevelScreen implements Screen {
 					protected void result (Object object) {
 						paused = false;
 						if (object.equals(false))
-							result = "cancel";
+							result = SELECT;
 					}
 				}.text("Would you like to continue").button("continue", true).button("Exit", false).show(stage);
 			}
@@ -74,10 +79,24 @@ public class LevelScreen implements Screen {
 	
 	@Override
 	public void update() {
-		if (!paused) {
-			label.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
-			renderer.update();
+		if (!win) {
+			if (!paused) {
+				label.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
+				renderer.update();
+				
+				if (renderer.win()) {
+					win = true;
+					
+					new Dialog("YOU WIN", skin) {
+						protected void result (Object object) {
+							paused = false;
+							result = (String)object;
+						}
+					}.text("What do you want to do").button("Select level", SELECT).button("Next level", NEXT).show(stage);
+				}
+			}
 		}
+		
 		stage.act();
 	}
 

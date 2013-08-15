@@ -79,7 +79,7 @@ weapondestructionlevelsup:1
 texture:weapon
 width:4
 height:4
-hp:10
+hp:1
 shiplevel:1
 projectiletype:2
 name:enemy1
@@ -91,7 +91,7 @@ shootdistance:50
 texture:weapon
 width:4
 height:4
-hp:15
+hp:1
 shiplevel:2
 projectiletype:3
 name:enemy1
@@ -118,4 +118,4 @@ host:enemy1
 texture:weakpoint
 width:4
 height:4
-hp:10
+hp:1

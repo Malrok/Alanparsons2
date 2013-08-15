@@ -39,7 +39,7 @@ public class LevelSelect implements Screen {
 	private float width, height;
 	private String result = "";
 	
-	public LevelSelect(int width, int height) {
+	public LevelSelect(List<FileHandle> levels, int width, int height) {
 		camera = new OrthographicCamera();
 		batch = new SpriteBatch();
 		
@@ -51,13 +51,14 @@ public class LevelSelect implements Screen {
 		
 		background = new TextureRegion(texture,0,0,texture.getWidth(),texture.getHeight() * height / width);
 		
-		FileHandle dirHandle;
-		if (Gdx.app.getType() == ApplicationType.Android) {
-		  dirHandle = Gdx.files.internal("levels");
-		} else {
-		  dirHandle = Gdx.files.internal("./bin/levels");
-		}
-		levels = Arrays.asList(dirHandle.list());
+//		FileHandle dirHandle;
+//		if (Gdx.app.getType() == ApplicationType.Android) {
+//		  dirHandle = Gdx.files.internal("levels");
+//		} else {
+//		  dirHandle = Gdx.files.internal("./bin/levels");
+//		}
+//		levels = Arrays.asList(dirHandle.list());
+		this.levels = levels;
 		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		

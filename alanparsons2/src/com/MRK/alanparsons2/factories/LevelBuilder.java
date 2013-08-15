@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import com.MRK.alanparsons2.models.Background;
 import com.MRK.alanparsons2.models.BackgroundElement;
 import com.MRK.alanparsons2.models.EnemyShip;
-import com.MRK.alanparsons2.models.Level;
+import com.MRK.alanparsons2.models.GameLevel;
 import com.MRK.alanparsons2.models.Ship;
 import com.MRK.alanparsons2.resources.LevelFileHandler;
 import com.MRK.alanparsons2.resources.Resource;
@@ -94,7 +94,7 @@ public class LevelBuilder implements Disposable {
 	private PixmapTextureAtlas pixmapAtlas;
 	private ShipFactory shipFactory = new ShipFactory();
 	
-	private Level level;
+	private GameLevel level;
 	private Map<String, Sprite> sprites = new HashMap<String, Sprite>();
 	private List<WeaponTemplate> weapons = new ArrayList<WeaponTemplate>();
 	private List<WeakPointTemplate> weakPoints = new ArrayList<WeakPointTemplate>();
@@ -185,7 +185,7 @@ public class LevelBuilder implements Disposable {
 	}
 
 	private void constructLevel(Map<String, ResourceValue> values) {
-		level = new Level();
+		level = new GameLevel();
 		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(NAME))
@@ -391,7 +391,7 @@ public class LevelBuilder implements Disposable {
 		return null;
 	}
 	
-	public Level getLevel() {
+	public GameLevel getLevel() {
 		return level;
 	}
 	

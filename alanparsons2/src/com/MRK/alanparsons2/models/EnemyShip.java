@@ -44,13 +44,15 @@ public class EnemyShip extends Sprite implements Disposable {
 
 	public void draw(SpriteBatch batch) {
 		structure.draw(batch);
-		for (Entry<PixmapPosition, WeakPoint> entry : shipWeakPoints.entrySet()) {
-			((WeakPoint)entry.getValue()).draw(batch);
-		}
+		if (shipWeakPoints.size() > 0)
+			for (Entry<PixmapPosition, WeakPoint> entry : shipWeakPoints.entrySet()) {
+				((WeakPoint)entry.getValue()).draw(batch);
+			}
 		hull.draw(batch);
-		for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
-			((Weapon)entry.getValue()).draw(batch);
-		}
+		if (shipWeapons.size() > 0)
+			for (Entry<PixmapPosition, Weapon> entry : shipWeapons.entrySet()) {
+				((Weapon)entry.getValue()).draw(batch);
+			}
 	}
 	
 	public String getName() {
