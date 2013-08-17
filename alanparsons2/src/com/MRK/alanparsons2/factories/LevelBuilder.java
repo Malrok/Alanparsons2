@@ -87,29 +87,38 @@ public class LevelBuilder implements Disposable {
 	public static final String CAMERA_RADIUS = "radius";
 	public static final String HEALTH_POINTS = "hp";
 	
-	private FileHandle handle;
-	private LevelFileHandler levelHandler = new LevelFileHandler();
-	
+	private LevelFileHandler levelHandler = new LevelFileHandler();	
 	private TextureAtlas atlas;
 	private PixmapTextureAtlas pixmapAtlas;
 	private ShipFactory shipFactory = new ShipFactory();
-	
 	private GameLevel level;
-	private Map<String, Sprite> sprites = new HashMap<String, Sprite>();
-	private List<WeaponTemplate> weapons = new ArrayList<WeaponTemplate>();
-	private List<WeakPointTemplate> weakPoints = new ArrayList<WeakPointTemplate>();
-	private List<ProjectileTemplate> projectiles = new ArrayList<ProjectileTemplate>();
+	private Map<String, Sprite> sprites;
+	private List<WeaponTemplate> weapons;
+	private List<WeakPointTemplate> weakPoints;
+	private List<ProjectileTemplate> projectiles;
 	private CameraTemplate cameraTemplate;
-	private Background background = new Background();
+	private Background background;
 	private TouchInputTemplate touchTemplate;
 	
 	@Override
 	public void dispose() {
 		if (level != null)
 			level.dispose();
+		if (atlas != null)
+			atlas.dispose();
+		if (pixmapAtlas != null)
+			pixmapAtlas.dispose();
 	}
 	
-	public void setLevel(boolean internal, String levelFile) throws IOException {
+	public void load(boolean internal, String levelFile) throws IOException {
+		FileHandle handle;
+		
+		level = new GameLevel();
+		sprites = new HashMap<String, Sprite>();
+		weapons = new ArrayList<WeaponTemplate>();
+		weakPoints = new ArrayList<WeakPointTemplate>();
+		projectiles = new ArrayList<ProjectileTemplate>();
+		background = new Background();
 		atlas = new TextureAtlas(Gdx.files.internal(ATLAS_DIR + levelFile + ATLAS_EXT));
 		pixmapAtlas = new PixmapTextureAtlas(Gdx.files.internal(ATLAS_DIR + levelFile + TEXTURES_EXT), Gdx.files.internal(ATLAS_DIR + levelFile + ATLAS_EXT));
 		
@@ -117,9 +126,7 @@ public class LevelBuilder implements Disposable {
 			handle = Gdx.files.internal(LEVEL_DIR_INTERNAL + levelFile + LEVEL_EXT);
 		else
 			handle = Gdx.files.external(LEVEL_DIR_EXTERNAL + levelFile + LEVEL_EXT);
-	}
-	
-	public void load() throws IOException {
+		
 		levelHandler.load(handle);
 	}
 	
@@ -185,8 +192,6 @@ public class LevelBuilder implements Disposable {
 	}
 
 	private void constructLevel(Map<String, ResourceValue> values) {
-		level = new GameLevel();
-		
 		for (Entry<String, ResourceValue> value : values.entrySet()) {
 			if (value.getKey().equalsIgnoreCase(NAME))
 				level.setName(value.getValue().getString());

@@ -34,16 +34,8 @@ public class LoadingScreen implements Screen {
 					@Override
 					public void run() {
 						try {
-							levelBuilder.setLevel(internal, lvlStr);
+							levelBuilder.load(internal, lvlStr);
 						} catch (IOException e) {
-							result = "erreur 1";
-							e.printStackTrace();
-							return;
-						}
-						try {
-							levelBuilder.load();
-						} catch (IOException e) {
-							result = "erreur 2";
 							e.printStackTrace();
 							return;
 						}
