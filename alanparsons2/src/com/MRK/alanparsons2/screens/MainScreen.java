@@ -31,6 +31,7 @@ public class MainScreen implements Screen {
 	
 	private Stage stage = new Stage();
 	private Image start;
+	private Image options;
 	private TweenManager tweenManager = new TweenManager();
 	
 	private String result = "";
@@ -48,11 +49,10 @@ public class MainScreen implements Screen {
 		
 		backgroundTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		background = new TextureRegion(backgroundTexture,0,0,backgroundTexture.getWidth(),backgroundTexture.getHeight() * height / width);
+		background = new TextureRegion(backgroundTexture, 0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight() * height / width);
 
 		Texture startTexture = new Texture(Gdx.files.internal("buttons/start.png"));
 		startTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
 		start = new Image(startTexture);
 		start.setSize(width / 5, width / 5);
 		start.setOrigin(start.getWidth()/2, start.getHeight()/2);
@@ -66,6 +66,20 @@ public class MainScreen implements Screen {
 		
 		stage.addActor(start);
 
+		Texture optionsTexture = new Texture(Gdx.files.internal("buttons/options.png"));
+		optionsTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		options = new Image(optionsTexture);
+		options.setOrigin(options.getWidth()/2, options.getHeight()/2);
+		options.setPosition(10, 10);
+		options.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				result = "options";
+			}
+		});
+		
+		stage.addActor(options);
+		
 		Tween.registerAccessor(Image.class, new ImageAccessor());
 		Tween.to(start, ImageAccessor.ZOOM, PULSE).ease(Linear.INOUT).target(1.1f, 1.1f).repeatYoyo(-1, 0).start(tweenManager);
 		
@@ -84,9 +98,7 @@ public class MainScreen implements Screen {
 		
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-
-		batch.draw(background, 0, 0, width, height);
-		
+		batch.draw(background, 0, 0, width, height);		
 		batch.end();
 		
 		stage.draw();
@@ -100,8 +112,14 @@ public class MainScreen implements Screen {
 	}
 
 	@Override
+	public void backKeyStroke() {
+		result = "back";
+	}
+	
+	@Override
 	public void dispose() {
 		stage.dispose();
+		batch.dispose();
 	}
 
 	@Override

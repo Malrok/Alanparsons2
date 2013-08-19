@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -31,7 +31,6 @@ public class LevelSelect implements Screen {
 	private TextureRegion background;
 	private Stage stage = new Stage();
 	private Skin skin;
-	private CheckBox checkBox;
 	
 	private List<Level> levels = new ArrayList<Level>();
 	private float width, height;
@@ -45,20 +44,26 @@ public class LevelSelect implements Screen {
 		resize(width, height);
 		
 		Texture texture = new Texture(Gdx.files.internal("images/menu.png"));
-		
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		background = new TextureRegion(texture,0,0,texture.getWidth(),texture.getHeight() * height / width);
+		background = new TextureRegion(texture, 0, 0, texture.getWidth(), texture.getHeight() * height / width);
 		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		
-		checkBox = new CheckBox("Read level from game files", skin);
-		checkBox.setPosition(10,10);
-		checkBox.setChecked(true);
-
-		stage.addActor(checkBox);
-		
 		loadLevelsButtons();
+		
+		Texture backTexture = new Texture(Gdx.files.internal("buttons/back.png"));
+		backTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Image back = new Image(backTexture);
+		back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+		back.setPosition(10, 10);
+		back.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				result = "back";
+			}
+		});
+		
+		stage.addActor(back);
 		
 		Gdx.input.setInputProcessor(stage);
 	}
@@ -100,6 +105,11 @@ public class LevelSelect implements Screen {
 		this.height = height;
 	}
 	
+	@Override
+	public void backKeyStroke() {
+		result = "back";
+	}
+	
 	private void loadLevelsButtons() {
 		int rows = 1, columns = 1;
 		int coordx, coordy;
@@ -124,7 +134,7 @@ public class LevelSelect implements Screen {
 					button.addListener(new ClickListener() {
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
-							result = "play " + ((LevelButton)event.getListenerActor()).getLevel().getFile().nameWithoutExtension() + " " + (checkBox.isChecked() ? "internal" : "external");
+							result = "play " + ((LevelButton)event.getListenerActor()).getLevel().getFile().nameWithoutExtension();
 						}
 					});
 					
@@ -133,4 +143,5 @@ public class LevelSelect implements Screen {
 			}
 		}
 	}
+
 }

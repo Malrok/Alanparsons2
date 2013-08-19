@@ -1,5 +1,6 @@
 package com.MRK.alanparsons2.screens;
 
+import com.MRK.alanparsons2.helpers.ScreenAction;
 import com.MRK.alanparsons2.models.GameLevel;
 import com.MRK.alanparsons2.renderers.LevelRenderer;
 import com.MRK.alanparsons2.templates.Screen;
@@ -17,9 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LevelScreen implements Screen {
 
-	public static final String NEXT = "next";
-	public static final String SELECT = "select";
-	
 	private Stage stage = new Stage();
 	private Skin skin;
 	private Label label;
@@ -57,7 +55,7 @@ public class LevelScreen implements Screen {
 					protected void result (Object object) {
 						paused = false;
 						if (object.equals(false))
-							result = SELECT;
+							result = ScreenAction.SELECT;
 					}
 				}.text("Would you like to continue").button("continue", true).button("Exit", false).show(stage);
 			}
@@ -91,7 +89,7 @@ public class LevelScreen implements Screen {
 							paused = false;
 							result = (String)object;
 						}
-					}.text("What do you want to do").button("Select level", SELECT).button("Next level", NEXT).show(stage);
+					}.text("What do you want to do").button("Select level", ScreenAction.SELECT).button("Next level", ScreenAction.NEXT).show(stage);
 				}
 			}
 		}
@@ -120,5 +118,10 @@ public class LevelScreen implements Screen {
 	public void resize(int width, int height) {
         stage.setViewport(width, height, true);
 		renderer.resize(width, height);
+	}
+
+	@Override
+	public void backKeyStroke() {
+		result = ScreenAction.BACK;
 	}
 }

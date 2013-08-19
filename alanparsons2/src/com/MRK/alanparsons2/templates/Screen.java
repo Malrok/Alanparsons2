@@ -12,4 +12,6 @@ public interface Screen {
 	
 	public void resize(int width, int height);
 	
+	public void backKeyStroke();
+	
 }

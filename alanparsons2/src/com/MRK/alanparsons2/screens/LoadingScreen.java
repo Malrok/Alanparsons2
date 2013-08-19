@@ -77,6 +77,11 @@ public class LoadingScreen implements Screen {
 	}
 
 	@Override
+	public void backKeyStroke() {
+//		result = "back";
+	}
+	
+	@Override
 	public void dispose() {
 		try {
 			thread.join();
