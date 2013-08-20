@@ -3,6 +3,7 @@ package com.MRK.alanparsons2.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.MRK.alanparsons2.controllers.BackgroundController;
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.templates.CameraTemplate;
 import com.MRK.alanparsons2.templates.ProjectileTemplate;
@@ -26,7 +27,7 @@ public class GameLevel implements Disposable {
 	private List<WeakPoint> weakPoints = new ArrayList<WeakPoint>();
 	private List<ProjectileTemplate> projectilesTemplates = new ArrayList<ProjectileTemplate>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
-	private Background background;
+	private BackgroundController background;
 	private CameraTemplate cameraTemplate;
 	private TouchInputTemplate touchTemplate;
 
@@ -130,11 +131,11 @@ public class GameLevel implements Disposable {
 		this.projectiles = projectiles;
 	}
 
-	public Background getBackground() {
+	public BackgroundController getBackground() {
 		return background;
 	}
 
-	public void setBackground(Background background) {
+	public void setBackground(BackgroundController background) {
 		this.background = background;
 	}
 

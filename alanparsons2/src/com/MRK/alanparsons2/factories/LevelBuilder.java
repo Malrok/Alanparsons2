@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.MRK.alanparsons2.models.Background;
+import com.MRK.alanparsons2.controllers.BackgroundController;
 import com.MRK.alanparsons2.models.BackgroundElement;
 import com.MRK.alanparsons2.models.EnemyShip;
 import com.MRK.alanparsons2.models.GameLevel;
@@ -48,8 +48,7 @@ public class LevelBuilder implements Disposable {
 	public static final String WEAPON = "weapon";
 	public static final String WEAK_POINT = "weakpoint";
 	public static final String PROJECTILE = "projectile";
-	public static final String STATIC_BACKGROUND = "staticbackground";
-	public static final String MOVING_BACKGROUND = "movingbackground";
+	public static final String BACKGROUND = "background";
 	
 	/* propriétés */
 	public static final String X = "x";
@@ -64,8 +63,8 @@ public class LevelBuilder implements Disposable {
 	public static final String SPEED = "speed";
 	public static final String ZOOM_MIN = "zoom_min";
 	public static final String ZOOM_MAX = "zoom_max";
-	public static final String REPEAT_WIDTH = "repeatwidth";
-	public static final String REPEAT_HEIGHT = "repeatheight";
+	public static final String REPEAT_X = "repeatx";
+	public static final String REPEAT_Y = "repeaty";
 	public static final String SHIFTX = "shiftx";
 	public static final String SHIFTY = "shifty";
 	public static final String NAME = "name";
@@ -97,7 +96,7 @@ public class LevelBuilder implements Disposable {
 	private List<WeakPointTemplate> weakPoints;
 	private List<ProjectileTemplate> projectiles;
 	private CameraTemplate cameraTemplate;
-	private Background background;
+	private BackgroundController background;
 	private TouchInputTemplate touchTemplate;
 	
 	@Override
@@ -118,7 +117,7 @@ public class LevelBuilder implements Disposable {
 		weapons = new ArrayList<WeaponTemplate>();
 		weakPoints = new ArrayList<WeakPointTemplate>();
 		projectiles = new ArrayList<ProjectileTemplate>();
-		background = new Background();
+		background = new BackgroundController();
 		atlas = new TextureAtlas(Gdx.files.internal(ATLAS_DIR + levelFile + ATLAS_EXT));
 		pixmapAtlas = new PixmapTextureAtlas(Gdx.files.internal(ATLAS_DIR + levelFile + TEXTURES_EXT), Gdx.files.internal(ATLAS_DIR + levelFile + ATLAS_EXT));
 		
@@ -183,11 +182,8 @@ public class LevelBuilder implements Disposable {
 		if (entity.equalsIgnoreCase(PROJECTILE)) {
 			constructProjectile(values);
 		}
-		if (entity.equalsIgnoreCase(STATIC_BACKGROUND)) {
-			constructBackground(false, values);
-		}
-		if (entity.equalsIgnoreCase(MOVING_BACKGROUND)) {
-			constructBackground(true, values);
+		if (entity.equalsIgnoreCase(BACKGROUND)) {
+			constructBackground(values);
 		}
 	}
 
@@ -349,10 +345,8 @@ public class LevelBuilder implements Disposable {
 		projectiles.add(projectile);
 	}
 	
-	private void constructBackground(boolean moveable, Map<String, ResourceValue> values) {
+	private void constructBackground(Map<String, ResourceValue> values) {
 		BackgroundElement element = new BackgroundElement();
-		
-		element.setMoveable(moveable);
 		
 		float x = 0, y = 0;
 		
@@ -366,17 +360,23 @@ public class LevelBuilder implements Disposable {
 			if (value.getKey().equalsIgnoreCase(HEIGHT))
 				element.setHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(X))
-				x= value.getValue().getNumber();
+				if (value.getValue().getType() == ResourceValue.NUMBER)
+					x = value.getValue().getNumber();
+				else
+					element.setxFormula(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(Y))
-				y = value.getValue().getNumber();
+				if (value.getValue().getType() == ResourceValue.NUMBER)
+					y = value.getValue().getNumber();
+				else
+					element.setyFormula(value.getValue().getString());
 			if (value.getKey().equalsIgnoreCase(SHIFTX))
 				element.setShiftx(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(SHIFTY))
 				element.setShifty(value.getValue().getNumber());
-			if (value.getKey().equalsIgnoreCase(REPEAT_WIDTH))
-				element.setRepeatWidth(value.getValue().getNumber());
-			if (value.getKey().equalsIgnoreCase(REPEAT_HEIGHT))
-				element.setRepeatHeight(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(REPEAT_X))
+				element.setRepeatX(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(REPEAT_Y))
+				element.setRepeatY(value.getValue().getNumber());
 		}
 		
 		element.setX(x - element.getWidth() / 2);

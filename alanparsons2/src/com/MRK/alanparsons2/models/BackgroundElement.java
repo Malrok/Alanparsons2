@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class BackgroundElement implements Comparable<BackgroundElement> {
 
 	private boolean moveable;
+	private boolean isRepeated;
 	private int zrank;
 	private float width, height;
-	private float repeatWidth, repeatHeight;
+	private float repeatX, repeatY;
 	private float x, y;
+	private String xFormula, yFormula;
 	private float shiftx, shifty;
 	private TextureRegion texture;
 	
@@ -21,6 +23,14 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.moveable = moveable;
 	}
 	
+	public boolean isRepeated() {
+		return isRepeated;
+	}
+
+	public void setRepeated(boolean isRepeated) {
+		this.isRepeated = isRepeated;
+	}
+
 	public int getZrank() {
 		return zrank;
 	}
@@ -45,22 +55,22 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.height = height;
 	}
 	
-	public float getRepeatWidth() {
-		return repeatWidth;
+	public float getRepeatX() {
+		return repeatX;
 	}
-	
-	public void setRepeatWidth(float repeatWidth) {
-		this.repeatWidth = repeatWidth;
+
+	public void setRepeatX(float repeatX) {
+		this.repeatX = repeatX;
 	}
-	
-	public float getRepeatHeight() {
-		return repeatHeight;
+
+	public float getRepeatY() {
+		return repeatY;
 	}
-	
-	public void setRepeatHeight(float repeatHeight) {
-		this.repeatHeight = repeatHeight;
+
+	public void setRepeatY(float repeatY) {
+		this.repeatY = repeatY;
 	}
-	
+
 	public float getX() {
 		return x;
 	}
@@ -77,6 +87,24 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.y = y;
 	}
 	
+	public String getxFormula() {
+		return xFormula;
+	}
+
+	public void setxFormula(String xFormula) {
+		this.xFormula = xFormula;
+		moveable = true;
+	}
+
+	public String getyFormula() {
+		return yFormula;
+	}
+
+	public void setyFormula(String yFormula) {
+		this.yFormula = yFormula;
+		moveable = true;
+	}
+
 	public float getShiftx() {
 		return shiftx;
 	}
