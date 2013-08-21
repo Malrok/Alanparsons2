@@ -1,15 +1,14 @@
 [level]
 name:Level 2
-order:2
 width:100
 height:100
 [background]
-zrank:5
+zrank:4
 texture:stars
 repeatx:4
 repeaty:4
 [background]
-zrank:4
+zrank:3
 texture:sun
 width:8
 height:8
@@ -18,7 +17,7 @@ y:37
 shiftx:0.5
 shifty:0.5
 [background]
-zrank:2
+zrank:1
 texture:flare
 width:32
 height:32
@@ -27,17 +26,8 @@ y:37
 shiftx:0.48
 shifty:0.48
 [background]
-zrank:3
+zrank:2
 texture:planet
-width:50
-height:50
-x:25
-y:25
-shiftx:0.3
-shifty:0.3
-[background]
-zrank:1
-texture:meteorite
 width:50
 height:50
 x:25
