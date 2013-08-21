@@ -1,11 +1,12 @@
 package com.MRK.alanparsons2.models;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.MRK.alanparsons2.helpers.PathInterpreter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class BackgroundElement implements Comparable<BackgroundElement> {
 
-	private boolean moveable;
+	private boolean moving;
 	private boolean isRepeated;
 	private int zrank;
 	private float width, height;
@@ -15,13 +16,13 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	private float shiftx, shifty;
 	private TextureRegion texture;
 	
-	public boolean isMoveable() {
-		return moveable;
-	}
-	
-	public void setMoveable(boolean moveable) {
-		this.moveable = moveable;
-	}
+//	public boolean isMoveable() {
+//		return moveable;
+//	}
+//	
+//	public void setMoveable(boolean moveable) {
+//		this.moveable = moveable;
+//	}
 	
 	public boolean isRepeated() {
 		return isRepeated;
@@ -71,16 +72,26 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.repeatY = repeatY;
 	}
 
-	public float getX() {
-		return x;
+	public float getX(PathInterpreter interpreter) {
+		if (!moving)
+			return x;
+		else {
+			interpreter.evaluate(getxFormula());
+			return interpreter.getInt("x");
+		}
 	}
 	
 	public void setX(float x) {
 		this.x = x;
 	}
 	
-	public float getY() {
-		return y;
+	public float getY(PathInterpreter interpreter) {
+		if (!moving)
+			return y;
+		else {
+			interpreter.evaluate(getxFormula());
+			return interpreter.getInt("y");
+		}
 	}
 	
 	public void setY(float y) {
@@ -88,21 +99,27 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	}
 	
 	public String getxFormula() {
-		return xFormula;
+		if (xFormula.toLowerCase().contains("t"))
+			return xFormula.replaceAll("t", String.valueOf(Gdx.graphics.getDeltaTime()));
+		else
+			return xFormula;
 	}
 
 	public void setxFormula(String xFormula) {
 		this.xFormula = xFormula;
-		moveable = true;
+		moving = true;
 	}
 
 	public String getyFormula() {
-		return yFormula;
+		if (yFormula.toLowerCase().contains("t"))
+			return yFormula.replaceAll("t", String.valueOf(Gdx.graphics.getDeltaTime()));
+		else
+			return yFormula;
 	}
 
 	public void setyFormula(String yFormula) {
 		this.yFormula = yFormula;
-		moveable = true;
+		moving = true;
 	}
 
 	public float getShiftx() {
@@ -138,7 +155,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		return 0;
 	}
 
-	public void draw(SpriteBatch batch, float deltax, float deltay) {
-		batch.draw(texture, getX() - deltax * shiftx, getY() - deltay * shifty, getWidth(), getHeight());
-	}
+//	public void draw(SpriteBatch batch, float deltax, float deltay) {
+//		batch.draw(texture, getX() - deltax * shiftx, getY() - deltay * shifty, getWidth(), getHeight());
+//	}
 }

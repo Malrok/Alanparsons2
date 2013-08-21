@@ -85,6 +85,7 @@ public class LevelBuilder implements Disposable {
 	public static final String SPEED_DOWN_DELAY = "speeddowndelay";
 	public static final String CAMERA_RADIUS = "radius";
 	public static final String HEALTH_POINTS = "hp";
+	public static final String ORDER = "order";
 	
 	private LevelFileHandler levelHandler = new LevelFileHandler();	
 	private TextureAtlas atlas;

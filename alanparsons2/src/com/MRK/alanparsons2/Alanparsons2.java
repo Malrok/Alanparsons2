@@ -98,8 +98,9 @@ public class Alanparsons2 extends Game {
 		screen.dispose();
 	}
 	
-	
-	
+	/**
+	 * Défini la réaction des écrans aux différents retour
+	 */
 	private void computeScreen() {
 		screen.dispose();
 
