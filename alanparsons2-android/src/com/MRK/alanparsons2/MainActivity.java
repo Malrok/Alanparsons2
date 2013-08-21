@@ -17,6 +17,7 @@ public class MainActivity extends AndroidApplication implements AndroidCallback 
         cfg.useGL20 = false;
         
         Alanparsons2 game = new Alanparsons2();
+        game.resize(800, 600);
         
         game.setCallback(this);
         

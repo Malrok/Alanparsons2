@@ -1,4 +1,4 @@
-package com.MRK.alanparsons2.helpers;
+package com.MRK.alanparsons2.constants;
 
 public class ScreenAction {
 

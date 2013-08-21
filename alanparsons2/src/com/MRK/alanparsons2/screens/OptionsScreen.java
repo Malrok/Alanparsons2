@@ -1,6 +1,6 @@
 package com.MRK.alanparsons2.screens;
 
-import com.MRK.alanparsons2.helpers.ScreenAction;
+import com.MRK.alanparsons2.constants.ScreenAction;
 import com.MRK.alanparsons2.resources.GamePreferences;
 import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
@@ -90,8 +90,9 @@ public class OptionsScreen implements Screen {
 	public void render() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
+		
 		batch.setProjectionMatrix(camera.combined);
+//		batch.setProjectionMatrix(stage.getCamera().combined);
 		batch.begin();
 		batch.draw(background, 0, 0, width, height);
 		batch.end();

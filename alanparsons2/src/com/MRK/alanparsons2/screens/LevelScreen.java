@@ -1,6 +1,6 @@
 package com.MRK.alanparsons2.screens;
 
-import com.MRK.alanparsons2.helpers.ScreenAction;
+import com.MRK.alanparsons2.constants.ScreenAction;
 import com.MRK.alanparsons2.models.GameLevel;
 import com.MRK.alanparsons2.renderers.LevelRenderer;
 import com.MRK.alanparsons2.templates.Screen;

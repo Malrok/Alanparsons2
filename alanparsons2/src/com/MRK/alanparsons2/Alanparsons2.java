@@ -1,9 +1,9 @@
 package com.MRK.alanparsons2;
 
+import com.MRK.alanparsons2.constants.ScreenAction;
 import com.MRK.alanparsons2.controllers.KeystrokeController;
 import com.MRK.alanparsons2.controllers.LevelController;
 import com.MRK.alanparsons2.factories.LevelBuilder;
-import com.MRK.alanparsons2.helpers.ScreenAction;
 import com.MRK.alanparsons2.interfaces.AndroidCallback;
 import com.MRK.alanparsons2.resources.GamePreferences;
 import com.MRK.alanparsons2.screens.LevelScreen;

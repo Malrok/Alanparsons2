@@ -8,7 +8,6 @@ import com.MRK.alanparsons2.templates.Screen;
 import com.MRK.alanparsons2.ui.LevelButton;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,9 +24,7 @@ public class LevelSelect implements Screen {
 	private final float WIDTH_SPAN = 20f;
 	private final float HEIGHT_SPAN = 20f;
 	
-	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	
 	private TextureRegion background;
 	private Stage stage = new Stage();
 	private Skin skin;
@@ -37,7 +34,6 @@ public class LevelSelect implements Screen {
 	private String result = "";
 	
 	public LevelSelect(List<Level> levels, int width, int height) {
-		camera = new OrthographicCamera();
 		batch = new SpriteBatch();
 		
 		this.levels = levels;
@@ -78,7 +74,7 @@ public class LevelSelect implements Screen {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(stage.getCamera().combined);
 		batch.begin();
 		
 		batch.draw(background, 0, 0, width, height);
@@ -100,7 +96,7 @@ public class LevelSelect implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		camera.setToOrtho(false, width, height);
+		stage.setViewport(width, height, false);
 		this.width = width;
 		this.height = height;
 	}
