@@ -2,6 +2,7 @@ package com.MRK.alanparsons2.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -77,6 +78,9 @@ public class LevelController {
 						if (value.getKey().equalsIgnoreCase(LevelBuilder.NAME)) {
 							level.setName(value.getValue().getString());
 						}
+						if (value.getKey().equalsIgnoreCase(LevelBuilder.ORDER)) {
+							level.setOrder((int)value.getValue().getNumber());
+						}
 //						TODO
 //						if (value.getKey().equalsIgnoreCase(LevelBuilder.TEXTURE)) {
 //							level.setTexture(atlas.findRegion(value.getValue().getString()));
@@ -85,6 +89,8 @@ public class LevelController {
 				}
 			}
 		}
+		
+		Collections.sort(levels);
 	}
 	
 	private int getLevelIndex(String levelFileName) {
@@ -92,7 +98,8 @@ public class LevelController {
 		
 		for (Level level : levels) {
 			if (level.getFile().nameWithoutExtension().equalsIgnoreCase(levelFileName))
-				return levels.indexOf(level);
+//				return levels.indexOf(level);
+				return level.getOrder();
 		}
 		
 		return ret;

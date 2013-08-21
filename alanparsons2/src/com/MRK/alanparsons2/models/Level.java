@@ -9,9 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
  * @author malrok
  *
  */
-public class Level {
+public class Level implements Comparable<Level> {
 
 	private FileHandle file;
+	private int order;
 	private String name;
 	private Texture image;
 	
@@ -23,6 +24,14 @@ public class Level {
 		this.file = file;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -37,6 +46,15 @@ public class Level {
 	
 	public void setImage(Texture image) {
 		this.image = image;
+	}
+
+	@Override
+	public int compareTo(Level other) {
+		if (order < other.getOrder())
+			return -1;
+		if (order > other.getOrder())
+			return 1;
+		return 0;
 	}
 	
 }
