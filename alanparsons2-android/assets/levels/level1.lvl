@@ -38,10 +38,10 @@ shifty:0.3
 [background]
 zrank:1
 texture:meteorite
-width:50
-height:50
-x:x=Math.cos(t)
-y:y=Math.sin(t)
+width:4
+height:4
+x:25+cos(t)
+y:25+cos(t)
 shiftx:0.3
 shifty:0.3
 [camera]

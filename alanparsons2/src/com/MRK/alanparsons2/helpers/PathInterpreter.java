@@ -1,16 +1,25 @@
 package com.MRK.alanparsons2.helpers;
 
-import bsh.EvalError;
-import bsh.Interpreter;
+import de.congrace.exp4j.Calculable;
+import de.congrace.exp4j.ExpressionBuilder;
+import de.congrace.exp4j.UnknownFunctionException;
+import de.congrace.exp4j.UnparsableExpressionException;
 
 public class PathInterpreter {
 
-	private Interpreter interpreter;
+	private Calculable calc;
 	
-	public boolean evaluate(String command) {
+	public boolean evaluate(String command, String[] vars, float[] values) {
+		ExpressionBuilder expr;
 		try {
-			interpreter.eval(command);
-		} catch (EvalError e) {
+			expr = new ExpressionBuilder(command);
+			for  (int num = 0; num < vars.length; num++)
+				expr.withVariable(vars[num], values[num]);
+			calc = expr.build();
+		} catch (UnknownFunctionException e) {
+			e.printStackTrace();
+			return false;
+		} catch (UnparsableExpressionException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -18,15 +27,7 @@ public class PathInterpreter {
 		return true;
 	}
 	
-	public int getInt(String value) {
-		int ret = 0;
-		try {
-			ret = (Integer)interpreter.get(value);
-		} catch (EvalError eval) {
-			eval.printStackTrace();
-		} catch (ClassCastException cast) {
-			cast.printStackTrace();
-		}
-		return ret;
+	public float getInt() {
+		return (float) calc.calculate();
 	}
 }

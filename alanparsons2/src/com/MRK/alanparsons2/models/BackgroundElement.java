@@ -15,14 +15,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	private String xFormula, yFormula;
 	private float shiftx, shifty;
 	private TextureRegion texture;
-	
-//	public boolean isMoveable() {
-//		return moveable;
-//	}
-//	
-//	public void setMoveable(boolean moveable) {
-//		this.moveable = moveable;
-//	}
+	private float time = 0;
 	
 	public boolean isRepeated() {
 		return isRepeated;
@@ -76,8 +69,8 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		if (!moving)
 			return x;
 		else {
-			interpreter.evaluate(getxFormula());
-			return interpreter.getInt("x");
+			interpreter.evaluate(getxFormula(), new String[]{"t"}, new float[]{(time += Gdx.graphics.getDeltaTime())});
+			return interpreter.getInt();
 		}
 	}
 	
@@ -89,8 +82,8 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		if (!moving)
 			return y;
 		else {
-			interpreter.evaluate(getxFormula());
-			return interpreter.getInt("y");
+			interpreter.evaluate(getyFormula(), new String[]{"t"}, new float[]{(time += Gdx.graphics.getDeltaTime())});
+			return interpreter.getInt();
 		}
 	}
 	
@@ -99,10 +92,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	}
 	
 	public String getxFormula() {
-		if (xFormula.toLowerCase().contains("t"))
-			return xFormula.replaceAll("t", String.valueOf(Gdx.graphics.getDeltaTime()));
-		else
-			return xFormula;
+		return xFormula;
 	}
 
 	public void setxFormula(String xFormula) {
@@ -111,10 +101,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	}
 
 	public String getyFormula() {
-		if (yFormula.toLowerCase().contains("t"))
-			return yFormula.replaceAll("t", String.valueOf(Gdx.graphics.getDeltaTime()));
-		else
-			return yFormula;
+		return yFormula;
 	}
 
 	public void setyFormula(String yFormula) {
@@ -154,8 +141,4 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 			return 1;
 		return 0;
 	}
-
-//	public void draw(SpriteBatch batch, float deltax, float deltay) {
-//		batch.draw(texture, getX() - deltax * shiftx, getY() - deltay * shifty, getWidth(), getHeight());
-//	}
 }
