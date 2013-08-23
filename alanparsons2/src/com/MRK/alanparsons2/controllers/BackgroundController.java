@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.MRK.alanparsons2.helpers.PathInterpreter;
 import com.MRK.alanparsons2.models.BackgroundElement;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -12,7 +11,7 @@ public class BackgroundController {
 	
 	private float levelWidth, levelHeight;
 	private List<BackgroundElement> elements = new ArrayList<BackgroundElement>();
-	private PathInterpreter interpreter = new PathInterpreter();
+//	private PathInterpreter interpreter = new PathInterpreter();
 	
 	public void init(float width, float height) {
 		this.levelWidth = width;
@@ -42,7 +41,7 @@ public class BackgroundController {
 				} else {
 					batch.draw(
 							element.getTexture(), 
-							element.getX(interpreter) + element.getShiftx() * deltax, element.getY(interpreter) + element.getShifty() * deltay, 
+							element.getX() + element.getShiftx() * deltax, element.getY() + element.getShifty() * deltay, 
 							element.getWidth(), element.getHeight());
 				}
 			}

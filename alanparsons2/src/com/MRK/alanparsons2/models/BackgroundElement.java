@@ -16,6 +16,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	private float shiftx, shifty;
 	private TextureRegion texture;
 	private float time = 0;
+	private PathInterpreter interpreter;
 	
 	public boolean isRepeated() {
 		return isRepeated;
@@ -65,11 +66,11 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.repeatY = repeatY;
 	}
 
-	public float getX(PathInterpreter interpreter) {
+	public float getX() {
 		if (!moving)
 			return x;
 		else {
-			interpreter.evaluate(getxFormula(), new String[]{"t"}, new float[]{(time += Gdx.graphics.getDeltaTime())});
+			interpreter.evaluate(new String[]{"t"}, new float[]{(time += Gdx.graphics.getDeltaTime())});
 			return interpreter.getInt();
 		}
 	}
@@ -78,11 +79,11 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 		this.x = x;
 	}
 	
-	public float getY(PathInterpreter interpreter) {
+	public float getY() {
 		if (!moving)
 			return y;
 		else {
-			interpreter.evaluate(getyFormula(), new String[]{"t"}, new float[]{(time += Gdx.graphics.getDeltaTime())});
+			interpreter.evaluate(new String[]{"t"}, new float[]{(time += Gdx.graphics.getDeltaTime())});
 			return interpreter.getInt();
 		}
 	}
@@ -97,6 +98,8 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 
 	public void setxFormula(String xFormula) {
 		this.xFormula = xFormula;
+		if (interpreter == null) interpreter = new PathInterpreter();
+		interpreter.parse(xFormula, "t");
 		moving = true;
 	}
 
@@ -106,6 +109,8 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 
 	public void setyFormula(String yFormula) {
 		this.yFormula = yFormula;
+		if (interpreter == null) interpreter = new PathInterpreter();
+		interpreter.parse(yFormula, "t");
 		moving = true;
 	}
 

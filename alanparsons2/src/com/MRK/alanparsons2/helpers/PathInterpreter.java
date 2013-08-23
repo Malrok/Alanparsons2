@@ -9,12 +9,11 @@ public class PathInterpreter {
 
 	private Calculable calc;
 	
-	public boolean evaluate(String command, String[] vars, float[] values) {
+	public boolean parse(String command, String vars) {
 		ExpressionBuilder expr;
 		try {
 			expr = new ExpressionBuilder(command);
-			for  (int num = 0; num < vars.length; num++)
-				expr.withVariable(vars[num], values[num]);
+			expr.withVariableNames(vars);
 			calc = expr.build();
 		} catch (UnknownFunctionException e) {
 			e.printStackTrace();
@@ -25,6 +24,11 @@ public class PathInterpreter {
 		}
 		
 		return true;
+	}
+	
+	public void evaluate(String[] vars, float[] values) {
+		for  (int num = 0; num < vars.length; num++)
+			calc.setVariable(vars[num], values[num]);
 	}
 	
 	public float getInt() {
