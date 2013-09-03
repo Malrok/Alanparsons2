@@ -1,10 +1,12 @@
 package com.MRK.alanparsons2.templates;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public interface Screen {
 
 	public void update();
 	
-	public void render();
+	public void render(SpriteBatch batch);
 	
 	public String result();
 	

@@ -88,7 +88,7 @@ public class CollisionController {
 							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 							toBeRemoved.add(projectile);
 						}
-					} else if (target instanceof WeakPoint) {
+					} else if (target instanceof WeakPoint && !(projectile.getEmitter() instanceof EnemyShip)) {
 						((WeakPoint)target).setEnergy((int) (((WeakPoint)target).getEnergy() - projectile.getPower()));
 						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 						toBeRemoved.add(projectile);

@@ -3,25 +3,23 @@ package com.MRK.alanparsons2.screens;
 import java.io.IOException;
 
 import com.MRK.alanparsons2.factories.LevelBuilder;
+import com.MRK.alanparsons2.resources.GamePreferences;
 import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LoadingScreen implements Screen {
 
 	private String result = "";
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
 	private Texture loadingTexture;
 	private float width, height;	
 	private Thread thread;
 	
-	public LoadingScreen(final boolean internal, final String lvlStr, final LevelBuilder levelBuilder, int width, int height) {
-		camera = new OrthographicCamera();
-		batch = new SpriteBatch();
+	public LoadingScreen(final String lvlStr, final LevelBuilder levelBuilder, int width, int height) {
+		GamePreferences preferences = new GamePreferences();
+		final boolean internal = !preferences.isExternalFiles();
+		
 		loadingTexture = new Texture(Gdx.files.internal("images/loading.png"));
 		
 		resize(width, height);
@@ -55,20 +53,11 @@ public class LoadingScreen implements Screen {
 	
 	@Override
 	public void update() {
-		
 	}
 
 	@Override
-	public void render() {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		
+	public void render(SpriteBatch batch) {
 		batch.draw(loadingTexture, 0, 0, width, height);
-		
-		batch.end();
 	}
 
 	@Override
@@ -78,7 +67,7 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void backKeyStroke() {
-//		result = "back";
+		result = "back";
 	}
 	
 	@Override
@@ -92,9 +81,7 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		camera.setToOrtho(false, width, height);
 		this.width = width;
 		this.height = height;
 	}
-
 }

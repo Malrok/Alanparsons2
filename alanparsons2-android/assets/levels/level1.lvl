@@ -126,6 +126,6 @@ power:1
 [weakpoint]
 host:enemy1
 texture:weakpoint
-width:4
-height:4
+width:2
+height:2
 hp:1

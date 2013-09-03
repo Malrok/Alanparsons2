@@ -6,6 +6,7 @@ import com.MRK.alanparsons2.renderers.LevelRenderer;
 import com.MRK.alanparsons2.templates.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -65,6 +66,9 @@ public class LevelScreen implements Screen {
         
         Gdx.input.setInputProcessor(stage);
 	}
+
+//	@Override
+//	public void create() { }
 	
 	public void pause() {
 		paused = true;
@@ -98,7 +102,7 @@ public class LevelScreen implements Screen {
 	}
 
 	@Override
-	public void render() {
+	public void render(SpriteBatch batch) {
 		renderer.render();
 		stage.draw();
 	}
