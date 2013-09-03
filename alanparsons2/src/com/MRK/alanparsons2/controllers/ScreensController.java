@@ -79,8 +79,8 @@ public class ScreensController implements Disposable {
 		if (!(screen instanceof LevelScreen)) {
 	        camera.update();
 	        camera.apply(Gdx.gl10);
-	        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
-	                          (int) viewport.width, (int) viewport.height);
+//	        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+	        Gdx.gl.glViewport(0, 0, (int) viewport.width, (int) viewport.height);
 	        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	        
 	        batch.begin();
@@ -98,9 +98,6 @@ public class ScreensController implements Disposable {
 	}
 
 	public void resize(int width, int height) {
-//		this.width = width;
-//		this.height = height;
-		
 		float aspectRatio = (float) width / (float) height;
 		float scale = 1f;
 		Vector2 crop = new Vector2(0f, 0f);
@@ -130,7 +127,6 @@ public class ScreensController implements Disposable {
 	
 	public void init() {
 		if (screen == null) {
-//			screen = new MainScreen(width, height);
 			screen = new MainScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			computeStage();
 		}
@@ -162,49 +158,39 @@ public class ScreensController implements Disposable {
 
 		if (screen instanceof MainScreen) {
 			if (screen.result().equalsIgnoreCase(ScreenAction.NEXT))
-//				screen = new LevelSelect(levelController.getLevels(), width, height);
 				screen = new LevelSelect(levelController.getLevels(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			else if (screen.result().equalsIgnoreCase(ScreenAction.OPTIONS))
-//				screen = new OptionsScreen(width, height);
 				screen = new OptionsScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			else if (screen.result().equalsIgnoreCase(ScreenAction.BACK))
 				Gdx.app.exit();
 		}
 		if (screen instanceof OptionsScreen)
 			if (screen.result().startsWith(ScreenAction.BACK)) {
-//				screen = new MainScreen(width, height);
 				screen = new MainScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			}
 		if (screen instanceof LevelSelect)
 			if (screen.result().startsWith(ScreenAction.PLAY)) {
 				currentLevel = screen.result().split(" ")[1];
-//				screen = new LoadingScreen(currentLevel, levelBuilder, width, height);
 				screen = new LoadingScreen(currentLevel, levelBuilder, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			} else if (screen.result().startsWith(ScreenAction.BACK)) {
-//				screen = new MainScreen(width, height);
 				screen = new MainScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			}
 		if (screen instanceof LoadingScreen)
 			if (screen.result().startsWith(ScreenAction.LOADED))
-//				screen = new LevelScreen(levelBuilder.getLevel(), width, height);
 				screen = new LevelScreen(levelBuilder.getLevel(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		if (screen instanceof LevelScreen) {
 			if (screen.result().equalsIgnoreCase(ScreenAction.SELECT))
-//				screen = new LevelSelect(levelController.getLevels(), width, height);
 				screen = new LevelSelect(levelController.getLevels(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			else if (screen.result().equalsIgnoreCase(ScreenAction.NEXT)) {
 				currentLevel = levelController.getNextLevel(currentLevel);
 				if (currentLevel != null) {
-//					screen = new LoadingScreen(currentLevel, levelBuilder, width, height);
 					screen = new LoadingScreen(currentLevel, levelBuilder, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 				} else {
-//					screen = new LevelSelect(levelController.getLevels(), width, height);
 					screen = new LevelSelect(levelController.getLevels(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 				}
 			}
 		}
 		
-//		screen.resize(width, height);
 		screen.resize(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		computeStage();
 	}
