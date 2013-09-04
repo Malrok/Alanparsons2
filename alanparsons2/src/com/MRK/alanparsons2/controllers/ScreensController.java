@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Scaling;
 
 public class ScreensController implements Disposable {
 
@@ -35,7 +36,7 @@ public class ScreensController implements Disposable {
 	private LevelBuilder levelBuilder;// = new LevelBuilder();
 	
 	private OrthographicCamera camera;
-    private Rectangle viewport;
+    private Rectangle viewport = new Rectangle();
     private SpriteBatch batch;
     private Stage stage;
     private Skin skin;
@@ -78,9 +79,9 @@ public class ScreensController implements Disposable {
 		
 		if (!(screen instanceof LevelScreen)) {
 	        camera.update();
-	        camera.apply(Gdx.gl10);
-//	        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
-	        Gdx.gl.glViewport(0, 0, (int) viewport.width, (int) viewport.height);
+//	        camera.apply(Gdx.gl10);
+	        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+//	        Gdx.gl.glViewport(0, 0, (int) viewport.width, (int) viewport.height);
 	        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	        
 	        batch.begin();
@@ -98,23 +99,13 @@ public class ScreensController implements Disposable {
 	}
 
 	public void resize(int width, int height) {
-		float aspectRatio = (float) width / (float) height;
-		float scale = 1f;
-		Vector2 crop = new Vector2(0f, 0f);
-
-		if (aspectRatio > ASPECT_RATIO) {
-			scale = (float) height / (float) VIRTUAL_HEIGHT;
-			crop.x = (width - VIRTUAL_WIDTH * scale) / 2f;
-		} else if (aspectRatio < ASPECT_RATIO) {
-			scale = (float) width / (float) VIRTUAL_WIDTH;
-			crop.y = (height - VIRTUAL_HEIGHT * scale) / 2f;
-		} else {
-			scale = (float) width / (float) VIRTUAL_WIDTH;
-		}
-
-		float w = (float) VIRTUAL_WIDTH * scale;
-		float h = (float) VIRTUAL_HEIGHT * scale;
-		viewport = new Rectangle(crop.x, crop.y, w, h);
+		Vector2 resize = new Vector2(0f, 0f);
+        resize.set(Scaling.fit.apply(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, width, height));
+        
+        viewport.width = resize.x;
+        viewport.height = resize.y;
+        viewport.y = (height - viewport.height) / 2;
+        viewport.x = (width - viewport.width) / 2;
 	}
 
 	public void backKeyStroke() {
