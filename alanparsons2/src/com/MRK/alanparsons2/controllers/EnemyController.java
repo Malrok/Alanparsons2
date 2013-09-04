@@ -88,12 +88,14 @@ public class EnemyController {
 				if (weapon.getEmitter() instanceof EnemyShip) {
 					EnemyShip enemy = (EnemyShip)weapon.getEmitter();
 					
-					enemy.removeWeapon(weapon);
-					enemy.addLevel(1);
+					if (enemy != null) {
+						enemy.removeWeapon(weapon);
+						enemy.addLevel(1);
 					
-					WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
-					
-					if (template != null) enemy.upgradeWeapons(template);
+						WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
+						
+						if (template != null) enemy.upgradeWeapons(template);
+					}
 				}
 			}
 		}
@@ -109,12 +111,14 @@ public class EnemyController {
 				
 				EnemyShip enemy = (EnemyShip)weakPoint.getHost();
 				
-				enemy.removeWeakPoint(weakPoint);
-				enemy.addLevel(1);
+				if (enemy != null) {
+					enemy.removeWeakPoint(weakPoint);
+					enemy.addLevel(1);
 				
-				WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
+					WeaponTemplate template = helper.getMatchingTemplate(enemy.getName(), enemy.getLevel());
 				
-				if (template != null) enemy.upgradeWeapons(template);
+					if (template != null) enemy.upgradeWeapons(template);
+				}
 			}
 		}
 		

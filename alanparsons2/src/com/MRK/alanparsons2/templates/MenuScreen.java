@@ -32,7 +32,7 @@ public class MenuScreen implements Screen {
 	@Override
 	public void render(SpriteBatch batch) {		
 //		batch.draw(background, 0, 0, ScreensController.VIRTUAL_WIDTH, ScreensController.VIRTUAL_HEIGHT);
-		batch.draw(background, 0, 0, width, height);
+		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override

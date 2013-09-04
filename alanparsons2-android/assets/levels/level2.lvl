@@ -86,7 +86,7 @@ shootdistance:50
 [weapon]
 shiplevel:2
 projectiletype:3
-name:enemy1
+name:enemy2
 host:enemy1
 power:1
 sps:2
