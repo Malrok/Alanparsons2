@@ -27,13 +27,12 @@ public class ScreensController implements Disposable {
     public static final int VIRTUAL_HEIGHT = 480;
     public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/(float)VIRTUAL_HEIGHT;
 	
-//	private int width, height;
 	private Screen screen;
 	private String currentLevel;
 	private AndroidCallback callback;
 	
 	private LevelController levelController;
-	private LevelBuilder levelBuilder;// = new LevelBuilder();
+	private LevelBuilder levelBuilder;
 	
 	private OrthographicCamera camera;
     private Rectangle viewport = new Rectangle();
@@ -79,9 +78,8 @@ public class ScreensController implements Disposable {
 		
 		if (!(screen instanceof LevelScreen)) {
 	        camera.update();
-//	        camera.apply(Gdx.gl10);
+	        
 	        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
-//	        Gdx.gl.glViewport(0, 0, (int) viewport.width, (int) viewport.height);
 	        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	        
 	        batch.begin();

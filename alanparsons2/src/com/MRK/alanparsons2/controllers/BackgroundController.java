@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 
 import com.MRK.alanparsons2.models.BackgroundElement;
+import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BackgroundController {
 	
 	private float levelWidth, levelHeight;
 	private List<BackgroundElement> elements = new ArrayList<BackgroundElement>();
-//	private PathInterpreter interpreter = new PathInterpreter();
 	
 	public void init(float width, float height) {
 		this.levelWidth = width;
@@ -30,14 +30,17 @@ public class BackgroundController {
 				if (element.isRepeated()) {
 					for (int w = 0; w < element.getRepeatX(); w++) {
 						for (int h = 0; h < element.getRepeatY(); h++) {
+							if (element.isLight())
+								batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+							else
+								batch.setBlendFunction(GL11.GL_ACTIVE_TEXTURE, GL11.GL_ONE);
+							
 							batch.draw(
 									element.getTexture(), 
 									w * levelWidth / element.getRepeatX(), h * levelHeight / element.getRepeatY(), 
 									levelWidth / element.getRepeatX(), levelHeight / element.getRepeatY());
 						}
 					}
-//				} else if (element.isMoveable()) {
-					
 				} else {
 					batch.draw(
 							element.getTexture(), 

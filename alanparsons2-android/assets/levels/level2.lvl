@@ -16,6 +16,7 @@ x:37
 y:37
 shiftx:0.5
 shifty:0.5
+islight:true
 [background]
 zrank:1
 texture:flare
@@ -25,6 +26,7 @@ x:37
 y:37
 shiftx:0.48
 shifty:0.48
+islight:true
 [background]
 zrank:2
 texture:planet

@@ -2,6 +2,7 @@ package com.MRK.alanparsons2.models;
 
 import com.MRK.alanparsons2.helpers.PathInterpreter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class BackgroundElement implements Comparable<BackgroundElement> {
@@ -17,6 +18,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	private TextureRegion texture;
 	private float time = 0;
 	private PathInterpreter interpreter;
+	private boolean isLight = false;
 	
 	public boolean isRepeated() {
 		return isRepeated;
@@ -135,7 +137,16 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	}
 	
 	public void setTexture(TextureRegion texture) {
+		texture.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.texture = texture;
+	}
+
+	public boolean isLight() {
+		return isLight;
+	}
+
+	public void setLight(boolean isLight) {
+		this.isLight = isLight;
 	}
 
 	@Override

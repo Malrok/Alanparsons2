@@ -21,8 +21,6 @@ public class Alanparsons2 extends Game {
 
 	public Alanparsons2() {
 		levelController = new LevelController();
-//		levelController.init();
-		
 		screenController = new ScreensController();
 	}
 	
@@ -66,8 +64,6 @@ public class Alanparsons2 extends Game {
 
 	@Override
 	public void resize(int width, int height) {
-//		System.out.println("width/height = " + width + "/" + height + " gdxwidth/gdxheight = " + Gdx.graphics.getWidth() + "/" + Gdx.graphics.getHeight());
-		
 		screenController.resize(width, height);
 	}
 	

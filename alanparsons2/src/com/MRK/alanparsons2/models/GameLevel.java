@@ -10,6 +10,7 @@ import com.MRK.alanparsons2.templates.ProjectileTemplate;
 import com.MRK.alanparsons2.templates.TouchInputTemplate;
 import com.MRK.alanparsons2.templates.WeakPointTemplate;
 import com.MRK.alanparsons2.templates.WeaponTemplate;
+import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -178,6 +179,7 @@ public class GameLevel implements Disposable {
 	}
 	
 	public void draw(SpriteBatch batch) {
+		batch.setBlendFunction(GL11.GL_ACTIVE_TEXTURE, GL11.GL_ONE);
 		background.draw(batch, ShipController.deltaX, ShipController.deltaY);
 		
 		ship.draw(batch);
@@ -185,8 +187,10 @@ public class GameLevel implements Disposable {
 		for (EnemyShip enemy : enemies)
 			enemy.draw(batch);
 		
+		batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		for (Projectile projectile : projectiles)
 			projectile.draw(batch);
+//		batch.disableBlending();
 	}
 	
 	public void dispose() {

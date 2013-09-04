@@ -86,6 +86,7 @@ public class LevelBuilder implements Disposable {
 	public static final String CAMERA_RADIUS = "radius";
 	public static final String HEALTH_POINTS = "hp";
 	public static final String ORDER = "order";
+	public static final String ISLIGHT = "islight";
 	
 	private LevelFileHandler levelHandler = new LevelFileHandler();	
 	private TextureAtlas atlas;
@@ -378,6 +379,9 @@ public class LevelBuilder implements Disposable {
 				element.setRepeatX(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(REPEAT_Y))
 				element.setRepeatY(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(ISLIGHT))
+				element.setLight(value.getValue().getString().equalsIgnoreCase("true"));
+
 		}
 		
 		element.setX(x - element.getWidth() / 2);

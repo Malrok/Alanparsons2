@@ -98,7 +98,6 @@ public class LevelController {
 		
 		for (Level level : levels) {
 			if (level.getFile().nameWithoutExtension().equalsIgnoreCase(levelFileName))
-//				return levels.indexOf(level);
 				return level.getOrder();
 		}
 		
