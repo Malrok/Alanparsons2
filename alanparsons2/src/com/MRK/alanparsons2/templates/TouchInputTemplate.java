@@ -2,26 +2,27 @@ package com.MRK.alanparsons2.templates;
 
 public class TouchInputTemplate {
 
-	//	private float lowerNormalLimit, upperNormalLimit;
+	private float lowerTouchLimit, upperTouchLimit;
 	private float lowerSpeedLimit, normalSpeedLimit, upperSpeedLimit;
 	private float minSpeed, normalSpeed, maxSpeed;
 	private int speedDownDelay;
 	
-//	public float getLowerNormalLimit() {
-//		return lowerNormalLimit;
-//	}
-//	
-//	public void setLowerNormalLimit(float lowerNormalLimit) {
-//		this.lowerNormalLimit = lowerNormalLimit;
-//	}
-//	
-//	public float getUpperNormalLimit() {
-//		return upperNormalLimit;
-//	}
-//	
-//	public void setUpperNormalLimit(float upperNormalLimit) {
-//		this.upperNormalLimit = upperNormalLimit;
-//	}
+	public float getLowerTouchLimit() {
+		return lowerTouchLimit;
+	}
+
+	public void setLowerTouchLimit(float lowerTouchlLimit) {
+		this.lowerTouchLimit = lowerTouchlLimit;
+	}
+
+	public float getUpperTouchLimit() {
+		return upperTouchLimit;
+	}
+
+	public void setUpperTouchLimit(float upperTouchLimit) {
+		this.upperTouchLimit = upperTouchLimit;
+	}
+
 	public float getLowerSpeedLimit() {
 		return lowerSpeedLimit;
 	}

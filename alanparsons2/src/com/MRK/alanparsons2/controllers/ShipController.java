@@ -25,7 +25,7 @@ public class ShipController {
 	
 	private Ship ship;
 	private TouchInputTemplate touchTemplate;
-	private float[] speedLimits = new float[3];
+	private float[] speedLimits = new float[5];
 	private float currentDirection = 0;
 	private long lastTime = TimeUtils.millis();
 	
@@ -51,9 +51,11 @@ public class ShipController {
 		rotationCenterx = centerx;
 		rotationCentery = centery;
 		
-		speedLimits[0] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse mini
-		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
-		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
+		speedLimits[0] = touchTemplate.getUpperTouchLimit();
+		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse mini
+		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
+		speedLimits[3] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
+		speedLimits[4] = touchTemplate.getLowerTouchLimit();
 		
 		this.distanceFromFoe = distanceFromFoe;
 	}
@@ -72,18 +74,20 @@ public class ShipController {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
 			
-			touchLeft = x < screenMiddle;
-			touchRight = x >= screenMiddle;
-			
-			if (y > speedLimits[0]) {// vitesse mini
-				newDirection = touchTemplate.getMinSpeed();
-			} else if (y < speedLimits[2]) {// vitesse maxi
-				newDirection = touchTemplate.getMaxSpeed();
-			} else {
-				if (speedLimits[0] >= y && y >= speedLimits[1]) // entre mini et normal
-					newDirection = touchTemplate.getMinSpeed() + (speedLimits[0] - y) * (touchTemplate.getNormalSpeed() - touchTemplate.getMinSpeed()) / ((speedLimits[0] - speedLimits[1]));
-				else // entre normal et maxi
-					newDirection = touchTemplate.getNormalSpeed() + (y - speedLimits[1]) * (touchTemplate.getMaxSpeed() - touchTemplate.getNormalSpeed()) / ((speedLimits[2] - speedLimits[1]));
+			if (y > speedLimits[0] && y < speedLimits[4]) { // on est dans la zone de touch
+				touchLeft = x < screenMiddle;
+				touchRight = x >= screenMiddle;
+				
+				if (y > speedLimits[1]) {// vitesse mini
+					newDirection = touchTemplate.getMinSpeed();
+				} else if (y < speedLimits[3]) {// vitesse maxi
+					newDirection = touchTemplate.getMaxSpeed();
+				} else {
+					if (speedLimits[1] >= y && y >= speedLimits[2]) // entre mini et normal
+						newDirection = touchTemplate.getMinSpeed() + (speedLimits[1] - y) * (touchTemplate.getNormalSpeed() - touchTemplate.getMinSpeed()) / ((speedLimits[1] - speedLimits[2]));
+					else // entre normal et maxi
+						newDirection = touchTemplate.getNormalSpeed() + (y - speedLimits[2]) * (touchTemplate.getMaxSpeed() - touchTemplate.getNormalSpeed()) / ((speedLimits[3] - speedLimits[2]));
+				}
 			}
 		}
 		if (!touchLeft && !touchRight) {

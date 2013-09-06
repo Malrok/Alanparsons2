@@ -21,7 +21,7 @@ public class LevelScreen implements Screen {
 
 	private Stage stage = new Stage();
 	private Skin skin;
-	private Label label;
+	private Label score;
 	private Button pause;
 	
 	private LevelRenderer renderer;
@@ -30,18 +30,12 @@ public class LevelScreen implements Screen {
 	
 	private boolean paused = false;
 	
-	public LevelScreen(GameLevel level, int width, int height) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		
-		renderer = new LevelRenderer(level);		
-		renderer.resize(width, height);
-		renderer.init();
-		
+	public LevelScreen(GameLevel level, int width, int height) {		
 		skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 		
-        label = new Label("", skin);
-        label.setPosition(10, 10);
-        stage.addActor(label);
+        score = new Label("", skin);
+        score.setPosition(10, 10);
+        stage.addActor(score);
         
         pause = new Button(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("images/pause.png")))));
         pause.setSize(width / 10, width / 10);
@@ -65,11 +59,15 @@ public class LevelScreen implements Screen {
         stage.addActor(pause);
         
         Gdx.input.setInputProcessor(stage);
+        
+        level.getTouchTemplate().setUpperTouchLimit(pause.getHeight());
+        level.getTouchTemplate().setLowerTouchLimit(Gdx.graphics.getHeight());
+        
+		renderer = new LevelRenderer(level);		
+		renderer.resize(width, height);
+		renderer.init();
 	}
 
-//	@Override
-//	public void create() { }
-	
 	public void pause() {
 		paused = true;
 	}
@@ -82,7 +80,7 @@ public class LevelScreen implements Screen {
 	public void update() {
 		if (!win) {
 			if (!paused) {
-				label.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
+				score.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
 				renderer.update();
 				
 				if (renderer.win()) {
