@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
@@ -72,10 +73,26 @@ public class LevelRenderer implements Disposable {
 		weakPointFactory = new WeakPointFactory();
 		
 		shipController = new ShipController(level.getShip(), level.getTouchTemplate());
-		enemyController = new EnemyController(level.getEnemies(), level.getWeapons(), level.getWeakPoints(), pixHelper);
+		enemyController = new EnemyController(level.getEnemies(), level.getWeapons(), level.getWeakPoints(), pixHelper) {
+			public void updatedScore(int newScore, int startx, int starty) {
+				Vector3 pos = new Vector3(startx, starty, 0);
+				camera.project(pos);
+				updateScore(newScore, (int) pos.x, (int) pos.y);
+			}
+			
+			public void shakeCamera() {
+				camera.setShaking(true);
+			}
+		};
 		projectileController = new ProjectileController(new ProjectileFactory(level.getProjectilesTemplates()), level.getProjectiles());
-		collisionController = new CollisionController(level.getProjectiles(), pixHelper);
 		particleController = new ParticleController();
+		collisionController = new CollisionController(level.getProjectiles(), pixHelper) {
+			public void updatedScore(int newScore, int startx, int starty) {
+				Vector3 pos = new Vector3(startx, starty, 0);
+				camera.project(pos);
+				updateScore(newScore, (int) pos.x, (int) pos.y);
+			}
+		};
 		
 		shapeRenderer = new ShapeRenderer();
 	}
@@ -85,6 +102,7 @@ public class LevelRenderer implements Disposable {
 		removedWeakPoints.clear();
 		
 		camera.rotateCameraAround(shipController.getLastRotateValue());
+		camera.updateShaking();
 		
 		shipController.update();
 		enemyController.updateEnemies(level.getShip().getX() + level.getShip().getWidth() / 2, level.getShip().getY() + level.getShip().getHeight() / 2);
@@ -121,18 +139,6 @@ public class LevelRenderer implements Disposable {
 		drawDebug();
 	}
 	
-	private void drawDebug() {
-		if (Alanparsons2.DEBUG) {
-			shapeRenderer.setProjectionMatrix(camera.combined);
-			shapeRenderer.begin(ShapeType.Line);
-			shapeRenderer.setColor(Color.RED);
-			shapeRenderer.rect(level.getShip().getX(), level.getShip().getY(), level.getShip().getWidth(), level.getShip().getWidth());
-			shapeRenderer.circle(level.getShip().getWeapon().getX(), level.getShip().getWeapon().getY(), 0.4f);
-			shapeRenderer.line(level.getShip().getWeapon().getX(), level.getShip().getWeapon().getY(), level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
-			shapeRenderer.end();
-		}
-	}
-	
 	public void resize(int width, int height) {
 		camera.initViewport(width, height, level.getCameraTemplate().getCameraWidth());
 		
@@ -163,5 +169,19 @@ public class LevelRenderer implements Disposable {
 	
 	public void dispose() {
 		batch.dispose();
+	}
+		
+	protected void updateScore(int newScore, int startx, int starty) { }
+	
+	private void drawDebug() {
+		if (Alanparsons2.DEBUG) {
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.begin(ShapeType.Line);
+			shapeRenderer.setColor(Color.RED);
+			shapeRenderer.rect(level.getShip().getX(), level.getShip().getY(), level.getShip().getWidth(), level.getShip().getWidth());
+			shapeRenderer.circle(level.getShip().getWeapon().getX(), level.getShip().getWeapon().getY(), 0.4f);
+			shapeRenderer.line(level.getShip().getWeapon().getX(), level.getShip().getWeapon().getY(), level.getShip().getWeapon().getAimAt().x, level.getShip().getWeapon().getAimAt().y);
+			shapeRenderer.end();
+		}
 	}
 }

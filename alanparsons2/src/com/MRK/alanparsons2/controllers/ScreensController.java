@@ -39,6 +39,8 @@ public class ScreensController implements Disposable {
     private SpriteBatch batch;
     private Stage stage;
     private Skin skin;
+    
+//    private int width, height;
 	
 	public void initControllers(LevelController levelController, LevelBuilder levelBuilder) {
 		this.levelController = levelController;
@@ -97,6 +99,9 @@ public class ScreensController implements Disposable {
 	}
 
 	public void resize(int width, int height) {
+//		this.width = width;
+//		this.height = height;
+		
 		Vector2 resize = new Vector2(0f, 0f);
         resize.set(Scaling.fit.apply(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, width, height));
         
@@ -166,6 +171,7 @@ public class ScreensController implements Disposable {
 			}
 		if (screen instanceof LoadingScreen)
 			if (screen.result().startsWith(ScreenAction.LOADED))
+//				screen = new LevelScreen(levelBuilder.getLevel(), width, height);
 				screen = new LevelScreen(levelBuilder.getLevel(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		if (screen instanceof LevelScreen) {
 			if (screen.result().equalsIgnoreCase(ScreenAction.SELECT))

@@ -81,6 +81,8 @@ public class CollisionController {
 							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 							pixHelper.eraseCircle(((EnemyShip) target).getHull(), position, (int) projectile.getPower());
 							toBeRemoved.add(projectile);
+							
+							updatedScore(10, (int) (projectile.getX() - projectile.getWidth() / 2), (int) (projectile.getY() - projectile.getHeight() / 2));
 						}
 					} else if (target instanceof Weapon) {
 						if (((Weapon)target).getEmitter() != projectile.getEmitter()) {
@@ -107,4 +109,6 @@ public class CollisionController {
 	public void clearImpacts() {
 		impacts.clear();
 	}
+	
+	protected void updatedScore(int newScore, int startx, int starty) {}
 }

@@ -3,11 +3,13 @@ name:Level 1
 order:1
 width:100
 height:100
+
 [background]
 zrank:5
 texture:stars
 repeatx:4
 repeaty:4
+
 [background]
 zrank:4
 texture:sun
@@ -17,6 +19,7 @@ x:37
 y:37
 shiftx:0.5
 shifty:0.5
+
 [background]
 zrank:2
 texture:flare
@@ -26,6 +29,7 @@ x:37
 y:37
 shiftx:0.48
 shifty:0.48
+
 [background]
 zrank:3
 texture:planet
@@ -35,6 +39,7 @@ x:25
 y:25
 shiftx:0.3
 shifty:0.3
+
 [background]
 zrank:1
 texture:meteorite
@@ -44,11 +49,13 @@ x:25+cos(t)
 y:25+cos(t)
 shiftx:0.3
 shifty:0.3
+
 [camera]
 width:50
 radius:20
 zoom_min:
 zoom_max:
+
 [input]
 up:0.85
 middle:0.5
@@ -57,17 +64,20 @@ minspeed:0.01
 normalspeed:0.05
 maxspeed:0.1
 speeddowndelay:100
+
 [ship]
 y:2
 width:4
 height:4
 texture:ship
+
 [weapon]
 projectiletype:1
 name:ship1
 host:ship
 sps:1
 shootdistance:50
+
 [projectile]
 projectiletype:1
 speed:0.2
@@ -75,6 +85,7 @@ width:1
 height:0.4
 texture:shot1
 power:1
+
 [enemy]
 name:enemy1
 x:50
@@ -85,6 +96,7 @@ shelltexture:enemy
 structuretexture:enemy_structure
 damagepercentagelevelup:10
 weapondestructionlevelsup:1
+
 [weapon]
 texture:weapon
 width:4
@@ -97,6 +109,7 @@ host:enemy1
 power:1
 sps:1
 shootdistance:50
+
 [weapon]
 texture:weapon
 width:4
@@ -109,6 +122,7 @@ host:enemy1
 power:1
 sps:2
 shootdistance:50
+
 [projectile]
 projectiletype:2
 speed:0.2
@@ -116,6 +130,7 @@ width:1
 height:0.4
 texture:shot2
 power:1
+
 [projectile]
 projectiletype:3
 speed:0.2
@@ -123,6 +138,7 @@ width:1
 height:0.4
 texture:shot3
 power:1
+
 [weakpoint]
 host:enemy1
 texture:weakpoint
