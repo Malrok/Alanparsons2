@@ -227,4 +227,11 @@ public class PixmapSprite implements Disposable {
 		lastModification = 0;
 	}
 
+	/**
+	 * Reload all the pixmap data to the opengl texture, to be used after the game was resumed.
+	 */
+	public void reload() {
+		texture.load(new PixmapTextureData(pixmap, pixmap.getFormat(), false, false));
+	}
+
 }

@@ -35,6 +35,11 @@ public class EnemyShip extends Sprite implements Disposable {
 		structure.setPosition(x, y);
 	}
 	
+	public void reload() {
+		hull.reload();
+		structure.reload();
+	}
+	
 	public void dispose() {
 		shipWeapons.clear();
 		shipWeakPoints.clear();

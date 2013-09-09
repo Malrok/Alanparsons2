@@ -1,6 +1,7 @@
 package com.MRK.alanparsons2.models;
 
 import com.MRK.alanparsons2.helpers.CircleHelper;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -90,8 +91,8 @@ public class Projectile implements Disposable {
 	 * Calcul de la nouvelle position
 	 */
 	public void update() {
-		float x = getX() + speed.x,
-			  y = getY() + speed.y;
+		float x = getX() + Gdx.graphics.getDeltaTime() * speed.x,
+			  y = getY() + Gdx.graphics.getDeltaTime() * speed.y;
 		setPosition(x, y);
 	}
 	

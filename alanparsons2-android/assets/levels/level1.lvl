@@ -80,7 +80,7 @@ shootdistance:50
 
 [projectile]
 projectiletype:1
-speed:0.2
+speed:5
 width:1
 height:0.4
 texture:shot1
@@ -125,7 +125,7 @@ shootdistance:50
 
 [projectile]
 projectiletype:2
-speed:0.2
+speed:5
 width:1
 height:0.4
 texture:shot2
@@ -133,7 +133,7 @@ power:1
 
 [projectile]
 projectiletype:3
-speed:0.2
+speed:5
 width:1
 height:0.4
 texture:shot3

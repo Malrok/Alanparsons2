@@ -39,8 +39,6 @@ public class ScreensController implements Disposable {
     private SpriteBatch batch;
     private Stage stage;
     private Skin skin;
-    
-//    private int width, height;
 	
 	public void initControllers(LevelController levelController, LevelBuilder levelBuilder) {
 		this.levelController = levelController;
@@ -99,9 +97,6 @@ public class ScreensController implements Disposable {
 	}
 
 	public void resize(int width, int height) {
-//		this.width = width;
-//		this.height = height;
-		
 		Vector2 resize = new Vector2(0f, 0f);
         resize.set(Scaling.fit.apply(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, width, height));
         
@@ -165,13 +160,12 @@ public class ScreensController implements Disposable {
 		if (screen instanceof LevelSelect)
 			if (screen.result().startsWith(ScreenAction.PLAY)) {
 				currentLevel = screen.result().split(" ")[1];
-				screen = new LoadingScreen(currentLevel, levelBuilder, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+				screen = new LoadingScreen(currentLevel, levelBuilder);
 			} else if (screen.result().startsWith(ScreenAction.BACK)) {
 				screen = new MainScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 			}
 		if (screen instanceof LoadingScreen)
 			if (screen.result().startsWith(ScreenAction.LOADED))
-//				screen = new LevelScreen(levelBuilder.getLevel(), width, height);
 				screen = new LevelScreen(levelBuilder.getLevel(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		if (screen instanceof LevelScreen) {
 			if (screen.result().equalsIgnoreCase(ScreenAction.SELECT))
@@ -179,7 +173,7 @@ public class ScreensController implements Disposable {
 			else if (screen.result().equalsIgnoreCase(ScreenAction.NEXT)) {
 				currentLevel = levelController.getNextLevel(currentLevel);
 				if (currentLevel != null) {
-					screen = new LoadingScreen(currentLevel, levelBuilder, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+					screen = new LoadingScreen(currentLevel, levelBuilder);
 				} else {
 					screen = new LevelSelect(levelController.getLevels(), VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 				}

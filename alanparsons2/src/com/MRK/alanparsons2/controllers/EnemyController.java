@@ -31,6 +31,11 @@ public class EnemyController {
 		this.pixHelper = pixHelper;
 	}
 	
+	public void reload() {
+		for (EnemyShip ship : enemies)
+			ship.reload();
+	}
+	
 	public void setEnemiesWeapons(WeaponHelper helper, WeaponFactory weaponFactory) {
 		int rank = 0;
 		

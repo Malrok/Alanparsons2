@@ -13,16 +13,13 @@ public class LoadingScreen implements Screen {
 
 	private String result = "";
 	private Texture loadingTexture;
-	private float width, height;	
 	private Thread thread;
 	
-	public LoadingScreen(final String lvlStr, final LevelBuilder levelBuilder, int width, int height) {
+	public LoadingScreen(final String lvlStr, final LevelBuilder levelBuilder) {
 		GamePreferences preferences = new GamePreferences();
 		final boolean internal = !preferences.isExternalFiles();
 		
 		loadingTexture = new Texture(Gdx.files.internal("images/loading.png"));
-		
-		resize(width, height);
 		
 		thread = new Thread(new Runnable() {
 
@@ -57,7 +54,7 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		batch.draw(loadingTexture, 0, 0, width, height);
+		batch.draw(loadingTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
@@ -81,7 +78,6 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		this.width = width;
-		this.height = height;
+
 	}
 }

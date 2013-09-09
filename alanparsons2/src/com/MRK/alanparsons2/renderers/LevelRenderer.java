@@ -163,6 +163,10 @@ public class LevelRenderer implements Disposable {
 		collisionController.addWeakPointsTargets(level.getWeakPoints());
 	}
 	
+	public void reload() {
+		enemyController.reload();
+	}
+	
 	public boolean win() {
 		return win;
 	}

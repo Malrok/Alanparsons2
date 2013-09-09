@@ -58,6 +58,7 @@ public class LevelScreen implements Screen {
 	
 	public void resume() {
 		paused = false;
+		renderer.reload();
 	}
 	
 	@Override

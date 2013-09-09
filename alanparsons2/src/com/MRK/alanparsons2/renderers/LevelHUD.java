@@ -3,6 +3,7 @@ package com.MRK.alanparsons2.renderers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.MRK.alanparsons2.controllers.ScreensController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -73,11 +74,8 @@ public class LevelHUD extends Stage {
 	}
 	
 	public void updateScore(int newScore, int startx, int starty) {
-		System.out.println("updateScore x/y=" + startx + "/" + starty + " w/h=" + getWidth() + "/" + getHeight());
-		
 		Label scoreAdder = new Label(String.valueOf(newScore), skin);
-//		scoreAdder.setPosition(screenXToStage(startx), screenYToStage(starty));
-		scoreAdder.setPosition(startx, starty);
+		scoreAdder.setPosition(screenXToStage(startx), screenYToStage(starty));
 		
 		scoreAdder.addAction(new SequenceAction(Actions.parallel(Actions.moveTo(scoreLabel.getX(), scoreLabel.getY(), 1), Actions.scaleBy(0.1f, 0.1f, 1))));//, completeAction));
 		
@@ -92,19 +90,13 @@ public class LevelHUD extends Stage {
 		fps.setText("FPS = " + Gdx.graphics.getFramesPerSecond());
 	}
 	
-//	Action completeAction = new Action(){
-//	    public boolean act( float delta ) {
-//	        return true;
-//	    }
-//	};
-	
 	protected void paused() {}
 	
-//	private int screenXToStage(int x) {
-//		return x;
-//	}
-//	
-//	private int screenYToStage(int y) {
-//		return y;
-//	}
+	private int screenXToStage(int x) {
+		return x * ScreensController.VIRTUAL_WIDTH / Gdx.graphics.getWidth();
+	}
+	
+	private int screenYToStage(int y) {
+		return y * ScreensController.VIRTUAL_HEIGHT / Gdx.graphics.getHeight();
+	}
 }

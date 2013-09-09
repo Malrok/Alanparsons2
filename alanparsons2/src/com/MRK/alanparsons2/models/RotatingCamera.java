@@ -24,12 +24,8 @@ public class RotatingCamera extends OrthographicCamera {
 	}
 	
 	public void initViewport(float screenWidth, float screenHeight, float viewportWidth) {
-//		this.viewportWidth = screenWidth;
-//		this.viewportHeight = screenHeight;
 		this.viewportWidth = viewportWidth;
 		this.viewportHeight = screenHeight * this.viewportWidth / screenWidth;
-		
-		System.out.println("camera initViewport " + this.viewportWidth + " " + this.viewportHeight);
 		
 		setToOrtho(false, this.viewportWidth, this.viewportHeight);
 	}
