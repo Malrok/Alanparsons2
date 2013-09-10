@@ -2,6 +2,7 @@ package com.MRK.alanparsons2.models;
 
 import com.MRK.alanparsons2.controllers.ShipController;
 import com.MRK.alanparsons2.helpers.CircleHelper;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -12,8 +13,11 @@ public class RotatingCamera extends OrthographicCamera {
 	
 	private float rotateCenterx, rotateCentery;
 	private float radius;
+	private float zoomMin, zoomMax, zoomUpdateValue;
 	private boolean isShaking = false;
 	private long shakeStart = 0;
+	private float[] shipSpeeds;
+	private float currentZoom = 1.0f;
 	
 	public RotatingCamera(int width, int height) {
 		super(width, height);
@@ -44,6 +48,16 @@ public class RotatingCamera extends OrthographicCamera {
 		radius = value;
 	}
 	
+	public float getZoomUpdateValue() {
+		return zoomUpdateValue;
+	}
+
+	public void setZoomValues(float zoomMin, float zoomMax, float zoomUpdateValue) {
+		this.zoomMin = zoomMin;
+		this.zoomMax = zoomMax;
+		this.zoomUpdateValue = zoomUpdateValue;
+	}
+
 	public void setRotateCenter(float originx, float originy) {
 		this.rotateCenterx = originx;
 		this.rotateCentery = originy;
@@ -83,5 +97,31 @@ public class RotatingCamera extends OrthographicCamera {
 				position.y += Math.random();
 			}
 		}
+	}
+	
+	public void setShipSpeeds(float[] speeds) {
+		shipSpeeds = speeds;
+	}
+
+	public void updateZoomValue(float shipSpeed) {
+		if (shipSpeed == 0) {
+			if (currentZoom < 1.0f) {
+				currentZoom += zoomUpdateValue * Gdx.graphics.getDeltaTime();
+				if (currentZoom > 1.0f) currentZoom = 1.0f;
+			} else if (currentZoom > 1.0f) {
+				currentZoom -= zoomUpdateValue * Gdx.graphics.getDeltaTime();
+				if (currentZoom < 1.0f) currentZoom = 1.0f;
+			}
+		} else {
+			if (shipSpeed <= shipSpeeds[ShipController.NORMAL_SPEED]) {
+				currentZoom -= zoomUpdateValue * Gdx.graphics.getDeltaTime();
+				if (currentZoom < zoomMin) currentZoom = zoomMin;
+			} else if (shipSpeed >= shipSpeeds[ShipController.NORMAL_SPEED]) {
+				currentZoom += zoomUpdateValue * Gdx.graphics.getDeltaTime();
+				if (currentZoom > zoomMax) currentZoom = zoomMax;
+			}
+		}
+		
+		this.zoom = currentZoom;
 	}
 }

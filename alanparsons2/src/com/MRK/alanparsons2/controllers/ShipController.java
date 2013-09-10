@@ -19,6 +19,10 @@ import com.badlogic.gdx.utils.TimeUtils;
  */
 public class ShipController {
 
+	public static int MIN_SPEED = 1;
+	public static int NORMAL_SPEED = 2;
+	public static int MAX_SPEED = 3;
+	
 	private float distanceFromFoe;
 	private float screenMiddle;
 	private float rotationCenterx, rotationCentery;
@@ -52,9 +56,9 @@ public class ShipController {
 		rotationCentery = centery;
 		
 		speedLimits[0] = touchTemplate.getUpperTouchLimit();
-		speedLimits[1] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse mini
-		speedLimits[2] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
-		speedLimits[3] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
+		speedLimits[MIN_SPEED] = Gdx.graphics.getHeight() * touchTemplate.getUpperSpeedLimit();  // ordonnée à l'écran de la vitesse mini
+		speedLimits[NORMAL_SPEED] = Gdx.graphics.getHeight() * touchTemplate.getNormalSpeedLimit(); // ordonnée à l'écran de la vitesse normale
+		speedLimits[MAX_SPEED] = Gdx.graphics.getHeight() * touchTemplate.getLowerSpeedLimit();  // ordonnée à l'écran de la vitesse maxi
 		speedLimits[4] = touchTemplate.getLowerTouchLimit();
 		
 		this.distanceFromFoe = distanceFromFoe;
@@ -147,6 +151,10 @@ public class ShipController {
 		return currentDirection;
 	}
 
+	public float[] getShipSpeeds() {
+		return new float[]{0, touchTemplate.getMinSpeed(), touchTemplate.getNormalSpeed(), touchTemplate.getMaxSpeed(), 0};
+	}
+	
 	/**
 	 * centre de rotation du monde
 	 */

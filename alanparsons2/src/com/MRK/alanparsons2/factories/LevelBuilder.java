@@ -87,6 +87,7 @@ public class LevelBuilder implements Disposable {
 	public static final String HEALTH_POINTS = "hp";
 	public static final String ORDER = "order";
 	public static final String ISLIGHT = "islight";
+	public static final String ZOOM_UPDATE_VALUE = "zoom_update_value";
 	
 	private LevelFileHandler levelHandler = new LevelFileHandler();	
 	private TextureAtlas atlas;
@@ -212,6 +213,8 @@ public class LevelBuilder implements Disposable {
 				cameraTemplate.setCameraZoomMax(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(CAMERA_RADIUS))
 				cameraTemplate.setCameraRadius(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(ZOOM_UPDATE_VALUE))
+				cameraTemplate.setZoomUpdateValue(value.getValue().getNumber());
 		}
 	}
 

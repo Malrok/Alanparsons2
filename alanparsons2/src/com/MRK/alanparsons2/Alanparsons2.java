@@ -34,9 +34,7 @@ public class Alanparsons2 extends Game {
 //			music.play();
 			
 			levelController.init();
-			
 			screenController.initControllers(levelController, levelBuilder);
-			
 			isInitialized = true;
 		}
 	}
@@ -56,9 +54,7 @@ public class Alanparsons2 extends Game {
 	@Override
 	public void render() {
 		keyController.update();
-		
 		if (keyController.keyReleased(Keys.BACK)) screenController.backKeyStroke();
-		
 		screenController.render();
 	}
 

@@ -100,7 +100,8 @@ public class LevelRenderer implements Disposable {
 	public void update() {
 		removedWeapons.clear();
 		removedWeakPoints.clear();
-		
+
+		camera.updateZoomValue(Math.abs(shipController.getLastRotateValue()));
 		camera.rotateCameraAround(shipController.getLastRotateValue());
 		camera.updateShaking();
 		
@@ -147,12 +148,15 @@ public class LevelRenderer implements Disposable {
 	
 	public void init() {
 		camera.setRadius(Math.abs(level.getCameraTemplate().getCameraRadius()));
+		camera.setZoomValues(level.getCameraTemplate().getCameraZoomMin(), level.getCameraTemplate().getCameraZoomMax(), level.getCameraTemplate().getZoomUpdateValue());
 		camera.setRotateCenter(level.getLevelCenterX(), level.getLevelCenterY());
 		camera.initPosition(level.getWidth());
 		
 		shipController.init(level.getLevelCenterX(), level.getLevelCenterY(), camera.getRadius() + camera.getViewportHeight() / 2 - level.getShip().getHeight() / 2 - level.getShip().getyFromScreen());
 		shipController.setWeapon(weaponHelper, level.getWeapons(), weaponFactory);
 		shipController.update();
+		
+		camera.setShipSpeeds(shipController.getShipSpeeds());
 		
 		enemyController.setEnemiesWeapons(weaponHelper, weaponFactory);
 		enemyController.setEnemiesWeakPoints(weakPointsHelper, weakPointFactory);
