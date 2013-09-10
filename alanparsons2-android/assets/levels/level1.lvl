@@ -97,12 +97,14 @@ shelltexture:enemy
 structuretexture:enemy_structure
 damagepercentagelevelup:10
 weapondestructionlevelsup:1
+touchpoints:10
+destroypoints:1000
 
 [weapon]
 texture:weapon
 width:4
 height:4
-hp:1
+hp:5
 shiplevel:1
 projectiletype:2
 name:enemy1
@@ -110,12 +112,14 @@ host:enemy1
 power:1
 sps:1
 shootdistance:50
+touchpoints:100
+destroypoints:500
 
 [weapon]
 texture:weapon
 width:4
 height:4
-hp:1
+hp:10
 shiplevel:2
 projectiletype:3
 name:enemy1
@@ -123,6 +127,8 @@ host:enemy1
 power:1
 sps:2
 shootdistance:50
+touchpoints:100
+destroypoints:500
 
 [projectile]
 projectiletype:2
@@ -145,4 +151,6 @@ host:enemy1
 texture:weakpoint
 width:2
 height:2
-hp:1
+hp:10
+touchpoints:100
+destroypoints:500

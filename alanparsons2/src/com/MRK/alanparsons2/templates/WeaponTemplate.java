@@ -14,6 +14,7 @@ public class WeaponTemplate {
 	private int shootFrequency;
 	private int projectileType;
 	private int hps;
+	private int touchPoints, destroyPoints;
 	
 	public String getName() {
 		return name;
@@ -93,5 +94,21 @@ public class WeaponTemplate {
 
 	public void setHps(int hps) {
 		this.hps = hps;
+	}
+
+	public int getTouchPoints() {
+		return touchPoints;
+	}
+
+	public void setTouchPoints(int touchPoints) {
+		this.touchPoints = touchPoints;
+	}
+
+	public int getDestroyPoints() {
+		return destroyPoints;
+	}
+
+	public void setDestroyPoints(int destroyPoints) {
+		this.destroyPoints = destroyPoints;
 	}
 }

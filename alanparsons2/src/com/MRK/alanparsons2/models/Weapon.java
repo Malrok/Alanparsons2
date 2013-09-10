@@ -27,6 +27,7 @@ public class Weapon extends Sprite implements Disposable {
 	private String emitterName;
 	private Sprite emitter;
 	private int hps;
+	private int touchPoints, destroyPoints;
 
 	public void setTexture(TextureRegion texture) {
 		this.texture = texture;
@@ -142,6 +143,22 @@ public class Weapon extends Sprite implements Disposable {
 
 	public void setHps(int hps) {
 		this.hps = hps;
+	}
+
+	public int getTouchPoints() {
+		return touchPoints;
+	}
+
+	public void setTouchPoints(int touchPoints) {
+		this.touchPoints = touchPoints;
+	}
+
+	public int getDestroyPoints() {
+		return destroyPoints;
+	}
+
+	public void setDestroyPoints(int destroyPoints) {
+		this.destroyPoints = destroyPoints;
 	}
 
 	public void upgrade(WeaponTemplate template) {

@@ -19,6 +19,8 @@ public class WeaponFactory {
 			weapon.setShootFrequency(template.getShootFrequency());
 			weapon.setProjectileType(template.getProjectileType());
 			weapon.setHps(template.getHps());
+			weapon.setTouchPoints(template.getTouchPoints());
+			weapon.setDestroyPoints(template.getDestroyPoints());
 		}
 		
 		return weapon;

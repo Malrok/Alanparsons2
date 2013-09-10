@@ -82,18 +82,22 @@ public class CollisionController {
 							pixHelper.eraseCircle(((EnemyShip) target).getHull(), position, (int) projectile.getPower());
 							toBeRemoved.add(projectile);
 							
-							updatedScore(10, (int) (projectile.getX() - projectile.getWidth() / 2), (int) (projectile.getY() - projectile.getHeight() / 2));
+							updatedScore(((EnemyShip)target).getTouchPoints(), (int) (projectile.getX() - projectile.getWidth() / 2), (int) (projectile.getY() - projectile.getHeight() / 2));
 						}
 					} else if (target instanceof Weapon) {
 						if (((Weapon)target).getEmitter() != projectile.getEmitter()) {
 							((Weapon)target).setHps((int) (((Weapon)target).getHps() - projectile.getPower()));
 							impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 							toBeRemoved.add(projectile);
+							
+							updatedScore(((Weapon)target).getTouchPoints(), (int) (projectile.getX() - projectile.getWidth() / 2), (int) (projectile.getY() - projectile.getHeight() / 2));
 						}
 					} else if (target instanceof WeakPoint && !(projectile.getEmitter() instanceof EnemyShip)) {
 						((WeakPoint)target).setEnergy((int) (((WeakPoint)target).getEnergy() - projectile.getPower()));
 						impacts.add(new Vector2(projectile.getX() - projectile.getWidth() / 2, projectile.getY() - projectile.getHeight() / 2));
 						toBeRemoved.add(projectile);
+						
+						updatedScore(((WeakPoint)target).getTouchPoints(), (int) (projectile.getX() - projectile.getWidth() / 2), (int) (projectile.getY() - projectile.getHeight() / 2));
 					} else if (target instanceof Ship) {
 						toBeRemoved.add(projectile);
 					}

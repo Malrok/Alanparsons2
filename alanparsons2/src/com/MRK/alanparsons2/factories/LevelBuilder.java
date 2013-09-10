@@ -88,6 +88,8 @@ public class LevelBuilder implements Disposable {
 	public static final String ORDER = "order";
 	public static final String ISLIGHT = "islight";
 	public static final String ZOOM_UPDATE_VALUE = "zoom_update_value";
+	public static final String TOUCH_POINTS = "touchpoints";
+	public static final String DESTROY_POINTS = "destroypoints";
 	
 	private LevelFileHandler levelHandler = new LevelFileHandler();	
 	private TextureAtlas atlas;
@@ -270,6 +272,10 @@ public class LevelBuilder implements Disposable {
 				((EnemyShip)ship).setHull(pixmapAtlas.createPixmap(value.getValue().getString()));
 			if (value.getKey().equalsIgnoreCase(STRUCTURE_TEXTURE))
 				((EnemyShip)ship).setStructure(pixmapAtlas.createPixmap(value.getValue().getString()));
+			if (value.getKey().equalsIgnoreCase(TOUCH_POINTS))
+				((EnemyShip)ship).setTouchPoints((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(DESTROY_POINTS))
+				((EnemyShip)ship).setDestroyPoints((int) value.getValue().getNumber());
 		}
 		
 		if (ship instanceof EnemyShip && width != 0 && height != 0 && x != 0 && y != 0) {
@@ -305,6 +311,10 @@ public class LevelBuilder implements Disposable {
 				weapon.setHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEALTH_POINTS))
 				weapon.setHps((int)value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(TOUCH_POINTS))
+				weapon.setTouchPoints((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(DESTROY_POINTS))
+				weapon.setDestroyPoints((int) value.getValue().getNumber());
 		}
 		
 		weapons.add(weapon);
@@ -324,6 +334,10 @@ public class LevelBuilder implements Disposable {
 				weakPoint.setHeight(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(HEALTH_POINTS))
 				weakPoint.setEnergy((int)value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(TOUCH_POINTS))
+				weakPoint.setTouchPoints((int) value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(DESTROY_POINTS))
+				weakPoint.setDestroyPoints((int) value.getValue().getNumber());
 		}
 		
 		weakPoints.add(weakPoint);

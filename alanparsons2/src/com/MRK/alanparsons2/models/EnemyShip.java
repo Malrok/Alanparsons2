@@ -21,6 +21,8 @@ public class EnemyShip extends Sprite implements Disposable {
 	private PixmapSprite hull = new PixmapSprite();
 	private PixmapSprite structure = new PixmapSprite();
 	
+	private int touchPoints, destroyPoints;
+	
 	@Override
 	public void setSize(float width, float height) {
 		super.setSize(width, height);
@@ -153,5 +155,21 @@ public class EnemyShip extends Sprite implements Disposable {
 	 */
 	public Map<PixmapPosition, WeakPoint> getWeakPointsPosition() {
 		return shipWeakPoints;
+	}
+
+	public int getTouchPoints() {
+		return touchPoints;
+	}
+
+	public void setTouchPoints(int touchPoints) {
+		this.touchPoints = touchPoints;
+	}
+
+	public int getDestroyPoints() {
+		return destroyPoints;
+	}
+
+	public void setDestroyPoints(int destroyPoints) {
+		this.destroyPoints = destroyPoints;
 	}
 }

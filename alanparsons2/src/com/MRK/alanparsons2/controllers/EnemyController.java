@@ -87,8 +87,7 @@ public class EnemyController {
 	public void updateWeapons(List<Weapon> toBeRemoved, WeaponHelper helper) {
 		for (Weapon weapon : weapons) {
 			if (weapon.getEmitter() instanceof EnemyShip && weapon.getHps() <= 0) {
-				// TODO : improve that bitch
-				updatedScore(50, (int) weapon.getX(), (int) weapon.getY());
+				updatedScore(weapon.getDestroyPoints(), (int) weapon.getX(), (int) weapon.getY());
 				shakeCamera();
 				toBeRemoved.add(weapon);
 				explodingParts.add(new Vector2(weapon.getX(), weapon.getY()));
@@ -114,8 +113,7 @@ public class EnemyController {
 	public void updateWeakPoint(List<WeakPoint> toBeRemoved, WeaponHelper helper) {
 		for (WeakPoint weakPoint : weakPoints) {
 			if (weakPoint.getEnergy() <= 0) {
-				// TODO : improve that bitch
-				updatedScore(50, (int) weakPoint.getX(), (int) weakPoint.getY());
+				updatedScore(weakPoint.getDestroyPoints(), (int) weakPoint.getX(), (int) weakPoint.getY());
 				shakeCamera();
 				toBeRemoved.add(weakPoint);
 				explodingParts.add(new Vector2(weakPoint.getX(), weakPoint.getY()));

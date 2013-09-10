@@ -16,6 +16,8 @@ public class WeakPointFactory {
 			weakPoint.setHostName(template.getHostName());
 			weakPoint.setHost(template.getHost());
 			weakPoint.setEnergy(template.getEnergy());
+			weakPoint.setTouchPoints(template.getTouchPoints());
+			weakPoint.setDestroyPoints(template.getDestroyPoints());
 		}
 		
 		return weakPoint;

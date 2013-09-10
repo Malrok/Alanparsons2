@@ -10,6 +10,7 @@ public class WeakPointTemplate {
 	private float width, height;
 	private String hostName;
 	private Sprite host;
+	private int touchPoints, destroyPoints;
 	
 	public int getEnergy() {
 		return energy;
@@ -57,6 +58,22 @@ public class WeakPointTemplate {
 
 	public void setHost(Sprite host) {
 		this.host = host;
+	}
+
+	public int getTouchPoints() {
+		return touchPoints;
+	}
+
+	public void setTouchPoints(int touchPoints) {
+		this.touchPoints = touchPoints;
+	}
+
+	public int getDestroyPoints() {
+		return destroyPoints;
+	}
+
+	public void setDestroyPoints(int destroyPoints) {
+		this.destroyPoints = destroyPoints;
 	}
 	
 }
