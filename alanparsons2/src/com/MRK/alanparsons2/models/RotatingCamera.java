@@ -13,11 +13,13 @@ public class RotatingCamera extends OrthographicCamera {
 	
 	private float rotateCenterx, rotateCentery;
 	private float radius;
-	private float zoomMin, zoomMax, zoomUpdateValue;
+	private float zoomMin, zoomMax, zoomUpdateValue, zoomCooldown;
 	private boolean isShaking = false;
 	private long shakeStart = 0;
+	private long zoomEnd = 0;
 	private float[] shipSpeeds;
 	private float currentZoom = 1.0f;
+	private float fromCenterToShip = .0f;
 	
 	public RotatingCamera(int width, int height) {
 		super(width, height);
@@ -52,10 +54,11 @@ public class RotatingCamera extends OrthographicCamera {
 		return zoomUpdateValue;
 	}
 
-	public void setZoomValues(float zoomMin, float zoomMax, float zoomUpdateValue) {
-		this.zoomMin = zoomMin;
-		this.zoomMax = zoomMax;
+	public void setZoomValues(float zoomMin, float zoomMax, float zoomUpdateValue, float zoomCooldown) {
+		this.zoomMin = (zoomMin == 0 ? 1 : zoomMin);
+		this.zoomMax = (zoomMax == 0 ? 1 : zoomMax);
 		this.zoomUpdateValue = zoomUpdateValue;
+		this.zoomCooldown = zoomCooldown;
 	}
 
 	public void setRotateCenter(float originx, float originy) {
@@ -68,11 +71,21 @@ public class RotatingCamera extends OrthographicCamera {
 		position.y = rotateCentery - radius - viewportHeight / 2;
 	}
 	
+	public float getFromCenterToShip() {
+		return fromCenterToShip;
+	}
+
+	public void setFromCenterToShip(float fromCenterToShip) {
+		this.fromCenterToShip = fromCenterToShip;
+	}
+
 	public float getViewportHeight() {
 		return viewportHeight;
 	}
 	
 	public void rotateCameraAround(float angle) {
+		float radius = this.radius + (fromCenterToShip - fromCenterToShip * currentZoom);
+		
 		ShipController.currentAngle += angle;
 		
 		Vector2 newPos = CircleHelper.getPointOnCircle(rotateCenterx, rotateCentery, radius, ShipController.currentAngle);
@@ -105,14 +118,25 @@ public class RotatingCamera extends OrthographicCamera {
 
 	public void updateZoomValue(float shipSpeed) {
 		if (shipSpeed == 0) {
-			if (currentZoom < 1.0f) {
-				currentZoom += zoomUpdateValue * Gdx.graphics.getDeltaTime();
-				if (currentZoom > 1.0f) currentZoom = 1.0f;
-			} else if (currentZoom > 1.0f) {
-				currentZoom -= zoomUpdateValue * Gdx.graphics.getDeltaTime();
-				if (currentZoom < 1.0f) currentZoom = 1.0f;
+			if (zoomEnd == 0) {
+				zoomEnd = TimeUtils.millis();
+			} else if (zoomEnd + (long)(zoomCooldown * 1000) < TimeUtils.millis()) {
+				if (currentZoom < 1.0f) {
+					currentZoom += zoomUpdateValue * Gdx.graphics.getDeltaTime();
+					if (currentZoom > 1.0f) {
+						currentZoom = 1.0f;
+						zoomEnd = 0;
+					}
+				} else if (currentZoom > 1.0f) {
+					currentZoom -= zoomUpdateValue * Gdx.graphics.getDeltaTime();
+					if (currentZoom < 1.0f) {
+						currentZoom = 1.0f;
+						zoomEnd = 0;
+					}
+				}
 			}
 		} else {
+			zoomEnd = 0;
 			if (shipSpeed <= shipSpeeds[ShipController.NORMAL_SPEED]) {
 				currentZoom -= zoomUpdateValue * Gdx.graphics.getDeltaTime();
 				if (currentZoom < zoomMin) currentZoom = zoomMin;

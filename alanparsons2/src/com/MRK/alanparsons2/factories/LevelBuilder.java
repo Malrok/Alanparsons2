@@ -88,6 +88,7 @@ public class LevelBuilder implements Disposable {
 	public static final String ORDER = "order";
 	public static final String ISLIGHT = "islight";
 	public static final String ZOOM_UPDATE_VALUE = "zoom_update_value";
+	public static final String ZOOM_COOLDOWN = "zoom_cooldown";
 	public static final String TOUCH_POINTS = "touchpoints";
 	public static final String DESTROY_POINTS = "destroypoints";
 	
@@ -217,6 +218,8 @@ public class LevelBuilder implements Disposable {
 				cameraTemplate.setCameraRadius(value.getValue().getNumber());
 			if (value.getKey().equalsIgnoreCase(ZOOM_UPDATE_VALUE))
 				cameraTemplate.setZoomUpdateValue(value.getValue().getNumber());
+			if (value.getKey().equalsIgnoreCase(ZOOM_COOLDOWN))
+				cameraTemplate.setZoomCooldown(value.getValue().getNumber());
 		}
 	}
 

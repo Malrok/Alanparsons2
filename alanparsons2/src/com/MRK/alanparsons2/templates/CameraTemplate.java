@@ -2,7 +2,7 @@ package com.MRK.alanparsons2.templates;
 
 public class CameraTemplate {
 
-	private float cameraWidth, cameraRadius, cameraZoomMin, cameraZoomMax, zoomUpdateValue;
+	private float cameraWidth, cameraRadius, cameraZoomMin, cameraZoomMax, zoomUpdateValue, zoomCooldown;
 
 	public float getCameraWidth() {
 		return cameraWidth;
@@ -42,6 +42,14 @@ public class CameraTemplate {
 
 	public void setZoomUpdateValue(float zoomCooldown) {
 		this.zoomUpdateValue = zoomCooldown;
+	}
+
+	public float getZoomCooldown() {
+		return zoomCooldown;
+	}
+
+	public void setZoomCooldown(float zoomCooldown) {
+		this.zoomCooldown = zoomCooldown;
 	}
 	
 }

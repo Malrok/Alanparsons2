@@ -7,6 +7,7 @@ public class GamePreferences {
 
 	private final String PREFERENCES = "alanp";
 	private final String PREF_EXTERNAL = "external";
+	private final String PREF_MUSIC_VOL = "music_vol";
 	
 	protected Preferences getPreferences() {
 		return Gdx.app.getPreferences(PREFERENCES);
@@ -21,4 +22,12 @@ public class GamePreferences {
 		getPreferences().flush();
 	}
 	
+	public int getMusicVolume() {
+		return getPreferences().getInteger(PREF_MUSIC_VOL);
+	}
+	
+	public void setMusicVolume(int musicVolume) {
+		getPreferences().putInteger(PREF_MUSIC_VOL, musicVolume);
+		getPreferences().flush();
+	}
 }

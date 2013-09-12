@@ -5,8 +5,11 @@ import com.MRK.alanparsons2.constants.ScreenAction;
 import com.MRK.alanparsons2.models.GameLevel;
 import com.MRK.alanparsons2.renderers.LevelHUD;
 import com.MRK.alanparsons2.renderers.LevelRenderer;
+import com.MRK.alanparsons2.resources.GamePreferences;
 import com.MRK.alanparsons2.templates.Screen;
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +19,7 @@ public class LevelScreen implements Screen {
 	private LevelHUD hud;
 	private Skin skin;
 	private LevelRenderer renderer;
+	private Music music;
 	
 	private String result = "";
 	private boolean win = false;	
@@ -50,6 +54,13 @@ public class LevelScreen implements Screen {
 		};		
 		renderer.resize(width, height);
 		renderer.init();
+		
+		GamePreferences preferences = new GamePreferences();
+		
+		music = Gdx.audio.newMusic(Gdx.files.getFileHandle("sounds/music.mp3", FileType.Internal));
+		music.setLooping(true);
+		music.setVolume(preferences.getMusicVolume() == 0 ? 0 : (float) preferences.getMusicVolume() / 7);
+		music.play();
 	}
 
 	public void pause() {
@@ -97,6 +108,8 @@ public class LevelScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		music.stop();
+		music.dispose();
 		hud.dispose();
 		renderer.dispose();
 	}

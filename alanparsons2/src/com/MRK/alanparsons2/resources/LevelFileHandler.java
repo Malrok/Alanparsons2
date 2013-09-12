@@ -27,10 +27,11 @@ public class LevelFileHandler {
 	private static final String SECTION_MARKER = "[";
 	private static final String SEMI_COLON = ":";
 	
-	public Multimap<String, Resource> resources = ArrayListMultimap.create();
+	public Multimap<String, Resource> resources;
 	
 	public void load(FileHandle levelFile) throws IOException {
 		String line = "", entry = "", value = "";
+		resources = ArrayListMultimap.create();
 		Resource resource = new Resource();
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(levelFile.read()));

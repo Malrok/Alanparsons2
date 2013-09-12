@@ -53,9 +53,10 @@ shifty:0.3
 [camera]
 width:50
 radius:20
-zoom_min:0.5
-zoom_max:1.5
-zoom_update_value:0.3
+zoom_min:0.7
+zoom_max:2
+zoom_update_value:0.2
+zoom_cooldown:0.3
 
 [input]
 up:0.85
