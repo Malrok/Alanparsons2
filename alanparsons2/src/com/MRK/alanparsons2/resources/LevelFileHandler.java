@@ -39,17 +39,19 @@ public class LevelFileHandler {
 		line = reader.readLine().trim();
 		
 		while (line != null) {
-			if (line.startsWith(SECTION_MARKER)) {
-				resource = new Resource();
-				resources.put(line.substring(1, line.length() - 1), resource);
-			} else if (resource != null && line.contains(SEMI_COLON)) {
-				entry = line.substring(0, line.indexOf(SEMI_COLON));
-				value = line.substring(line.indexOf(SEMI_COLON) + 1, line.length());
-				
-				try {
-					resource.addValue(entry, Float.valueOf(value));
-				} catch (NumberFormatException e) {
-					resource.addValue(entry, value);
+			if (!line.startsWith("#")) {
+				if (line.startsWith(SECTION_MARKER)) {
+					resource = new Resource();
+					resources.put(line.substring(1, line.length() - 1), resource);
+				} else if (resource != null && line.contains(SEMI_COLON)) {
+					entry = line.substring(0, line.indexOf(SEMI_COLON));
+					value = line.substring(line.indexOf(SEMI_COLON) + 1, line.length());
+					
+					try {
+						resource.addValue(entry, Float.valueOf(value));
+					} catch (NumberFormatException e) {
+						resource.addValue(entry, value);
+					}
 				}
 			}
 			line = reader.readLine();

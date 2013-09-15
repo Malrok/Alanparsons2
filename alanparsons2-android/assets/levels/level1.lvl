@@ -40,15 +40,15 @@ y:25
 shiftx:0.3
 shifty:0.3
 
-[background]
-zrank:1
-texture:meteorite
-width:4
-height:4
-x:25+cos(t)
-y:25+cos(t)
-shiftx:0.3
-shifty:0.3
+#[background]
+#zrank:1
+#texture:meteorite
+#width:4
+#height:4
+#x:25+cos(t)
+#y:25+cos(t)
+#shiftx:0.3
+#shifty:0.3
 
 [camera]
 width:50
@@ -69,8 +69,8 @@ speeddowndelay:100
 
 [ship]
 y:2
-width:4
-height:4
+width:2
+height:2
 texture:ship
 
 [weapon]
@@ -92,8 +92,8 @@ power:1
 name:enemy1
 x:50
 y:50
-width:30
-height:30
+width:50
+height:50
 shelltexture:enemy
 structuretexture:enemy_structure
 damagepercentagelevelup:10
