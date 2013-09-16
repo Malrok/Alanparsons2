@@ -27,14 +27,14 @@ public class BackgroundController {
 	public void draw(SpriteBatch batch, float deltax, float deltay) {
 		for (BackgroundElement element : elements) {
 			if (element.getTexture() != null) {
+				if (element.isLight())
+					batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+				else
+					batch.setBlendFunction(GL11.GL_ACTIVE_TEXTURE, GL11.GL_ONE);
+				
 				if (element.isRepeated()) {
 					for (int w = 0; w < element.getRepeatX(); w++) {
 						for (int h = 0; h < element.getRepeatY(); h++) {
-							if (element.isLight())
-								batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-							else
-								batch.setBlendFunction(GL11.GL_ACTIVE_TEXTURE, GL11.GL_ONE);
-							
 							batch.draw(
 									element.getTexture(), 
 									w * levelWidth / element.getRepeatX(), h * levelHeight / element.getRepeatY(), 

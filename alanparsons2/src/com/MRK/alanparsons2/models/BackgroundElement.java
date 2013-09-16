@@ -57,6 +57,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	}
 
 	public void setRepeatX(float repeatX) {
+		setRepeated(true);
 		this.repeatX = repeatX;
 	}
 
@@ -65,6 +66,7 @@ public class BackgroundElement implements Comparable<BackgroundElement> {
 	}
 
 	public void setRepeatY(float repeatY) {
+		setRepeated(true);
 		this.repeatY = repeatY;
 	}
 
